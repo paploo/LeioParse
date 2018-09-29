@@ -1,0 +1,14 @@
+# sbt
+target
+!build.properties
+
+# IntelliJ
+.idea
+.idea_modules
+
+# Vim
+*.swp
+*.swo
+
+# MacOS X
+.DS_Store
