@@ -1,18 +1,18 @@
 package net.paploo.leioparse
 
 import java.io.File
-import java.time.{Duration, LocalDateTime}
 
 import com.github.tototoshi.csv.{CSVReader, CSVWriter}
+import net.paploo.leioparse.data.Session
 import net.paploo.leioparse.formatter.DefaultSessionFormatter
-import net.paploo.leioparse.parser.{DateParser, DefaultRowParser, DurationParser, Row}
+import net.paploo.leioparse.parser.{BookParser, DateParser, DefaultRowParser, DurationParser, Row}
 
 class LeioParse {
 
   val rowBuilder: Map[String, String] => Row = Row.fromRaw
 
   val rowParser: Row => Session = new DefaultRowParser(
-    identity,
+    BookParser.mutable(),
     DateParser.standard,
     DurationParser.leio,
     _.toInt
@@ -45,12 +45,4 @@ object LeioParse {
     new LeioParse().run(args)
   }
 
-}
-
-case class Session(bookName: String,
-                   date: LocalDateTime,
-                   duration: Duration,
-                   pages: Int) {
-  def paceInSecondsPerPage: Double = duration.getSeconds.toDouble / pages.toDouble
-  def rateInPagesPerHour: Double = 3600.0 / paceInSecondsPerPage
 }
