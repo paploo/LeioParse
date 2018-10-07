@@ -23,7 +23,10 @@ class LeioParse {
   val headers: Seq[String] = DefaultSessionFormatter.headers
 
   def run(args: Seq[String]): Unit = {
-    val filePath = "/Users/paploo/Dropbox/Leio/leio_09-29-18/leio_sessions.csv"
+    //val filePath = "/Users/paploo/Dropbox/Leio/leio_09-29-18/leio_sessions.csv"
+    System.err.println(s"args = $args")
+    val filePath = args.head
+
     val file: File = new File(filePath)
 
     val reader = CSVReader.open(file)

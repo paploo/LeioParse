@@ -12,7 +12,7 @@ case class Row(toMap: Map[Column, String]) extends AnyVal {
 object Row {
 
   def fromRaw(map: Map[String, String]): Row =
-    Row(map.filter { case (k,v) => !v.isEmpty }.map { case (k,v) => Column(k) -> v })
+    Row(map.filter { case (_,v) => !v.isEmpty }.map { case (k,v) => Column(k) -> v })
 
   sealed trait Column
   object Column {
