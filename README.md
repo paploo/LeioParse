@@ -1,6 +1,9 @@
-LeioParse
-J.C. Reinecke
+# LeioParse
+
+J.C. Reinecke\
 Oct 2018
+
+## Quick Start
 
 Quick little project to parse the reading logs from my reading log app, Leio.
 
@@ -17,3 +20,7 @@ From the bash shell, you have to quote the command:
 ```
 $ sbt "run <path_to_data>>"
 ```
+
+## License
+
+TODO: Insert 3-clause BSD here.
