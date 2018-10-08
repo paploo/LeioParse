@@ -14,8 +14,11 @@ class LeioParse {
 
   val bookRowBuilder: Map[String, String] => BookRow = BookRow.fromRaw
 
-  val bookRowParser: BookRow => Book.Data = new DefaultBookRowParser(identity,
-                                                                     identity)
+  def bookRowParser(wordsPerPageByBookNameParser: String => Option[Int]): BookRow => Book.Data = new DefaultBookRowParser(
+    identity,
+    identity,
+    wordsPerPageByBookNameParser
+  )
 
   val bookLibraryBuilder: Seq[Book.Data] => BookLibrary = BookLibrary.build(BookLibrary.IdGenerator.byIndex)
 
@@ -38,17 +41,22 @@ class LeioParse {
     val sessionPath: Path = Paths.get(dataDirPath.toString, "leio_sessions.csv")
     val bookPath: Path = Paths.get(dataDirPath.toString, "leio_data.csv")
 
-    val bookLibrary: BookLibrary = readBookLibrary(bookPath.toFile)
+    val bookWordsPerPage: Map[String, Int] = readBookWordsPerPage(null) //TODO: Load from file
+
+    val bookLibrary: BookLibrary = readBookLibrary(bookWordsPerPage.get)(bookPath.toFile)
 
     val formattedRows = readFormattedRows(bookLibrary)(sessionPath.toFile)
 
     outputFormattedRows(new OutputStreamWriter(System.out))(formattedRows)
   }
 
-  private [this] def readBookLibrary(bookFile: File): BookLibrary = {
+  private[this] def readBookWordsPerPage(bookWordsFile: File): Map[String, Int] =
+    LeioParse.bookWordsPerPage //TODO: Load this from a file.
+
+  private [this] def readBookLibrary(wordsPerPageByBookNameParser: String => Option[Int])(bookFile: File): BookLibrary = {
     val bookReader = CSVReader.open(bookFile)
     try {
-      bookLibraryBuilder(bookReader.iteratorWithHeaders.map(bookRowBuilder andThen bookRowParser).toSeq)
+      bookLibraryBuilder(bookReader.iteratorWithHeaders.map(bookRowBuilder andThen bookRowParser(wordsPerPageByBookNameParser)).toSeq)
     } finally {
       bookReader.close()
     }
@@ -83,5 +91,11 @@ object LeioParse {
   def main(args: Array[String]): Unit = {
     new LeioParse().run(args)
   }
+
+  @deprecated(s"Do not use hardcoded values, instead load from file")
+  val bookWordsPerPage: Map[String, Int] = Map(
+    "Relic Worlds 1" -> 333, //Just use Relic Worlds 2 counts for the moment.
+    "Relic Worlds 2" -> (326+371+303)/3 //Counts from a few typical looking pages
+  )
 
 }
