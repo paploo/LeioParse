@@ -1,18 +1,28 @@
 package net.paploo.leioparse
 
-import java.io.File
+import java.io.{File, OutputStreamWriter}
+import java.nio.file.{Path, Paths}
 
 import com.github.tototoshi.csv.{CSVReader, CSVWriter}
-import net.paploo.leioparse.data.Session
+import net.paploo.leioparse.data.{Book, BookLibrary, Session}
 import net.paploo.leioparse.formatter.DefaultSessionFormatter
-import net.paploo.leioparse.parser.{BookParser, DateParser, DefaultRowParser, DurationParser, Row}
+import net.paploo.leioparse.parser.book.{BookRow, DefaultBookRowParser}
+import net.paploo.leioparse.parser.session.{DefaultSessionRowParser, SessionRow}
+import net.paploo.leioparse.parser.{DateParser, DurationParser}
 
 class LeioParse {
 
-  val rowBuilder: Map[String, String] => Row = Row.fromRaw
+  val bookRowBuilder: Map[String, String] => BookRow = BookRow.fromRaw
 
-  val rowParser: Row => Session = new DefaultRowParser(
-    BookParser.mutable(),
+  val bookRowParser: BookRow => Book.Data = new DefaultBookRowParser(identity,
+                                                                     identity)
+
+  val bookLibraryBuilder: Seq[Book.Data] => BookLibrary = BookLibrary.build(BookLibrary.IdGenerator.byIndex)
+
+  val sessionRowBuilder: Map[String, String] => SessionRow = SessionRow.fromRaw
+
+  def sessionRowParser(bookParser: String => Book): SessionRow => Session = new DefaultSessionRowParser(
+    bookParser,
     DateParser.standard,
     DurationParser.leio,
     _.toInt
@@ -23,21 +33,47 @@ class LeioParse {
   val headers: Seq[String] = DefaultSessionFormatter.headers
 
   def run(args: Seq[String]): Unit = {
-    //val filePath = "/Users/paploo/Dropbox/Leio/leio_09-29-18/leio_sessions.csv"
     System.err.println(s"args = $args")
-    val filePath = args.head
+    val dataDirPath: Path = Paths.get(args.head)
+    val sessionPath: Path = Paths.get(dataDirPath.toString, "leio_sessions.csv")
+    val bookPath: Path = Paths.get(dataDirPath.toString, "leio_data.csv")
 
-    val file: File = new File(filePath)
+    val bookLibrary: BookLibrary = readBookLibrary(bookPath.toFile)
 
-    val reader = CSVReader.open(file)
-    val formattedRows = reader.iteratorWithHeaders.map(rowBuilder andThen rowParser andThen sessionFormatter).toStream
+    val formattedRows = readFormattedRows(bookLibrary)(sessionPath.toFile)
 
-    val writer = CSVWriter.open(new java.io.OutputStreamWriter(System.out))
-    writer.writeRow(headers)
-    writer.writeAll(formattedRows)
+    outputFormattedRows(new OutputStreamWriter(System.out))(formattedRows)
+  }
 
-    reader.close()
-    writer.close()
+  private [this] def readBookLibrary(bookFile: File): BookLibrary = {
+    val bookReader = CSVReader.open(bookFile)
+    try {
+      bookLibraryBuilder(bookReader.iteratorWithHeaders.map(bookRowBuilder andThen bookRowParser).toSeq)
+    } finally {
+      bookReader.close()
+    }
+  }
+
+  private[this] def readFormattedRows(bookLibrary: BookLibrary)(sessionFile: File): Seq[Seq[String]] = {
+    val sessionReader = CSVReader.open(sessionFile)
+    val bookGetter: String => Book = name => bookLibrary.findByName(name).getOrElse(Book.unknown)
+    try {
+      //NOTE: I have a choice, leave as a stream, but then don't close the session reader until full processing, *or* realize explicitly in memory as a list so that I can close it eagerly.
+      sessionReader.iteratorWithHeaders.map(sessionRowBuilder andThen sessionRowParser(bookGetter) andThen sessionFormatter).toList
+    } finally {
+      sessionReader.close
+    }
+  }
+
+  private[this] def outputFormattedRows(outputWriter: OutputStreamWriter)(formattedRows: Seq[Seq[String]]): Seq[Seq[String]] = {
+    val writer = CSVWriter.open(outputWriter)
+    try {
+      writer.writeRow(headers)
+      writer.writeAll(formattedRows)
+      formattedRows
+    } finally {
+      writer.close()
+    }
   }
 
 }
