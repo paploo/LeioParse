@@ -2,6 +2,7 @@ package net.paploo.leioparse
 
 import java.io.{File, OutputStreamWriter}
 import java.nio.file.{Path, Paths}
+import java.time.LocalDateTime
 
 import com.github.tototoshi.csv.{CSVReader, CSVWriter}
 import net.paploo.leioparse.data.{Book, BookLibrary, Session}
@@ -63,11 +64,14 @@ class LeioParse {
   }
 
   private[this] def readFormattedRows(bookLibrary: BookLibrary)(sessionFile: File): Seq[Seq[String]] = {
+    import LeioParse.LocalDateTimeOrdering
     val sessionReader = CSVReader.open(sessionFile)
     val bookGetter: String => Book = name => bookLibrary.findByName(name).getOrElse(Book.unknown)
     try {
       //NOTE: I have a choice, leave as a stream, but then don't close the session reader until full processing, *or* realize explicitly in memory as a list so that I can close it eagerly.
-      sessionReader.iteratorWithHeaders.map(sessionRowBuilder andThen sessionRowParser(bookGetter) andThen sessionFormatter).toList
+      sessionReader.iteratorWithHeaders.map(
+        sessionRowBuilder andThen sessionRowParser(bookGetter)
+      ).toList.sortBy(_.date).map(sessionFormatter)
     } finally {
       sessionReader.close
     }
@@ -92,10 +96,22 @@ object LeioParse {
     new LeioParse().run(args)
   }
 
+  implicit val LocalDateTimeOrdering: Ordering[LocalDateTime] = new Ordering[LocalDateTime] {
+    override def compare(x: LocalDateTime, y: LocalDateTime): Int = x.compareTo(y)
+  }
+
+  // Used https://www.onlineocr.net to interpret screenshots and https://wordcounter.net to count
+  // Chose average looking pages
+  // Dune pagesToWordsAndChars = (19,45,71) --> ((426,2503), (436,2410), (458,???)
+
+
   @deprecated(s"Do not use hardcoded values, instead load from file")
   val bookWordsPerPage: Map[String, Int] = Map(
-    "Relic Worlds 1" -> 333, //Just use Relic Worlds 2 counts for the moment.
-    "Relic Worlds 2" -> (326+371+303)/3 //Counts from a few typical looking pages
+    //Just use the Relic Worlds 2 counts for the moment.
+    "Relic Worlds 1" -> 333,
+    //Counts from a few typical looking pages
+    "Relic Worlds 2" -> (326+371+303)/3,
+    "Dune" -> (426+436+458)/3 //Counts from a few typical looking pages
   )
 
 }
