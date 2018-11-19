@@ -103,15 +103,15 @@ object LeioParse {
   // Used https://www.onlineocr.net to interpret screenshots and https://wordcounter.net to count
   // Chose average looking pages
   // Dune pagesToWordsAndChars = (19,45,71) --> ((426,2503), (436,2410), (458,???)
+  // Gardens of the Moon = pages (41,35,47) --> (((500,2891), (555,3076), (577,3218))
 
 
   @deprecated(s"Do not use hardcoded values, instead load from file")
   val bookWordsPerPage: Map[String, Int] = Map(
-    //Just use the Relic Worlds 2 counts for the moment.
-    "Relic Worlds 1" -> 333,
-    //Counts from a few typical looking pages
-    "Relic Worlds 2" -> (326+371+303)/3,
-    "Dune" -> (426+436+458)/3 //Counts from a few typical looking pages
+    "Relic Worlds 1" -> 333, //Just use the Relic Worlds 2 counts for the moment
+    "Relic Worlds 2" -> (326+371+303)/3, //Counts from a few typical looking pages
+    "Dune" -> (426+436+458)/3, //Counts from a few typical looking pages
+    "Gardens of the Moon" -> (500+555+577)/3
   )
 
 }

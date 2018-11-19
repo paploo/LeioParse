@@ -13,12 +13,12 @@ from sbt, supplying the *directory* that *contains* the *leio_data.csv* and
 
 Inside the sbt shell, simply do
 ```
-run <path_to_data>
+run <path_to_data_dir>
 ```
 
 From the bash shell, you have to quote the command:
 ```
-$ sbt "run <path_to_data>>"
+$ sbt "run <path_to_data_dir>"
 ```
 
 ## License
