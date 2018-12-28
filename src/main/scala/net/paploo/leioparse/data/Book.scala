@@ -14,6 +14,6 @@ object Book {
   }
 
   case class Data(title: String,
-                      worsePerPage: Option[Int])
+                  worsePerPage: Option[Int])
 
 }

@@ -111,7 +111,8 @@ object LeioParse {
     "Relic Worlds 1" -> 333, //Just use the Relic Worlds 2 counts for the moment
     "Relic Worlds 2" -> (326+371+303)/3, //Counts from a few typical looking pages
     "Dune" -> (426+436+458)/3, //Counts from a few typical looking pages
-    "Gardens of the Moon" -> (500+555+577)/3
+    "Gardens of the Moon" -> (500+555+577)/3,
+    "Norse Mythology" -> (255+261+277)/3
   )
 
 }
