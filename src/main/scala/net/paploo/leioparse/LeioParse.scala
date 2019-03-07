@@ -114,8 +114,9 @@ object LeioParse {
     "Gardens of the Moon" -> (500+555+577)/3,
     "Norse Mythology" -> (255+261+277)/3,
     "Mortal Engines" -> (283+294+299)/3,
-    "Predator's Gold" -> 292, //Just use the first book's count.
-    "Infernal Devices" -> 292 //Just use the first book's count.
+    "Predator's Gold" -> 292, //Just use the first book's count since same layout.
+    "Infernal Devices" -> 292, //Just use the first book's count since same layout.
+    "A Darkling Plain" -> 292, //Just use the first books' count since same layout.
   )
 
 }
