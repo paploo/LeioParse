@@ -18,18 +18,3 @@ object Book {
   case class Title(value: String) extends AnyVal
 
 }
-
-
-case class BookSessions(book: Book,
-                        sessions: Seq[Session],
-                        stats: Option[BookStats])
-
-object BookSessions {
-
-  def from(book: Book, sessions: Seq[Session]): BookSessions = apply(
-    book,
-    sessions,
-    BookStats.from(book, sessions)
-  )
-
-}

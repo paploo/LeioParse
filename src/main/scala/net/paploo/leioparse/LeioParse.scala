@@ -23,7 +23,7 @@ object LeioParse {
 
   def getAppConfig(args: Array[String]): AppConfig = AppConfig(timeoutSeconds = 60)
 
-  def getAppArgs(args: Array[String]): AppArgs = AppArgsParser(args)
+  def getAppArgs(args: Array[String]): AppArgs = AppArgsParser.apply(args)
 
   def getAppTimeout(args: Array[String]): Duration = Duration(getAppConfig(args).timeoutSeconds, TimeUnit.SECONDS)
 

@@ -1,9 +1,9 @@
 package net.paploo.leioparse.app
 
-class AppArgsParser extends (Array[String] => AppArgs) {
-  override def apply(args: Array[String]): AppArgs = ???
-}
+trait AppArgsParser extends (Array[String] => AppArgs)
 
 object AppArgsParser {
-  implicit def apply: AppArgsParser = new AppArgsParser
+  val apply: AppArgsParser = new AppArgsParser {
+    override def apply(v1: Array[String]): AppArgs = ???
+  }
 }
