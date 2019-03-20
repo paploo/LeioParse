@@ -1,7 +1,7 @@
-package net.paploo.leioparse.parser.book
+package net.paploo.leioparse.v1.parser.book
 
-import net.paploo.leioparse.data.Book
-import net.paploo.leioparse.parser.book.BookRow.Column
+import net.paploo.leioparse.v1.data.Book
+import net.paploo.leioparse.v1.parser.book.BookRow.Column
 
 class DefaultBookRowParser(bookNameParser: String => String,
                            bookAuthorParser: String => String,

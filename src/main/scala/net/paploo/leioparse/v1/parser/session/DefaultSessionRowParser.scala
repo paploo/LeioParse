@@ -1,9 +1,9 @@
-package net.paploo.leioparse.parser.session
+package net.paploo.leioparse.v1.parser.session
 
 import java.time.{Duration, LocalDateTime}
 
-import net.paploo.leioparse.data.{Book, Session}
-import net.paploo.leioparse.parser.session.SessionRow.Column
+import net.paploo.leioparse.v1.data.{Book, Session}
+import net.paploo.leioparse.v1.parser.session.SessionRow.Column
 
 class DefaultSessionRowParser(bookParser: String => Book,
                               dateParser: String => LocalDateTime,

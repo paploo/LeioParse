@@ -1,8 +1,8 @@
-package net.paploo.leioparse.formatter
+package net.paploo.leioparse.v1.formatter
 
 import java.time.format.DateTimeFormatter
 
-import net.paploo.leioparse.data.Session
+import net.paploo.leioparse.v1.data.Session
 
 class DefaultSessionFormatter extends (Session => Seq[String]) {
 

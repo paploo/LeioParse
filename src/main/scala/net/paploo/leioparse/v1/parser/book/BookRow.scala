@@ -1,6 +1,6 @@
-package net.paploo.leioparse.parser.book
+package net.paploo.leioparse.v1.parser.book
 
-import net.paploo.leioparse.parser.Row
+import net.paploo.leioparse.v1.parser.Row
 
 case class BookRow(toMap: Map[BookRow.Column, String]) extends Row[BookRow.Column]
 

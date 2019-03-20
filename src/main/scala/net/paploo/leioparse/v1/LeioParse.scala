@@ -1,15 +1,15 @@
-package net.paploo.leioparse
+package net.paploo.leioparse.v1
 
 import java.io.{File, OutputStreamWriter}
 import java.nio.file.{Path, Paths}
 import java.time.LocalDateTime
 
 import com.github.tototoshi.csv.{CSVReader, CSVWriter}
-import net.paploo.leioparse.data.{Book, BookLibrary, Session}
-import net.paploo.leioparse.formatter.DefaultSessionFormatter
-import net.paploo.leioparse.parser.book.{BookRow, BookRowOverlayData, DefaultBookRowParser}
-import net.paploo.leioparse.parser.session.{DefaultSessionRowParser, SessionRow}
-import net.paploo.leioparse.parser.{DateParser, DurationParser}
+import net.paploo.leioparse.v1.data.{Book, BookLibrary, Session}
+import net.paploo.leioparse.v1.formatter.DefaultSessionFormatter
+import net.paploo.leioparse.v1.parser.book.{BookRow, BookRowOverlayData, DefaultBookRowParser}
+import net.paploo.leioparse.v1.parser.session.{DefaultSessionRowParser, SessionRow}
+import net.paploo.leioparse.v1.parser.{DateParser, DurationParser}
 
 class LeioParse {
 
@@ -93,7 +93,7 @@ class LeioParse {
 
 object LeioParse {
 
-  def main(args: Array[String]): Unit = {
+  def run(args: Array[String]): Unit = {
     new LeioParse().run(args)
   }
 

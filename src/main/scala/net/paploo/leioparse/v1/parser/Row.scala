@@ -1,4 +1,4 @@
-package net.paploo.leioparse.parser
+package net.paploo.leioparse.v1.parser
 
 trait Row[Column] {
   def toMap: Map[Column, String]

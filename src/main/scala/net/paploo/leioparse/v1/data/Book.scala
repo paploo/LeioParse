@@ -1,4 +1,4 @@
-package net.paploo.leioparse.data
+package net.paploo.leioparse.v1.data
 
 case class Book(id: Book.Id,
                 title: Book.Title,

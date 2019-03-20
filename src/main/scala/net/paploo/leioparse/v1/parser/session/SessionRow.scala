@@ -1,6 +1,6 @@
-package net.paploo.leioparse.parser.session
+package net.paploo.leioparse.v1.parser.session
 
-import net.paploo.leioparse.parser.Row
+import net.paploo.leioparse.v1.parser.Row
 
 case class SessionRow(toMap: Map[SessionRow.Column, String]) extends Row[SessionRow.Column]
 

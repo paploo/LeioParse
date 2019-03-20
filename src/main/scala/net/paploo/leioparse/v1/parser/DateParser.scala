@@ -1,4 +1,4 @@
-package net.paploo.leioparse.parser
+package net.paploo.leioparse.v1.parser
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
