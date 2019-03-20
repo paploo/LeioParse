@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 import com.github.tototoshi.csv.{CSVReader, CSVWriter}
 import net.paploo.leioparse.data.{Book, BookLibrary, Session}
 import net.paploo.leioparse.formatter.DefaultSessionFormatter
-import net.paploo.leioparse.parser.book.{BookRow, DefaultBookRowParser}
+import net.paploo.leioparse.parser.book.{BookRow, BookRowOverlayData, DefaultBookRowParser}
 import net.paploo.leioparse.parser.session.{DefaultSessionRowParser, SessionRow}
 import net.paploo.leioparse.parser.{DateParser, DurationParser}
 
@@ -15,18 +15,18 @@ class LeioParse {
 
   val bookRowBuilder: Map[String, String] => BookRow = BookRow.fromRaw
 
-  def bookRowParser(wordsPerPageByBookNameParser: String => Option[Int]): BookRow => Book.Data = new DefaultBookRowParser(
+  def bookRowParser(bookRowOverlayData: Book.Title => Option[BookRowOverlayData]): BookRow => Book = new DefaultBookRowParser(
     identity,
     identity,
-    wordsPerPageByBookNameParser
+    bookRowOverlayData
   )
 
-  val bookLibraryBuilder: Seq[Book.Data] => BookLibrary = BookLibrary.build(BookLibrary.IdGenerator.byIndex)
+  val bookLibraryBuilder: Seq[Book] => BookLibrary = BookLibrary.apply
 
   val sessionRowBuilder: Map[String, String] => SessionRow = SessionRow.fromRaw
 
-  def sessionRowParser(bookParser: String => Book): SessionRow => Session = new DefaultSessionRowParser(
-    bookParser,
+  def sessionRowParser(bookParser: Book.Title => Book): SessionRow => Session = new DefaultSessionRowParser(
+    (Book.Title.apply _).andThen(bookParser),
     DateParser.standard,
     DurationParser.leio,
     _.toInt
@@ -42,22 +42,23 @@ class LeioParse {
     val sessionPath: Path = Paths.get(dataDirPath.toString, "leio_sessions.csv")
     val bookPath: Path = Paths.get(dataDirPath.toString, "leio_data.csv")
 
-    val bookWordsPerPage: Map[String, Int] = readBookWordsPerPage(null) //TODO: Load from file
+    val bookRowOverlayData:  Map[Book.Title, BookRowOverlayData] = readBookRowOverlayData(null) //TODO: Load from file
 
-    val bookLibrary: BookLibrary = readBookLibrary(bookWordsPerPage.get)(bookPath.toFile)
+    val bookLibrary: BookLibrary = readBookLibrary(bookRowOverlayData.get)(bookPath.toFile)
 
     val formattedRows = readFormattedRows(bookLibrary)(sessionPath.toFile)
 
     outputFormattedRows(new OutputStreamWriter(System.out))(formattedRows)
   }
 
-  private[this] def readBookWordsPerPage(bookWordsFile: File): Map[String, Int] =
-    LeioParse.bookWordsPerPage //TODO: Load this from a file.
+  private[this] def readBookRowOverlayData(bookWordsFile: File): Map[Book.Title, BookRowOverlayData] =
+    LeioParse.bookRowOverlayData //TODO: Load this from a file.
 
-  private [this] def readBookLibrary(wordsPerPageByBookNameParser: String => Option[Int])(bookFile: File): BookLibrary = {
+  private [this] def readBookLibrary(bookRowOverlayData: Book.Title => Option[BookRowOverlayData])(bookFile: File): BookLibrary = {
     val bookReader = CSVReader.open(bookFile)
     try {
-      bookLibraryBuilder(bookReader.iteratorWithHeaders.map(bookRowBuilder andThen bookRowParser(wordsPerPageByBookNameParser)).toSeq)
+      //NOTE: I have a choice, leave as a stream, but then don't close the session reader until full processing, *or* realize explicitly in memory as a list so that I can close it eagerly.
+      bookLibraryBuilder(bookReader.iteratorWithHeaders.map(bookRowBuilder andThen bookRowParser(bookRowOverlayData)).toList)
     } finally {
       bookReader.close()
     }
@@ -66,7 +67,7 @@ class LeioParse {
   private[this] def readFormattedRows(bookLibrary: BookLibrary)(sessionFile: File): Seq[Seq[String]] = {
     import LeioParse.LocalDateTimeOrdering
     val sessionReader = CSVReader.open(sessionFile)
-    val bookGetter: String => Book = name => bookLibrary.findByName(name).getOrElse(Book.unknown)
+    val bookGetter: Book.Title => Book = title => bookLibrary.findByTitle(title).getOrElse(Book.unknown)
     try {
       //NOTE: I have a choice, leave as a stream, but then don't close the session reader until full processing, *or* realize explicitly in memory as a list so that I can close it eagerly.
       sessionReader.iteratorWithHeaders.map(
@@ -107,16 +108,16 @@ object LeioParse {
 
 
   @deprecated(s"Do not use hardcoded values, instead load from file")
-  val bookWordsPerPage: Map[String, Int] = Map(
-    "Relic Worlds 1" -> 333, //Just use the Relic Worlds 2 counts for the moment
-    "Relic Worlds 2" -> (326+371+303)/3, //Counts from a few typical looking pages
-    "Dune" -> (426+436+458)/3, //Counts from a few typical looking pages
-    "Gardens of the Moon" -> (500+555+577)/3,
-    "Norse Mythology" -> (255+261+277)/3,
-    "Mortal Engines" -> (283+294+299)/3,
-    "Predator's Gold" -> 292, //Just use the first book's count since same layout.
-    "Infernal Devices" -> 292, //Just use the first book's count since same layout.
-    "A Darkling Plain" -> 292, //Just use the first books' count since same layout.
+  val bookRowOverlayData: Map[Book.Title, BookRowOverlayData] = Map(
+    Book.Title("Relic Worlds 1")      -> BookRowOverlayData(1, Some(333)), //Just use the Relic Worlds 2 counts for the moment
+    Book.Title("Relic Worlds 2")      -> BookRowOverlayData(2, Some((326+371+303)/3)), //Counts from a few typical looking pages
+    Book.Title("Dune")                -> BookRowOverlayData(3, Some((426+436+458)/3)), //Counts from a few typical looking pages
+    Book.Title("Gardens of the Moon") -> BookRowOverlayData(4, Some((500+555+577)/3)),
+    Book.Title("Norse Mythology")     -> BookRowOverlayData(5, Some((255+261+277)/3)),
+    Book.Title("Mortal Engines")      -> BookRowOverlayData(6, Some((283+294+299)/3)),
+    Book.Title("Predator's Gold")     -> BookRowOverlayData(7, Some(292)), //Just use the first book's count since same layout.
+    Book.Title("Infernal Devices")    -> BookRowOverlayData(8, Some(292)), //Just use the first book's count since same layout.
+    Book.Title("A Darkling Plain")    -> BookRowOverlayData(9, Some(292)), //Just use the first books' count since same layout.
   )
 
 }

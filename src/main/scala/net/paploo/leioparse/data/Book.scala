@@ -1,11 +1,12 @@
 package net.paploo.leioparse.data
 
 case class Book(id: Book.Id,
-                data: Book.Data)
+                title: Book.Title,
+                wordsPerPage: Option[Book.WordsPerPage])
 
 object Book {
 
-  val unknown: Book = Book(Book.Id.unknown, Data("Unknown", None))
+  val unknown: Book = Book(Book.Id.unknown, Title("Unknown"), None)
 
   case class Id(value: Int) extends AnyVal
 
@@ -13,7 +14,8 @@ object Book {
     val unknown: Id = Id(-1)
   }
 
-  case class Data(title: String,
-                  worsePerPage: Option[Int])
+  case class Title(value: String) extends AnyVal
+
+  case class WordsPerPage(value: Int) extends AnyVal
 
 }

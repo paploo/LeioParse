@@ -7,9 +7,9 @@ import net.paploo.leioparse.data.Session
 class DefaultSessionFormatter extends (Session => Seq[String]) {
 
   override def apply(session: Session): Seq[String] = Seq(
-    session.book.data.title,
+    session.book.title.value.toString,
     session.book.id.value.toString,
-    session.book.data.worsePerPage.map(_.toString).getOrElse(""),
+    session.book.wordsPerPage.map(_.toString).getOrElse(""),
     session.date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
     session.pages.toString,
     session.duration.getSeconds.toString,
