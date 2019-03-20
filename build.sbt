@@ -4,6 +4,8 @@ version := "0.1"
 
 scalaVersion := "2.12.7"
 
+val circeVersion = "0.10.0"
+
 scalacOptions in (Compile, compile) ++= Seq(
   "-unchecked",
   "-deprecation",
@@ -18,6 +20,9 @@ scalacOptions in (Compile, compile) ++= Seq(
 
 libraryDependencies ++= Seq(
   "com.github.tototoshi" %% "scala-csv" % "1.3.5",
+  "io.circe" %% "circe-core" % circeVersion,
+  "io.circe" %% "circe-generic" % circeVersion,
+  "io.circe" %% "circe-parser" % circeVersion,
   "org.scalatest" %% "scalatest" % "3.0.5" % "test"
 )
 

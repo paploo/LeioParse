@@ -52,7 +52,7 @@ class LeioParse {
   }
 
   private[this] def readBookRowOverlayData(bookWordsFile: File): Map[Book.Title, BookRowOverlayData] =
-    LeioParse.bookRowOverlayData //TODO: Load this from a file.
+    LeioParse.bookRowOverlayDataMap //TODO: Load this from a file.
 
   private [this] def readBookLibrary(bookRowOverlayData: Book.Title => Option[BookRowOverlayData])(bookFile: File): BookLibrary = {
     val bookReader = CSVReader.open(bookFile)
@@ -108,7 +108,7 @@ object LeioParse {
 
 
   @deprecated(s"Do not use hardcoded values, instead load from file")
-  val bookRowOverlayData: Map[Book.Title, BookRowOverlayData] = Map(
+  val bookRowOverlayDataMap: Map[Book.Title, BookRowOverlayData] = Map(
     Book.Title("Relic Worlds 1")      -> BookRowOverlayData(1, Some(333)), //Just use the Relic Worlds 2 counts for the moment
     Book.Title("Relic Worlds 2")      -> BookRowOverlayData(2, Some((326+371+303)/3)), //Counts from a few typical looking pages
     Book.Title("Dune")                -> BookRowOverlayData(3, Some((426+436+458)/3)), //Counts from a few typical looking pages
