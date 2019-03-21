@@ -1,9 +1,11 @@
 package net.paploo.leioparse.logparser.data
 
+import net.paploo.leioparse.data.core.Book
 import net.paploo.leioparse.util.quantities.{DateTime, Location}
 
-case class LeioSession(bookTitle: String,
-                       startedOn: Option[DateTime],
-                       finishedOn: Option[DateTime],
+
+case class LeioSession(bookTitle: Book.Title,
+                       startedOn: DateTime,
+                       finishedOn: DateTime,
                        firstPage: Location,
                        lastPage: Location)

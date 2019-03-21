@@ -1,9 +1,28 @@
 package net.paploo.leioparse.logparser.pipeline
 
-import net.paploo.leioparse.logparser.pipeline.LeioParsePipeline.DataFile
+import net.paploo.leioparse.logparser.pipeline.LeioParsePipeline.{DataFile, Row}
 import net.paploo.leioparse.util.csv.CSVFile
 
-trait LeioReader extends (DataFile => Seq[CSVFile.Row])
+import scala.concurrent.{ExecutionContext, Future}
+
+trait LeioReader extends (DataFile => Future[Seq[Row]])
 
 object LeioReader {
+
+  def apply(implicit ec: ExecutionContext): LeioReader = new CSVFileLeioReader
+
+  private class CSVFileLeioReader(implicit val ec: ExecutionContext) extends LeioReader {
+
+    override def apply(dataFile: DataFile): Future[Seq[Row]] = read(dataFile).map {
+      _.map(convertCSVRow)
+    }
+
+    private[this] def read(dataFile: DataFile): Future[Seq[CSVFile.Row]] = CSVFile(dataFile.path.toFile).read
+
+    private[this] def convertCSVRow(csvRow: CSVFile.Row): Row = Row(csvRow.toMap.map {
+      case (CSVFile.Row.Key(key), value) => (Row.Key(key), if (value.nonEmpty) Some(Row.Value(value)) else None)
+    })
+
+  }
+
 }

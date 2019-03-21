@@ -8,8 +8,8 @@ trait LeioFileLocator extends (DataDirectory => DataFile)
 
 object LeioFileLocator {
 
-  val bookFileLocator: LeioFileLocator = dataDirectory => DataFile(Paths.get(dataDirectory.path.toString, "leio_sessions.csv"))
+  val BookFileLocator: LeioFileLocator = dataDirectory => DataFile(Paths.get(dataDirectory.path.toString, "leio_sessions.csv"))
 
-  val sessionFileLocator: LeioFileLocator = dataDirectory => DataFile(Paths.get(dataDirectory.path.toString, "leio_sessions.csv"))
+  val SessionFileLocator: LeioFileLocator = dataDirectory => DataFile(Paths.get(dataDirectory.path.toString, "leio_sessions.csv"))
 
 }

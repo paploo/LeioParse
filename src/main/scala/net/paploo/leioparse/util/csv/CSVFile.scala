@@ -3,17 +3,15 @@ package net.paploo.leioparse.util.csv
 import java.io.File
 
 import com.github.tototoshi.csv.CSVReader
-import net.paploo.leioparse.util.csv.CSVFile.{ColumnHeader, ColumnValue, Row, RowParser}
+import net.paploo.leioparse.util.csv.CSVFile.Row
 
 import scala.concurrent.{ExecutionContext, Future, blocking}
 
 case class CSVFile(file: File) {
 
-  def read(implicit ec: ExecutionContext): Future[Seq[Row]] = readRaw.map(_ map Row.apply)
+  def read(implicit ec: ExecutionContext): Future[Seq[Row]] = readRaw.map(_ map Row.from)
 
-  def parse[A](parser: RowParser[A])(implicit ec: ExecutionContext): Future[Seq[A]] = read.map(_ map parser)
-
-  private[this] def readRaw(implicit ec: ExecutionContext): Future[Seq[Map[ColumnHeader, ColumnValue]]] = Future {
+  private[this] def readRaw(implicit ec: ExecutionContext): Future[Seq[Map[String, String]]] = Future {
     blocking {
       val reader = CSVReader.open(file)
       try {
@@ -30,11 +28,13 @@ case class CSVFile(file: File) {
 
 object CSVFile {
 
-  type ColumnHeader = String
-  type ColumnValue = String
+  case class Row(toMap: Map[Row.Key, Row.Value])
 
-  case class Row(toMap: Map[ColumnHeader, ColumnValue])
+  object Row {
+    case class Key(value: String)
+    type Value = String
 
-  type RowParser[A] = Row => A
+    def from(rawRow: Map[String, String]): Row = Row(rawRow.map { case (k,v) => (Row.Key(k), v)})
+  }
 
 }

@@ -33,6 +33,7 @@ object TimeSpan {
   */
 case class DateTime(value: LocalDateTime) extends Quantity[LocalDateTime] {
   def +(duration: TimeSpan): DateTime = DateTime(value plus duration.value)
+  def -(duration: TimeSpan): DateTime = DateTime(value minus duration.value)
   def -(dateTime: DateTime): TimeSpan = TimeSpan(Duration.between(value, dateTime.value))
 
   def toInstant: Instant = value.atZone(ZoneId.systemDefault).toInstant
