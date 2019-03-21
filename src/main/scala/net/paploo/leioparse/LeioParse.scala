@@ -1,8 +1,9 @@
 package net.paploo.leioparse
 
+import java.nio.file.Paths
 import java.util.concurrent.TimeUnit
 
-import net.paploo.leioparse.app.{App, AppArgs, AppArgsParser, AppConfig}
+import net.paploo.leioparse.app.{App, AppArgs, AppConfig}
 import net.paploo.leioparse.util.extensions.Implicits._
 
 import scala.concurrent.duration.Duration
@@ -23,7 +24,7 @@ object LeioParse {
 
   def getAppConfig(args: Array[String]): AppConfig = AppConfig(timeoutSeconds = 60)
 
-  def getAppArgs(args: Array[String]): AppArgs = AppArgsParser.apply(args)
+  def getAppArgs(args: Array[String]): AppArgs = AppArgs(Paths.get(args.head))
 
   def getAppTimeout(args: Array[String]): Duration = Duration(getAppConfig(args).timeoutSeconds, TimeUnit.SECONDS)
 

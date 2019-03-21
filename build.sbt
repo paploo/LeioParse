@@ -2,7 +2,7 @@ name := "LeioParse"
 
 version := "0.1"
 
-scalaVersion := "2.12.7"
+scalaVersion := "2.12.8"
 
 val circeVersion = "0.10.0"
 
@@ -15,14 +15,19 @@ scalacOptions in (Compile, compile) ++= Seq(
   "-feature",
   "-Ywarn-unused",
   "-Ywarn-unused-import",
-  "-Ywarn-infer-any"
+  "-Ywarn-infer-any",
+  "-Ypartial-unification" //Needed by cats
 )
 
 libraryDependencies ++= Seq(
+  "org.typelevel" %% "cats-core" % "1.6.0",
+
   "com.github.tototoshi" %% "scala-csv" % "1.3.5",
+
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
   "io.circe" %% "circe-parser" % circeVersion,
+
   "org.scalatest" %% "scalatest" % "3.0.5" % "test"
 )
 
