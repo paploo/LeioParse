@@ -9,9 +9,9 @@ import scala.concurrent.{ExecutionContext, Future, blocking}
 
 case class CSVFile(file: File) {
 
-  def read(implicit ec: ExecutionContext): Future[Seq[Row]] = readRaw.map(_ map Row.from)
+  def read(implicit ec: ExecutionContext): Future[List[Row]] = readRaw.map(_ map Row.from)
 
-  private[this] def readRaw(implicit ec: ExecutionContext): Future[Seq[Map[String, String]]] = Future {
+  private[this] def readRaw(implicit ec: ExecutionContext): Future[List[Map[String, String]]] = Future {
     blocking {
       val reader = CSVReader.open(file)
       try {
