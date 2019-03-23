@@ -1,6 +1,6 @@
 package net.paploo.leioparse.leiologparser
 
-import java.nio.file.{Path, Paths}
+import java.nio.file.Path
 
 import net.paploo.leioparse.leiologparser.data.{LeioBook, LeioSession}
 import net.paploo.leioparse.leiologparser.pipeline.LeioParsePipeline

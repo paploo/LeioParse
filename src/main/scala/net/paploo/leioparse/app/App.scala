@@ -7,13 +7,24 @@ import org.slf4j.{Logger, LoggerFactory}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class App extends (AppArgs => Future[Result]) {
+trait App extends (AppArgs => Future[Result]) {
+  def run(args: AppArgs): Future[Result]
+  override def apply(args: AppArgs): Future[Result] = run(args)
+}
+
+object App {
+
+  case class Result(value: Any) //TODO: Figure out a meaningful result.
+
+}
+
+class TestingApp extends App {
 
   implicit val ec: ExecutionContext = ExecutionContext.global
 
   implicit val logger: Logger = LoggerFactory.getLogger(getClass)
 
-  override def apply(args: AppArgs): Future[Result] = {
+  override def run(args: AppArgs): Future[Result] = {
     args.log(identity)
     val parser = LeioLogParser.forPath(args.dataDirPath)
     for {
@@ -22,14 +33,6 @@ class App extends (AppArgs => Future[Result]) {
       _ = books.log(_.mkString("\n"))
       _ = sessions.log(_.mkString("\n"))
     } yield Result( (books, sessions) )
-  }.log(identity)
-
-}
-
-object App {
-
-  def apply: App = new App
-
-  case class Result(value: Any) //TODO: Figure out a meaningful result.
+  }.log(r => s"result = $r")
 
 }
