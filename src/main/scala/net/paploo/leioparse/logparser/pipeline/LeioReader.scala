@@ -9,9 +9,9 @@ trait LeioReader extends (DataFile => Future[List[Row]])
 
 object LeioReader {
 
-  def apply(implicit ec: ExecutionContext): LeioReader = new CSVFileLeioReader
+  def csvParser(implicit ec: ExecutionContext): LeioReader = CSVFileLeioReader.apply
 
-  private class CSVFileLeioReader(implicit val ec: ExecutionContext) extends LeioReader {
+  private[LeioReader] class CSVFileLeioReader(implicit val ec: ExecutionContext) extends LeioReader {
 
     override def apply(dataFile: DataFile): Future[List[Row]] = read(dataFile).map {
       _.map(convertCSVRow)
@@ -23,6 +23,10 @@ object LeioReader {
       case (CSVFile.Row.Key(key), value) => (Row.Key(key), if (value.nonEmpty) Some(Row.Value(value)) else None)
     })
 
+  }
+
+ private[LeioReader] object CSVFileLeioReader {
+    def apply(implicit ec: ExecutionContext): CSVFileLeioReader = new CSVFileLeioReader
   }
 
 }

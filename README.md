@@ -3,7 +3,7 @@
 J.C. Reinecke
 Mar 2019
 
-Quick little project to parse the reading logs from my reading log app, Leio.
+Quick little project to parse the reading logs from the reading log app for iOS, Leio.
 
 ## Quick Start
 
