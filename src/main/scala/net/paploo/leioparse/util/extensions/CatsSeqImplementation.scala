@@ -6,7 +6,7 @@ import cats.implicits._
 import scala.annotation.tailrec
 import scala.language.higherKinds
 
-object ExtendedSeq {
+object CatsSeqImplementation {
 
   trait SeqMonoid[A] extends Monoid[Seq[A]] with Semigroup[Seq[A]] {
     override def empty: Seq[A] = Seq.empty
@@ -59,13 +59,13 @@ object ExtendedSeq {
     override def coflatMap[A, B](fa: Seq[A])(f: Seq[A] => B): Seq[B] = CoflatMap[List].coflatMap(fa.toList)(f)
 
   }
-  object SeqCats extends SeqInstances
+  object SeqInstances extends SeqInstances
 
   trait Implicits {
     implicit def seqMonoid[A]: Monoid[Seq[A]] = new SeqMonoid[A] {}
-
-    implicit val seqCats: Monad[Seq] with Traverse[Seq] with Functor[Seq] = SeqCats
+    implicit val seqCats: Monad[Seq] with Traverse[Seq] with Functor[Seq] = SeqInstances
   }
   object Implicits extends Implicits
 
 }
+
