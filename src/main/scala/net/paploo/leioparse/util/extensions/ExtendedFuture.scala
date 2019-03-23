@@ -5,10 +5,12 @@ import scala.concurrent.duration.Duration
 import scala.util.{Failure, Try}
 
 class ExtendedFuture[+A](toFuture: Future[A]) {
+
   def toTry(timeout: Duration): Try[A] = {
     Await.ready(toFuture, timeout)
     toFuture.value getOrElse Failure(new RuntimeException(s"Cannot convert to Try, ready future value is missing!"))
   }
+
 }
 
 object ExtendedFuture {
