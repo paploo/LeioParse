@@ -18,7 +18,7 @@ object App {
 
 }
 
-class TestingApp extends App {
+class ParseLeioFilesAndLog extends App {
 
   implicit val ec: ExecutionContext = ExecutionContext.global
 
