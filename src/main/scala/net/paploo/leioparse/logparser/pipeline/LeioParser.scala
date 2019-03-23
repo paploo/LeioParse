@@ -10,9 +10,9 @@ trait LeioParser[A] extends (Row => Try[A])
 
 object LeioParser {
 
-  val SessionParser: LeioParser[LeioSession] = SessionParser.apply
+  val SessionParser: LeioParser[LeioSession] = parser.SessionParser()
 
-  val BookParser: LeioParser[LeioBook] = BookParser.apply
+  val BookParser: LeioParser[LeioBook] = parser.BookParser()
 
   trait ParseTools {
     implicit class RichRow(toRow: Row) {

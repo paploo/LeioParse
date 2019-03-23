@@ -16,7 +16,7 @@ object ExtendedAny {
 
   trait Implicits {
     import scala.language.implicitConversions
-    def anyToExtended[A](a: A): ExtendedAny[A] = apply(a)
+    implicit def anyToExtended[A](a: A): ExtendedAny[A] = apply(a)
   }
   object Implicits extends Implicits
 

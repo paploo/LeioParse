@@ -1,5 +1,7 @@
 package net.paploo.leioparse.logparser
 
+import java.nio.file.{Path, Paths}
+
 import net.paploo.leioparse.logparser.data.{LeioBook, LeioSession}
 import net.paploo.leioparse.logparser.pipeline.LeioParsePipeline
 import net.paploo.leioparse.logparser.pipeline.LeioParsePipeline.{DataDirectory, LeioParsePipelineBuilder}
@@ -13,9 +15,12 @@ trait LeioLogParser {
 
 object LeioLogParser {
 
-  def forDir(dir: DataDirectory): LeioLogParser = forPipelineBuilders(LeioParsePipeline.leioBookPipelineBuilder, LeioParsePipeline.leioSessionPipelineBuilder)(dir)
+  def forPath(path: Path): LeioLogParser = fromDataDirectory(DataDirectory(path))
 
-  def forPipelineBuilders(bookPipelineBuilder: LeioParsePipelineBuilder[LeioBook], sessionPipelineBuilder: LeioParsePipelineBuilder[LeioSession])(dir: DataDirectory): LeioLogParser =
+  def fromDataDirectory(dir: DataDirectory): LeioLogParser =
+    fromPipelineBuilders(LeioParsePipeline.leioBookPipelineBuilder, LeioParsePipeline.leioSessionPipelineBuilder)(dir)
+
+  def fromPipelineBuilders(bookPipelineBuilder: LeioParsePipelineBuilder[LeioBook], sessionPipelineBuilder: LeioParsePipelineBuilder[LeioSession])(dir: DataDirectory): LeioLogParser =
     LeioLogPipelineBuilderParser.apply(dir, bookPipelineBuilder, sessionPipelineBuilder)
 
 }

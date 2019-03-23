@@ -9,7 +9,7 @@ import net.paploo.leioparse.util.quantities.{DateTime, Location, TimeSpan}
 
 import scala.util.{Success, Try}
 
-private class SessionParser extends LeioParser[LeioSession] with ParseTools {
+class SessionParser extends LeioParser[LeioSession] with ParseTools {
   import SessionParser.Keys._
 
   override def apply(row: Row): Try[LeioSession] = for {
@@ -37,9 +37,9 @@ private class SessionParser extends LeioParser[LeioSession] with ParseTools {
 
 }
 
-private object SessionParser {
+object SessionParser extends (() => LeioParser[LeioSession]) {
 
-  val apply: LeioParser[LeioSession] = new SessionParser
+  override def apply(): LeioParser[LeioSession] = new SessionParser
 
   object Keys {
     val BookTitle = Row.Key("Book")

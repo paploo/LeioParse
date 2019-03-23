@@ -9,7 +9,7 @@ import net.paploo.leioparse.util.quantities.Location
 
 import scala.util.Try
 
-private class BookParser extends LeioParser[LeioBook] with ParseTools {
+class BookParser extends LeioParser[LeioBook] with ParseTools {
   import BookParser.Keys._
 
   override def apply(row: Row): Try[LeioBook] = for {
@@ -24,9 +24,9 @@ private class BookParser extends LeioParser[LeioBook] with ParseTools {
 
 }
 
-private object BookParser {
+object BookParser extends (() => LeioParser[LeioBook]) {
 
-  val apply: LeioParser[LeioBook] = new BookParser
+  def apply(): LeioParser[LeioBook] = new BookParser
 
   object Keys {
     val Title = Row.Key("Title")

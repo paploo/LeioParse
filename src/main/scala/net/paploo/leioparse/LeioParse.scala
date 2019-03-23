@@ -7,23 +7,28 @@ import net.paploo.leioparse.app.{App, AppArgs}
 import net.paploo.leioparse.util.extensions.Implicits._
 
 import scala.concurrent.duration.Duration
-import scala.util.{Failure, Success}
+import scala.util.{Failure, Success, Try}
 
 object LeioParse {
 
   def main(args: Array[String]): Unit = {
-    val config = getConfig(args)
-    val appArgs = getAppArgs(args)
-    val appTimeout = Duration(config.timeoutSeconds, TimeUnit.SECONDS)
-
-    App.apply(appArgs).toTry(appTimeout) match {
+    (for {
+      config <- getConfig(args)
+      appArgs <- getAppArgs(args)
+      appTimeout = Duration(config.timeoutSeconds, TimeUnit.SECONDS)
+      runResult <- App.apply(appArgs).toTry(appTimeout)
+    } yield runResult) match {
       case Success(_) => System.exit(0)
       case Failure(th) => throw th
     }
   }
 
-  def getConfig(args: Array[String]): LeioParseConfig = LeioParseConfig(timeoutSeconds = 60)
+  def getConfig(args: Array[String]): Try[LeioParseConfig] = Try(LeioParseConfig(timeoutSeconds = 60))
 
-  def getAppArgs(args: Array[String]): AppArgs = AppArgs(Paths.get(args.head))
+  def getAppArgs(args: Array[String]): Try[AppArgs] = Try(AppArgs(
+    Paths.get(args.head)
+  )).recoverWith {
+    case th => Failure(new IllegalArgumentException(s"Could not parse application arguments", th))
+  }
 
 }
