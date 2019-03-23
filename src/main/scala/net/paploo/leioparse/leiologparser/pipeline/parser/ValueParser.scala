@@ -1,10 +1,10 @@
-package net.paploo.leioparse.logparser.pipeline.parser
+package net.paploo.leioparse.leiologparser.pipeline.parser
 
 import java.time.{Duration, LocalDateTime}
 import java.time.format.DateTimeFormatter
 
 import net.paploo.leioparse.data.core.Book
-import net.paploo.leioparse.logparser.pipeline.LeioParsePipeline.Row
+import net.paploo.leioparse.leiologparser.pipeline.LeioParsePipeline.Row
 import net.paploo.leioparse.util.quantities.{DateTime, Location, TimeSpan}
 
 import scala.util.matching.Regex

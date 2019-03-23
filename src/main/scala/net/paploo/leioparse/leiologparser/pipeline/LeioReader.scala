@@ -1,6 +1,6 @@
-package net.paploo.leioparse.logparser.pipeline
+package net.paploo.leioparse.leiologparser.pipeline
 
-import net.paploo.leioparse.logparser.pipeline.LeioParsePipeline.{DataFile, Row}
+import net.paploo.leioparse.leiologparser.pipeline.LeioParsePipeline.{DataFile, Row}
 import net.paploo.leioparse.util.csv.CSVFile
 
 import scala.concurrent.{ExecutionContext, Future}

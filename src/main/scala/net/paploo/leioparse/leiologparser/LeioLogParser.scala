@@ -1,10 +1,10 @@
-package net.paploo.leioparse.logparser
+package net.paploo.leioparse.leiologparser
 
 import java.nio.file.{Path, Paths}
 
-import net.paploo.leioparse.logparser.data.{LeioBook, LeioSession}
-import net.paploo.leioparse.logparser.pipeline.LeioParsePipeline
-import net.paploo.leioparse.logparser.pipeline.LeioParsePipeline.{DataDirectory, LeioParsePipelineBuilder}
+import net.paploo.leioparse.leiologparser.data.{LeioBook, LeioSession}
+import net.paploo.leioparse.leiologparser.pipeline.LeioParsePipeline
+import net.paploo.leioparse.leiologparser.pipeline.LeioParsePipeline.{DataDirectory, LeioParsePipelineBuilder}
 
 import scala.concurrent.{ExecutionContext, Future}
 

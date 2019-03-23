@@ -1,7 +1,7 @@
 package net.paploo.leioparse.app
 
 import net.paploo.leioparse.app.App.Result
-import net.paploo.leioparse.logparser.LeioLogParser
+import net.paploo.leioparse.leiologparser.LeioLogParser
 
 import scala.concurrent.{ExecutionContext, Future}
 

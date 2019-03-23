@@ -1,12 +1,12 @@
-package net.paploo.leioparse.logparser.pipeline
+package net.paploo.leioparse.leiologparser.pipeline
 
 import java.nio.file.Path
 
 import cats.Traverse
 import cats.data.Kleisli
 import cats.implicits._
-import net.paploo.leioparse.logparser.data.{LeioBook, LeioSession}
-import net.paploo.leioparse.logparser.pipeline.LeioParsePipeline.DataDirectory
+import net.paploo.leioparse.leiologparser.data.{LeioBook, LeioSession}
+import net.paploo.leioparse.leiologparser.pipeline.LeioParsePipeline.DataDirectory
 import net.paploo.leioparse.util.functional.Functional
 
 import scala.concurrent.{ExecutionContext, Future}

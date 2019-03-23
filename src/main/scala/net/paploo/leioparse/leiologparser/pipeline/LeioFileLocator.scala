@@ -1,8 +1,8 @@
-package net.paploo.leioparse.logparser.pipeline
+package net.paploo.leioparse.leiologparser.pipeline
 
 import java.nio.file.Paths
 
-import net.paploo.leioparse.logparser.pipeline.LeioParsePipeline.{DataDirectory, DataFile}
+import net.paploo.leioparse.leiologparser.pipeline.LeioParsePipeline.{DataDirectory, DataFile}
 
 trait LeioFileLocator extends (DataDirectory => DataFile)
 

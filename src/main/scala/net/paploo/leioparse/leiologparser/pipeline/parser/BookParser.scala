@@ -1,10 +1,10 @@
-package net.paploo.leioparse.logparser.pipeline.parser
+package net.paploo.leioparse.leiologparser.pipeline.parser
 
 import net.paploo.leioparse.data.core.Book
-import net.paploo.leioparse.logparser.data.LeioBook
-import net.paploo.leioparse.logparser.pipeline.LeioParsePipeline.Row
-import net.paploo.leioparse.logparser.pipeline.LeioParser
-import net.paploo.leioparse.logparser.pipeline.LeioParser.ParseTools
+import net.paploo.leioparse.leiologparser.data.LeioBook
+import net.paploo.leioparse.leiologparser.pipeline.LeioParsePipeline.Row
+import net.paploo.leioparse.leiologparser.pipeline.LeioParser
+import net.paploo.leioparse.leiologparser.pipeline.LeioParser.ParseTools
 import net.paploo.leioparse.util.quantities.Location
 
 import scala.util.Try

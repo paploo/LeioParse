@@ -1,4 +1,4 @@
-package net.paploo.leioparse.logparser.data
+package net.paploo.leioparse.leiologparser.data
 
 import net.paploo.leioparse.data.core.Book
 import net.paploo.leioparse.util.quantities.{DateTime, Location}
