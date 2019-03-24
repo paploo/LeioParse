@@ -1,4 +1,4 @@
-package net.paploo.leioparse.leiologparser.data
+package net.paploo.leioparse.data.leiofile
 
 import net.paploo.leioparse.data.core.Book
 import net.paploo.leioparse.util.quantities.Location

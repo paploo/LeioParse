@@ -6,7 +6,8 @@ import java.nio.file.Path
 import cats.Traverse
 import cats.data.Kleisli
 import cats.implicits._
-import net.paploo.leioparse.bookoverlayparser.BookOverlayParser.{BookOverlay, BookOverlayParserException}
+import net.paploo.leioparse.bookoverlayparser.BookOverlayParser.BookOverlayParserException
+import net.paploo.leioparse.data.overlay.BookOverlay
 import net.paploo.leioparse.bookoverlayparser.JsonBookOverlayParser.RawBookOverlay
 import net.paploo.leioparse.data.core.Book
 import net.paploo.leioparse.util.quantities.WordDensity
@@ -22,10 +23,6 @@ trait BookOverlayParser extends Logging {
 }
 
 object BookOverlayParser {
-
-  case class BookOverlay(title: Book.Title,
-                         identifier: Option[Book.Id],
-                         wordDensity: WordDensity)
 
   case class BookOverlayParserException(message: String, cause: Throwable) extends RuntimeException(message, cause)
 

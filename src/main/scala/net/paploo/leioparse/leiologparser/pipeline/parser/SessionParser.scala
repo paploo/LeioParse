@@ -1,7 +1,7 @@
 package net.paploo.leioparse.leiologparser.pipeline.parser
 
 import net.paploo.leioparse.data.core.Book
-import net.paploo.leioparse.leiologparser.data.LeioSession
+import net.paploo.leioparse.data.leiofile.LeioSession
 import net.paploo.leioparse.leiologparser.pipeline.LeioParsePipeline.Row
 import net.paploo.leioparse.leiologparser.pipeline.LeioParser
 import net.paploo.leioparse.leiologparser.pipeline.LeioParser.ParseTools

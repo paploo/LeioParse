@@ -1,6 +1,6 @@
 package net.paploo.leioparse.leiologparser.pipeline
 
-import net.paploo.leioparse.leiologparser.data.{LeioBook, LeioSession}
+import net.paploo.leioparse.data.leiofile.{LeioBook, LeioSession}
 import net.paploo.leioparse.leiologparser.pipeline.LeioParsePipeline.Row
 import net.paploo.leioparse.leiologparser.pipeline.parser.ValueParser
 
