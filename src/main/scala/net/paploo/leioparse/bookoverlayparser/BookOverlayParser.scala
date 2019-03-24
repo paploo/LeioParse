@@ -52,11 +52,11 @@ object JsonBookOverlayParser {
 
   case class RawBookOverlay(title: String,
                             id: Option[Int],
-                            wordDensity: Int) {
+                            wordDensity: Option[Double]) {
     def toBookOverlay: Try[BookOverlay] = Try(BookOverlay(
       title = Book.Title(title),
       identifier = id.map(Book.Id.apply),
-      wordDensity = WordDensity(wordDensity)
+      wordDensity = wordDensity.map(WordDensity.apply),
     ))
   }
 

@@ -2,7 +2,6 @@ package net.paploo.leioparse.util.library
 
 import cats.data.Kleisli
 
-import scala.concurrent.{ExecutionContext, Future}
 import scala.language.higherKinds
 
 trait Library[F[+_], -K, +V] extends (K => F[V]) {
@@ -10,20 +9,14 @@ trait Library[F[+_], -K, +V] extends (K => F[V]) {
 }
 
 object Library {
-}
 
-trait OptionLibrary[-K, +V] extends Library[Option, K, V]
+  type OptionLibrary[-K, +V] = Library[Option, K, V]
 
-trait FutureLibrary[-K, +V] extends (ExecutionContext => K => Future[V]) {
-  def run(k: K)(implicit ec: ExecutionContext): Future[V]
+  def apply[F[+_], K, V](f: K => F[V]): Library[F, K, V] = key => f(key)
 
-  override def apply(ec: ExecutionContext): K => Future[V] = k => run(k)(ec)
-}
+  def fromMap[K, V](map: Map[K, V]): OptionLibrary[K, V] = apply(map.lift)
 
-object FutureLibrary {
-
-  def apply[K, V](lookup: K => Future[V]): FutureLibrary[K, V] = ??? //k => lookup(k)
-
-  def fromFunction[K,V](get: K => V): FutureLibrary[K, V] = ??? //k => Future.successful(get(k))
+  //Note: The apply order is taken to let type inference infer the type of K before the extraction function, allowing it to also infer V.
+  def fromSeq[K, V](seq: Seq[V])(extractKey: V => K): OptionLibrary[K, V] = fromMap(seq.map(v => extractKey(v) -> v).toMap)
 
 }

@@ -2,7 +2,7 @@ package net.paploo.leioparse.data.core
 
 import net.paploo.leioparse.util.quantities._
 
-case class Book(id: Book.Id,
+case class Book(identifier: Option[Book.Id] = None,
                 title: Book.Title,
                 startLocation: Location,
                 endLocation: Location,
