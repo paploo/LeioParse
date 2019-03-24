@@ -53,7 +53,7 @@ object BookStatistics {
       Progress(
         completed = locationsRead / book.length,
         locationsRead = locationsRead,
-        wordsRead = book.averageWordsPerBlock * locationsRead,
+        wordsRead = book.averageWordDensity * locationsRead,
         cumulativeReadingTime = sessions.foldLeft(TimeSpan.Zero)(_ + _.duration),
         calendarDuration = calendarDateStats.last - calendarDateStats.start
       )

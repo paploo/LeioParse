@@ -33,7 +33,9 @@ object LeioParse {
 
   def getConfig(implicit rawArgs: Array[String]): Try[LeioParseConfig] = Try(LeioParseConfig(timeoutSeconds = 60))
 
-  def getApp(implicit rawArgs: Array[String]): Try[App] = Try(new ParseLeioFilesAndLog)
+  def getApp(implicit rawArgs: Array[String]): Try[App] =
+    Try(ParseOverlayAndLogApp)
+  //Try(ParseLeioFilesAndLogApp)
 
   def getAppArgs(implicit rawArgs: Array[String]): Try[AppArgs] = Try(AppArgs(
     Paths.get(rawArgs.head)

@@ -9,7 +9,7 @@ case class Session(book: Book,
                    endLocation: Location) {
   val blocks: Blocks = startLocation to endLocation
   val endDate: DateTime = startDate + duration
-  val words: Words = blocks * book.averageWordsPerBlock
+  val words: Words = blocks * book.averageWordDensity
   val blockRate: BlockRate = blocks / duration
   val blockPace: BlockPace = blockRate.inverse
   val wordRate: WordRate = words / duration
