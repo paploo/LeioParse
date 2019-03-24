@@ -31,9 +31,13 @@ object LeioParsePipeline {
     case class Value(value: String)
   }
 
+  case class LeioParsePipelineException(message: String, cause: Throwable) extends RuntimeException(message, cause)
+
   def apply[A](fileLocator: LeioFileLocator, reader: LeioReader, parser: LeioParser[A])(implicit ec: ExecutionContext): LeioParsePipeline[A] = {
     val rowsParser: List[Row] => Future[List[A]] = Functional.swap(Traverse[List].traverse[Try, Row, A])(parser) andThen Future.fromTry
-    dataDirectory => (Kleisli(fileLocator andThen reader) andThen rowsParser).run(dataDirectory)
+    dataDirectory => (Kleisli(fileLocator andThen reader) andThen rowsParser).run(dataDirectory) recoverWith {
+      case th => Future.failed(LeioParsePipelineException(s"Unable to process Leio log file with cause: $th", th))
+    }
   }
 
   def leioBookPipeline(implicit ec: ExecutionContext): LeioParsePipeline[LeioBook] = apply(

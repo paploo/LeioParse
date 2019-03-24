@@ -6,7 +6,7 @@ import java.nio.file.Path
 import cats.Traverse
 import cats.data.Kleisli
 import cats.implicits._
-import net.paploo.leioparse.bookoverlayparser.BookOverlayParser.BookOverlay
+import net.paploo.leioparse.bookoverlayparser.BookOverlayParser.{BookOverlay, BookOverlayParserException}
 import net.paploo.leioparse.bookoverlayparser.JsonBookOverlayParser.RawBookOverlay
 import net.paploo.leioparse.data.core.Book
 import net.paploo.leioparse.util.quantities.WordDensity
@@ -28,6 +28,8 @@ object BookOverlayParser {
                          identifier: Option[Book.Id],
                          wordDensity: WordDensity)
 
+  case class BookOverlayParserException(message: String, cause: Throwable) extends RuntimeException(message, cause)
+
   def apply(overlayFilePath: Path): BookOverlayParser = JsonFilePathBookOverlayJsonParser(overlayFilePath)
 
 }
@@ -41,15 +43,12 @@ trait JsonBookOverlayParser {
 
   def parseJson(implicit ec: ExecutionContext): Future[Seq[BookOverlay]] = {
     val convertBooks: List[RawBookOverlay] => Try[List[BookOverlay]] = Functional.swap(Traverse[List].traverse[Try, RawBookOverlay, BookOverlay])(_.toBookOverlay)
-    val parseJsonToRawBookOverlaysK = Kleisli((decode[List[RawBookOverlay]] _) andThen (_.toTry))
     val parseJsonToRawBookOverlays: String => Try[List[RawBookOverlay]] = (decode[List[RawBookOverlay]] _) andThen (_.toTry)
-    val parseJsonToBookOverlays: String => Try[List[BookOverlay]] = (parseJsonToRawBookOverlaysK andThen convertBooks).run
-    val h: String => Try[List[BookOverlay]] = parseJsonToRawBookOverlays andThen (_ flatMap convertBooks)
-
-    getJson.flatMap(json => Future.fromTry(parseJsonToBookOverlays(json)))
+    val parseJsonToBookOverlays: String => Try[List[BookOverlay]] = (Kleisli(parseJsonToRawBookOverlays) andThen convertBooks).run
+    getJson flatMap (parseJsonToBookOverlays andThen Future.fromTry)
+  } recoverWith {
+    case th => Future.failed(BookOverlayParserException(s"Unable to parse overlay json with cause $th", th))
   }
-
-    //getJson flatMap (Kleisli((decode[Seq[RawBookOverlay]] _) andThen (_.toTry)) flatMap ()) // andThen Future.fromTry)
 
 }
 
