@@ -16,12 +16,14 @@ class SessionParser extends LeioParser[LeioSession] with ParseTools {
     bookTitle <- row.extractRequired[Book.Title](BookTitle)
     startedOn <- extractStartedOn(row)
     finishedOn <- row.extractRequired[DateTime](FinishedOn)
+    duration <- row.extractRequired[TimeSpan](SessionDuration)
     firstPage <- row.extractRequired[Location](FirstPage)
     lastPage <- row.extractRequired[Location](LastPage)
   } yield LeioSession(
     bookTitle,
     startedOn,
     finishedOn,
+    duration,
     firstPage,
     lastPage
   )

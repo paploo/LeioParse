@@ -8,9 +8,9 @@ import net.paploo.leioparse.util.library.Library.OptionLibrary
 import net.paploo.leioparse.util.quantities.{Blocks, WordDensity}
 
 /**
-  * Produces a converter of LeioBooks to Books, incorporating the given overlays.
+  * Produces a converter of LeioBook to Book, incorporating an appropriate overlay from the given overlays.
   */
-trait BookCompositor extends (Seq[BookOverlay] => Seq[LeioBook] => Seq[Book])
+trait BookCompositor extends (Seq[BookOverlay] => LeioBook => Book)
 
 object BookCompositor {
 
@@ -18,15 +18,13 @@ object BookCompositor {
 
   private class StandardBookCompositor extends BookCompositor {
 
-    override def apply(overlays: Seq[BookOverlay]): Seq[LeioBook] => Seq[Book] = leioBooks =>
-      leioBooks.map(leioBook => makeBook(leioBook)(leioBookOverlayLibrary(overlays)(leioBook)))
+    override def apply(overlays: Seq[BookOverlay]): LeioBook => Book =
+      leioBook => makeBook(leioBook, bookOverlayLibrary(overlays)(leioBook.title))
 
-    private[this] def leioBookOverlayLibrary(overlays: Seq[BookOverlay]): OptionLibrary[LeioBook, BookOverlay] =
-      Library( extractLeioBookTitle andThen Library.fromSeq(overlays)(_.title) )
+    private[this] def bookOverlayLibrary(overlays: Seq[BookOverlay]): OptionLibrary[Book.Title, BookOverlay] =
+      Library.fromSeq(overlays)(_.title)
 
-    private[this] val extractLeioBookTitle: LeioBook => Book.Title = _.title
-
-    private[this] def makeBook: LeioBook => Option[BookOverlay] => Book = leioBook => overlay => Book(
+    private[this] def makeBook(leioBook: LeioBook, overlay: Option[BookOverlay]): Book = Book(
       identifier = overlay.flatMap(_.identifier),
       title = leioBook.title,
       startLocation = leioBook.firstPage,
