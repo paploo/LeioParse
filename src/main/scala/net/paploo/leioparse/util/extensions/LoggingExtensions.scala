@@ -1,12 +1,16 @@
 package net.paploo.leioparse.util.extensions
 
-import org.slf4j.Logger
+import org.slf4j.{Logger, LoggerFactory}
 import net.paploo.leioparse.util.extensions.ExtendedAny.Implicits._
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
 object LoggingExtensions {
+
+  trait Logging {
+    implicit val logger: Logger = LoggerFactory.getLogger(getClass)
+  }
 
   trait Implicits {
     import scala.language.implicitConversions

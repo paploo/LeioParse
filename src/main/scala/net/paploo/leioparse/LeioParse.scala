@@ -5,14 +5,12 @@ import java.util.concurrent.TimeUnit
 
 import net.paploo.leioparse.app.{App, AppArgs, _}
 import net.paploo.leioparse.util.extensions.Implicits._
-import org.slf4j.{Logger, LoggerFactory}
+import net.paploo.leioparse.util.extensions.LoggingExtensions.Logging
 
 import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success, Try}
 
-object LeioParse {
-
-  implicit val logger: Logger = LoggerFactory.getLogger(getClass)
+object LeioParse extends Logging {
 
   def main(implicit rawArgs: Array[String]): Unit = {
     (for {

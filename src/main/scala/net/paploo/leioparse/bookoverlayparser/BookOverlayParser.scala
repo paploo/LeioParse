@@ -11,14 +11,13 @@ import net.paploo.leioparse.bookoverlayparser.JsonBookOverlayParser.RawBookOverl
 import net.paploo.leioparse.data.core.Book
 import net.paploo.leioparse.util.quantities.WordDensity
 import net.paploo.leioparse.util.extensions.LoggingExtensions.Implicits._
+import net.paploo.leioparse.util.extensions.LoggingExtensions.Logging
 import net.paploo.leioparse.util.functional.Functional
-import org.slf4j.{Logger, LoggerFactory}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 
-trait BookOverlayParser {
-  implicit val logger: Logger = LoggerFactory.getLogger(getClass)
+trait BookOverlayParser extends Logging {
   def parse(implicit ec: ExecutionContext): Future[Seq[BookOverlay]]
 }
 
