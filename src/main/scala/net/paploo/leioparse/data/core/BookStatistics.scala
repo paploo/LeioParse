@@ -2,7 +2,7 @@ package net.paploo.leioparse.data.core
 
 import net.paploo.leioparse.util.quantities._
 
-import scala.util.{Success, Try}
+import scala.util.{Failure, Try}
 
 case class BookStatistics(calendarDateStats: BookStatistics.CalendarDateStats,
                      locationStats: BookStatistics.LocationStats,
@@ -14,8 +14,9 @@ case class BookStatistics(calendarDateStats: BookStatistics.CalendarDateStats,
 
 object BookStatistics {
 
-  def from(book: Book, sessions: Seq[Session]): Try[Option[BookStatistics]] =
-    if (sessions.nonEmpty) fromNonEmptySessions(book, sessions).map(Some.apply) else Success(None)
+  def from(book: Book, sessions: Seq[Session]): Try[BookStatistics] =
+    if (sessions.nonEmpty) fromNonEmptySessions(book, sessions).recoverWith { case th => Failure(StatisticsComputationException(s"Encountered error $th while computing statistics for $book with sessions $sessions", th))}
+    else Failure(StatisticsComputationException(s"Could not compute statiscs for book with no sessions: $book", cause = null))
 
   case class CalendarDateStats(start: DateTime,
                                last: DateTime)
@@ -38,12 +39,13 @@ object BookStatistics {
   case class Estimates(timeRemaining: TimeSpan,
                        completionDate: DateTime)
 
+  case class StatisticsComputationException(message: String, cause: Throwable) extends RuntimeException(message, cause)
+
   /**
     * Construct the statistics from a book and its sessions.
     *
     */
   private[this] def fromNonEmptySessions(book: Book, sessions: Seq[Session]): Try[BookStatistics] = Try {
-    //TODO: All the stats that can crash due to an arithmetic error should be made optional and then remove the try!
 
     val calendarDateStats = CalendarDateStats(
       sessions.minBy(_.startDate).startDate,
@@ -58,7 +60,7 @@ object BookStatistics {
     val progress = {
       val locationsRead = locationStats.start to locationStats.last
       Progress(
-        completed = locationsRead / book.length,
+        completed = if (book.length.isZero) Ratio.zero else locationsRead / book.length,
         locationsRead = locationsRead,
         wordsRead = book.averageWordDensity * locationsRead,
         cumulativeReadingTime = sessions.foldLeft(TimeSpan.Zero)(_ + _.duration),
@@ -67,10 +69,10 @@ object BookStatistics {
     }
 
     val sessionReadingRates: SessionReadingRates = {
-      val blockRate = progress.locationsRead / progress.cumulativeReadingTime
+      val blockRate = if (progress.cumulativeReadingTime.isZero) BlockRate.Zero else progress.locationsRead / progress.cumulativeReadingTime
       SessionReadingRates(
         blockRate = blockRate,
-        blockPace = blockRate.inverse,
+        blockPace = if (blockRate.isZero) BlockPace.Zero else blockRate.inverse,
         wordRate = progress.wordsRead / progress.cumulativeReadingTime
       )
     }

@@ -4,16 +4,14 @@ import scala.util.Try
 
 case class BookSessions(book: Book,
                         sessions: Seq[Session],
-                        stats: Option[BookStatistics])
+                        stats: Try[BookStatistics])
 
 object BookSessions {
 
-  def from(book: Book, sessions: Seq[Session]): Try[BookSessions] = for {
-    stats <- BookStatistics.from(book, sessions)
-  } yield apply(
+  def from(book: Book, sessions: Seq[Session]): BookSessions = apply(
     book,
     sessions,
-    stats
+    BookStatistics.from(book, sessions)
   )
 
 }

@@ -6,6 +6,7 @@ trait Quantity[N] {
   def value: N
   def toInt: Int
   def toDouble: Double
+  def isZero: Boolean
 }
 
 /**
@@ -15,12 +16,15 @@ case class TimeSpan(value: Duration) extends Quantity[Duration] {
   def +(duration: TimeSpan): TimeSpan = TimeSpan(value plus duration.value)
   def *(ratio: Ratio): TimeSpan = TimeSpan(Duration.ofSeconds((value.getSeconds * ratio.value).round))
 
+  def getSeconds: Long = value.getSeconds
   def getMinutes: Double = value.getSeconds / 60.0
   def getHours: Double = value.getSeconds / 3600.0
   def getDays: Double = value.getSeconds / 86400.0
 
   override def toInt: Int = value.getSeconds.toInt
   override def toDouble: Double = value.getSeconds.toDouble + (value.getNano.toDouble / 1e9)
+
+  override def isZero: Boolean = value.getSeconds == 0 //Discard nanos
 }
 
 object TimeSpan {
@@ -36,10 +40,12 @@ case class DateTime(value: LocalDateTime) extends Quantity[LocalDateTime] {
   def -(duration: TimeSpan): DateTime = DateTime(value minus duration.value)
   def -(dateTime: DateTime): TimeSpan = TimeSpan(Duration.between(value, dateTime.value))
 
-  def toInstant: Instant = value.atZone(ZoneId.systemDefault).toInstant
+  private def toInstant: Instant = value.atZone(ZoneId.systemDefault).toInstant
   def toLong: Long = toInstant.getEpochSecond
   override def toInt: Int = toLong.toInt
-  override def toDouble: Double = toInstant.toEpochMilli
+  override def toDouble: Double = toInstant.toEpochMilli / 1000.0
+
+  override def isZero: Boolean = toInstant.getEpochSecond == 0L
 }
 
 object DateTime {
@@ -57,9 +63,12 @@ case class Location(value: Int) extends Quantity[Int] {
 
   override def toInt: Int = value.toInt
   override def toDouble: Double = value.toDouble
+
+  override def isZero: Boolean = value == 0
 }
 
 object Location {
+  val Zero: Location = Location(0)
   implicit val Ordering: Ordering[Location] = scala.math.Ordering.by(_.value)
 }
 
@@ -74,6 +83,12 @@ case class Blocks(value: Int) extends Quantity[Int] {
 
   override def toInt: Int = value.toInt
   override def toDouble: Double = value.toDouble
+
+  override def isZero: Boolean = value == 0
+}
+
+object Blocks {
+  val Zero: Blocks = Blocks(0)
 }
 
 /**
@@ -87,6 +102,12 @@ case class Words(value: Int) extends Quantity[Int] {
 
   override def toInt: Int = value.toInt
   override def toDouble: Double = value.toDouble
+
+  override def isZero: Boolean = value == 0
+}
+
+object Words {
+  val Zero: Words = Words(0)
 }
 
 /**
@@ -97,9 +118,12 @@ case class WordDensity(value: Double) extends Quantity[Double] {
 
   override def toInt: Int = value.toInt
   override def toDouble: Double = value.toDouble
+
+  override def isZero: Boolean = value == 0.0
 }
 
 object WordDensity {
+  val Zero: WordDensity = WordDensity(0.0)
   def from(words: Words, blocks: Blocks): WordDensity = WordDensity(words.toDouble / blocks.toDouble)
 }
 
@@ -111,9 +135,12 @@ case class BlockRate(value: Double) extends Quantity[Double] {
 
   override def toInt: Int = value.toInt
   override def toDouble: Double = value.toDouble
+
+  override def isZero: Boolean = value == 0.0
 }
 
 object BlockRate {
+  val Zero: BlockRate = BlockRate(0.0)
   def from(blocks: Blocks, duration: TimeSpan): BlockRate = BlockRate(blocks.toDouble / duration.getHours)
 }
 
@@ -125,9 +152,12 @@ case class BlockPace(value: Double) extends Quantity[Double] {
 
   override def toInt: Int = value.toInt
   override def toDouble: Double = value.toDouble
+
+  override def isZero: Boolean = value == 0.0
 }
 
 object BlockPace {
+  val Zero: BlockPace = BlockPace(0.0)
   def from(duration: TimeSpan, blocks: Blocks): BlockPace = BlockPace(duration.getMinutes / blocks.toDouble)
 }
 
@@ -137,9 +167,12 @@ object BlockPace {
 case class WordRate(value: Double) extends Quantity[Double] {
   override def toInt: Int = value.toInt
   override def toDouble: Double = value.toDouble
+
+  override def isZero: Boolean = value == 0.0
 }
 
 object WordRate {
+  val Zero: WordRate = WordRate(0.0)
   def from(words: Words, duration: TimeSpan): WordRate = WordRate(words.toDouble / duration.getMinutes)
 }
 
@@ -149,22 +182,28 @@ object WordRate {
 case class BlockDailyRate(value: Double) extends Quantity[Double] {
   override def toInt: Int = value.toInt
   override def toDouble: Double = value.toDouble
+
+  override def isZero: Boolean = value == 0.0
 }
 
 object BlockDailyRate {
+  val Zero: BlockDailyRate = BlockDailyRate(0.0)
   def from(blocks: Blocks, duration: TimeSpan): BlockDailyRate = BlockDailyRate(blocks.toDouble / duration.getDays)
-}
-
-case class Ratio(value: Double) extends Quantity[Double] {
-  def inverse: Ratio = Ratio(1.0 / value)
-
-  override def toInt: Int = value.toInt
-  override def toDouble: Double = value.toDouble
 }
 
 /**
   * Derived value: Stores the ratio between two quantities
   */
+case class Ratio(value: Double) extends Quantity[Double] {
+  def inverse: Ratio = Ratio(1.0 / value)
+
+  override def toInt: Int = value.toInt
+  override def toDouble: Double = value.toDouble
+
+  override def isZero: Boolean = value == 0.0
+}
+
 object Ratio {
+  def zero: Ratio = Ratio(0.0)
   def from[A <: Quantity[_]](numerator: A, denominator: A): Ratio = Ratio(numerator.toDouble / denominator.toDouble)
 }
