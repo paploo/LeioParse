@@ -2,6 +2,8 @@ package net.paploo.leioparse.data.core
 
 import net.paploo.leioparse.util.quantities._
 
+import scala.util.{Success, Try}
+
 case class BookStatistics(calendarDateStats: BookStatistics.CalendarDateStats,
                      locationStats: BookStatistics.LocationStats,
                      progress: BookStatistics.Progress,
@@ -12,8 +14,8 @@ case class BookStatistics(calendarDateStats: BookStatistics.CalendarDateStats,
 
 object BookStatistics {
 
-  def from(book: Book, sessions: Seq[Session]): Option[BookStatistics] =
-    if (sessions.nonEmpty) Some(fromNonEmptySessions(book, sessions)) else None
+  def from(book: Book, sessions: Seq[Session]): Try[Option[BookStatistics]] =
+    if (sessions.nonEmpty) fromNonEmptySessions(book, sessions).map(Some.apply) else Success(None)
 
   case class CalendarDateStats(start: DateTime,
                                last: DateTime)
@@ -36,7 +38,12 @@ object BookStatistics {
   case class Estimates(timeRemaining: TimeSpan,
                        completionDate: DateTime)
 
-  private[this] def fromNonEmptySessions(book: Book, sessions: Seq[Session]): BookStatistics = {
+  /**
+    * Construct the statistics from a book and its sessions.
+    *
+    */
+  private[this] def fromNonEmptySessions(book: Book, sessions: Seq[Session]): Try[BookStatistics] = Try {
+    //TODO: All the stats that can crash due to an arithmetic error should be made optional and then remove the try!
 
     val calendarDateStats = CalendarDateStats(
       sessions.minBy(_.startDate).startDate,
