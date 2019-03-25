@@ -33,9 +33,10 @@ object App {
       override def ++[A1 >: A](other: Result[A1]): Result[A1] = ResultVector(toSeq ++ other.toSeq)
     }
 
-    implicit object ShowResult extends Show[Result[_]] {
-      override def show(result: Result[_]): String = result.toSeq.mkString(s"Result(\n\t", ",\n\t", "\n)")
-    }
+    import cats.implicits._
+    implicit def ShowResult[A](implicit showA: Show[A]): Show[Result[A]] =
+      result => result.toSeq.map(_.show).mkString(s"Result(\n\t", ",\n\t", "\n)")
+
   }
 
   private[App] case class CompositeApp[+A](first: App[A], second: App[A]) extends App[A] {

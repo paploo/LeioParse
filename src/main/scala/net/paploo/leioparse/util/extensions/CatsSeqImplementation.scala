@@ -1,12 +1,14 @@
 package net.paploo.leioparse.util.extensions
 
-import cats.{Always, Applicative, CoflatMap, Eval, FlatMap, Foldable, Functor, Monad, Monoid, Semigroup, Traverse}
+import cats.{Always, Applicative, CoflatMap, Eval, FlatMap, Foldable, Functor, Monad, Monoid, Semigroup, Show, Traverse}
 import cats.implicits._
 
 import scala.annotation.tailrec
 import scala.language.higherKinds
 
 object CatsSeqImplementation {
+
+  def SeqShow[A](implicit showA: Show[A]): Show[Seq[A]] = seq => seq.map(showA.show).mkString("Seq(", ", ", ")")
 
   trait SeqMonoid[A] extends Monoid[Seq[A]] with Semigroup[Seq[A]] {
     override def empty: Seq[A] = Seq.empty
@@ -62,6 +64,7 @@ object CatsSeqImplementation {
   object SeqInstances extends SeqInstances
 
   trait Implicits {
+    implicit def seqShow[A](implicit showA: Show[A]): Show[Seq[A]] = SeqShow[A]
     implicit def seqMonoid[A]: Monoid[Seq[A]] = new SeqMonoid[A] {}
     implicit val seqCats: Monad[Seq] with Traverse[Seq] with Functor[Seq] = SeqInstances
   }

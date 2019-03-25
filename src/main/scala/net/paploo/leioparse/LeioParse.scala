@@ -3,9 +3,7 @@ package net.paploo.leioparse
 import java.nio.file.Paths
 import java.util.concurrent.TimeUnit
 
-import cats.implicits._
 import net.paploo.leioparse.app.{App, AppArgs, StandardApp, TestApps}
-import net.paploo.leioparse.app.App.Result.ShowResult
 import net.paploo.leioparse.util.extensions.Implicits._
 import net.paploo.leioparse.util.extensions.LoggingExtensions.Logging
 
@@ -26,7 +24,7 @@ object LeioParse extends Logging {
       runResult <- app.run(appArgs).toTry(appTimeout)
     } yield runResult) match {
       case Success(result) =>
-        result.log(r => s"LeioParse.main(${rawArgs.toList}) --> ${r.show}")
+        result.log(r => s"LeioParse.main(${rawArgs.toList}) --> ${r.toSeq.mkString(s"Result(\n\t", ",\n\t", "\n)")}")
         System.exit(0)
       case Failure(throwable) =>
         throwable.log(th => s"LeioParse encountered a fatal error: $th")

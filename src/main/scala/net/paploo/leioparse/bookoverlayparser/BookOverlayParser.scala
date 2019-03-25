@@ -79,6 +79,6 @@ case class JsonFilePathBookOverlayJsonParser(overlayFilePath: Path) extends Book
 
   override def parse(implicit ec: ExecutionContext): Future[Seq[BookOverlay]] = parseJson
 
-  override def getJson(implicit ec: ExecutionContext): Future[String] = readFile.log(json => s"json = $json")
+  override def getJson(implicit ec: ExecutionContext): Future[String] = readFile.log(json => s"overlayJson = $json")
 
 }

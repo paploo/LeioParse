@@ -1,15 +1,16 @@
 package net.paploo.leioparse.data.core
 
+import cats.Show
 import net.paploo.leioparse.util.quantities._
 
 import scala.util.{Failure, Try}
 
 case class BookStatistics(calendarDateStats: BookStatistics.CalendarDateStats,
-                     locationStats: BookStatistics.LocationStats,
-                     progress: BookStatistics.Progress,
-                     sessionReadingRates: BookStatistics.SessionReadingRates,
-                     bookReadingRates: BookStatistics.BookReadingRates,
-                     estimates: BookStatistics.Estimates) {
+                          locationStats: BookStatistics.LocationStats,
+                          progress: BookStatistics.Progress,
+                          sessionReadingRates: BookStatistics.SessionReadingRates,
+                          bookReadingRates: BookStatistics.BookReadingRates,
+                          estimates: BookStatistics.Estimates) {
 }
 
 object BookStatistics {
@@ -40,6 +41,9 @@ object BookStatistics {
                        completionDate: DateTime)
 
   case class StatisticsComputationException(message: String, cause: Throwable) extends RuntimeException(message, cause)
+
+  implicit val ShowBookStatistics: Show[BookStatistics] = stats => stats.productIterator.map(_.toString).mkString("BookStatistics(\n\t", "\n\t", "\n\t)")
+    //stats => s"BookStatistics(\n\t${stats.calendarDateStats},\n\t${stats.})"
 
   /**
     * Construct the statistics from a book and its sessions.

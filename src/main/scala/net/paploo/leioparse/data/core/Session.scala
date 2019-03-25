@@ -1,5 +1,6 @@
 package net.paploo.leioparse.data.core
 
+import cats.Show
 import net.paploo.leioparse.util.quantities._
 
 case class Session(bookTitle: Book.Title,
@@ -14,4 +15,10 @@ case class Session(bookTitle: Book.Title,
 
   def words(averageWordDensity: WordDensity): Words = blocks * averageWordDensity
   def wordRate(averageWordDensity: WordDensity): WordRate = words(averageWordDensity) / duration
+}
+
+object Session {
+
+  implicit val ShowSession: Show[Session] = Show.fromToString
+
 }

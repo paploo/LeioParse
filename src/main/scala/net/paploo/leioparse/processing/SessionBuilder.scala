@@ -1,4 +1,4 @@
-package net.paploo.leioparse.compositor
+package net.paploo.leioparse.processing
 
 import net.paploo.leioparse.data.core.Session
 import net.paploo.leioparse.data.leiofile.LeioSession
