@@ -10,7 +10,7 @@ trait SessionBuilder extends (LeioSession => Session)
 
 object SessionBuilder {
 
-  def apply: SessionBuilder = new StandardSessionBuilder
+  val default: SessionBuilder = new StandardSessionBuilder
 
   private class StandardSessionBuilder extends SessionBuilder {
 

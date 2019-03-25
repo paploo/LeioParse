@@ -15,7 +15,7 @@ trait LeioLogParser {
 
 object LeioLogParser {
 
-  def forPath(path: Path): LeioLogParser = fromDataDirectory(DataDirectory(path))
+  def fromPath(path: Path): LeioLogParser = fromDataDirectory(DataDirectory(path))
 
   def fromDataDirectory(dir: DataDirectory): LeioLogParser =
     fromPipelineBuilders(LeioParsePipeline.leioBookPipelineBuilder, LeioParsePipeline.leioSessionPipelineBuilder)(dir)

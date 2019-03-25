@@ -4,7 +4,7 @@ import java.nio.file.Paths
 import java.util.concurrent.TimeUnit
 
 import cats.implicits._
-import net.paploo.leioparse.app.{App, AppArgs, _}
+import net.paploo.leioparse.app.{App, AppArgs, StandardApp, TestApps}
 import net.paploo.leioparse.app.App.Result.ShowResult
 import net.paploo.leioparse.util.extensions.Implicits._
 import net.paploo.leioparse.util.extensions.LoggingExtensions.Logging
@@ -37,11 +37,13 @@ object LeioParse extends Logging {
   def getConfig(implicit rawArgs: Array[String]): Try[LeioParseConfig] = Try(LeioParseConfig(timeoutSeconds = 60))
 
   def getApp(implicit rawArgs: Array[String]): Try[App[_]] =
-    Try(ParseOverlayAndLogApp andThenRun ParseLeioFilesAndLogApp)
-  //Try(ParseLeioFilesAndLogApp)
+    Try(StandardApp)
+//    Try(TestApps.ParseOverlayAndLogApp andThenRun TestApps.ParseLeioFilesAndLogApp)
+//    Try(TestApps.ParseLeioFilesAndLogApp)
 
   def getAppArgs(implicit rawArgs: Array[String]): Try[AppArgs] = Try(AppArgs(
-    Paths.get(rawArgs.head)
+    dataDirPath = Paths.get(rawArgs.head),
+    bookOverlayPath = Paths.get("./books.json")
   )).recoverWith {
     case th => Failure(new IllegalArgumentException(s"Could not parse application arguments", th))
   }
