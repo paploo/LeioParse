@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": "1",
     "title": "Relic Worlds 1",
     "wordDensity": 333
   },
@@ -10,7 +10,7 @@
     "wordDensity": 0
   },
   {
-    "title": "Alpha",
+    "title": "Beta",
     "wordDensity": 0
   }
 ]

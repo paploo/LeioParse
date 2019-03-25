@@ -51,13 +51,13 @@ trait JsonBookOverlayParser {
 object JsonBookOverlayParser {
 
   case class RawBookOverlay(title: String,
-                            id: Option[Int],
+                            id: Option[String],
                             wordDensity: Option[Double]) {
     def toBookOverlay: Try[BookOverlay] = Try(BookOverlay(
       title = Book.Title(title),
-      identifier = id.map(Book.Id.apply),
+      externalId = id.map(Book.ExternalId.apply),
       wordDensity = wordDensity.map(WordDensity.apply),
-    ))
+      ))
   }
 
 }
