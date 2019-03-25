@@ -6,13 +6,13 @@ import net.paploo.leioparse.data.leiofile.LeioSession
 /**
   * Produces a converter of LeioSessions to sessions, using a
   */
-trait SessionCompositor extends (LeioSession => Session)
+trait SessionBuilder extends (LeioSession => Session)
 
-object SessionCompositor {
+object SessionBuilder {
 
-  def apply: StandardSessionCompositor = new StandardSessionCompositor
+  def apply: SessionBuilder = new StandardSessionBuilder
 
-  private class StandardSessionCompositor extends SessionCompositor {
+  private class StandardSessionBuilder extends SessionBuilder {
 
     override def apply(leioSession: LeioSession): Session = Session(
       bookTitle = leioSession.bookTitle,

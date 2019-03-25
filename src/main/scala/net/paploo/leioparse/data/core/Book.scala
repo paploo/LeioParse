@@ -16,12 +16,4 @@ object Book {
 
   case class Title(value: String) extends AnyVal
 
-  def unknown: Book = Book(
-    None,
-    Title("Unknown"),
-    Location(1),
-    Location(1),
-    averageWordDensity = WordDensity(0)
-  )
-
 }
