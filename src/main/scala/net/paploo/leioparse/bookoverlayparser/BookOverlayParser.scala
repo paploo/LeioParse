@@ -16,6 +16,7 @@ import net.paploo.leioparse.util.extensions.LoggingExtensions.Logging
 import net.paploo.leioparse.util.functional.Functional
 
 import scala.concurrent.{ExecutionContext, Future}
+import scala.io.Codec
 import scala.util.Try
 
 trait BookOverlayParser extends Logging {
@@ -68,7 +69,7 @@ trait FileBookOverlayParser {
   def overlayFile: File
 
   def readFile(implicit ec: ExecutionContext): Future[String] = Future {
-    scala.io.Source.fromFile(overlayFile).getLines().mkString("\n")
+    scala.io.Source.fromFile(overlayFile)(Codec.UTF8).getLines().mkString("\n")
   }
 
 }

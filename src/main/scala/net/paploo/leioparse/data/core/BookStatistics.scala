@@ -42,8 +42,8 @@ object BookStatistics {
 
   case class StatisticsComputationException(message: String, cause: Throwable) extends RuntimeException(message, cause)
 
-  implicit val ShowBookStatistics: Show[BookStatistics] = stats => stats.productIterator.map(_.toString).mkString("BookStatistics(\n\t", "\n\t", "\n\t)")
-    //stats => s"BookStatistics(\n\t${stats.calendarDateStats},\n\t${stats.})"
+  implicit val ShowBookStatistics: Show[BookStatistics] =
+    stats => stats.productIterator.map(_.toString).mkString("BookStatistics(\n\t", "\n\t", "\n\t)")
 
   /**
     * Construct the statistics from a book and its sessions.
