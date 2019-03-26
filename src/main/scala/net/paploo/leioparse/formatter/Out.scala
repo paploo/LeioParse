@@ -1,47 +1,51 @@
 package net.paploo.leioparse.formatter
 
-import java.io.{BufferedWriter, OutputStream, OutputStreamWriter, PrintWriter}
+import java.io.{OutputStream, OutputStreamWriter, PrintWriter}
 
 import net.paploo.leioparse.util.extensions.Implicits._
 
-trait Out {
+trait OutputStreamable {
   def toOutputStream: OutputStream
-  def stream: OutStream
-  def writer: OutWriter
 }
 
-trait OutStream extends Out {
-  def toOutputStream: OutputStream
-  def map(f: OutputStream => Unit): OutStream
+trait Out extends OutputStreamable {
+  def streamProjection: OutStream
+  def writerProjection: OutWriter
+  def map[B](f: PrintWriter => B): Out = this.tap(_.writerProjection.map(f))
 }
 
-trait OutWriter extends Out {
-  def map(f: PrintWriter => Unit): OutWriter
+trait OutStream extends OutputStreamable {
+  def map[B](f: OutputStream => B): OutStream
+}
+
+trait OutWriter extends OutputStreamable {
+  def map[B](f: PrintWriter => B): OutWriter
 }
 
 object Out {
 
-  def apply(out: OutputStream): Out = new IOStreamWriter(out)
+  /**
+    * Creates a new Out wrapping the given OutputStream.
+    *
+    * The OutpuStream must be closed outside of this.
+    */
+  def apply(out: OutputStream): Out = new OutStreamWriter(out)
 
-  private[this] class IOStreamWriter(val toOutputStream: OutputStream) extends Out {
+  private[this] class OutStreamWriter(val toOutputStream: OutputStream) extends Out {
 
-    // This is the same set of events as just `new PrintWriter(out)` except that we use UTF-8 instead of the default encoding.
-    //private[this] lazy val printWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(toOutputStream, "UTF-8")))
+    //PrintWriter.close() and OutputStreamWriter.close() just proxy to what they wrap, so closing them is not needed since we don't manage the OutputStream lifecycle.
     private[this] lazy val printWriter = new PrintWriter(new OutputStreamWriter(toOutputStream, "UTF-8"))
 
-    override val stream: OutStream = new OutStream {
-      override def toOutputStream: OutputStream = IOStreamWriter.this.toOutputStream
-      override def map(f: OutputStream => Unit): OutStream = this.tap(_ => f(toOutputStream))
-      override def stream: OutStream = IOStreamWriter.this.stream
-      override def writer: OutWriter = IOStreamWriter.this.writer
+    override val streamProjection: OutStream = new OutStream {
+      override val toOutputStream: OutputStream = OutStreamWriter.this.toOutputStream
+      override def map[B](f: OutputStream => B): OutStream = this.tap(_ => f(toOutputStream))
     }
 
-    override def writer: OutWriter = new OutWriter {
-      override def toOutputStream: OutputStream = IOStreamWriter.this.toOutputStream
-      override def map(f: PrintWriter => Unit): OutWriter = this.tap(_ => f(printWriter).tap(_ => printWriter.flush())) //Ensure flushing so that.
-      override def stream: OutStream = IOStreamWriter.this.stream
-      override def writer: OutWriter = IOStreamWriter.this.writer
+    override val writerProjection: OutWriter = new OutWriter {
+      override val toOutputStream: OutputStream = OutStreamWriter.this.toOutputStream
+      override def map[B](f: PrintWriter => B): OutWriter = this.tap(_ => f(printWriter).tap(_ => printWriter.flush()))
     }
+
   }
 
 }
