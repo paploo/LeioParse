@@ -6,8 +6,8 @@ import net.paploo.leioparse.bookoverlayparser.BookOverlayParser
 import net.paploo.leioparse.processing.{BookReportAssembler, BookReportParser}
 import net.paploo.leioparse.data.core.BookReport
 import net.paploo.leioparse.leiologparser.LeioLogParser
-import net.paploo.leioparse.formatter.formatters.CaseClassFormatter
-import net.paploo.leioparse.formatter.{Formatter, FormatterComposer}
+import net.paploo.leioparse.formatter.formatters.PrettyFormatter
+import net.paploo.leioparse.formatter.{Formatter, FormatterComposer, Outputter}
 import net.paploo.leioparse.util.extensions.Implicits._
 import net.paploo.leioparse.util.extensions.LoggingExtensions.Logging
 
@@ -19,6 +19,7 @@ trait StandardApp extends App[Seq[BookReport]] with Logging {
     leioLogParser <- leioLogParser(args)
     bookOverlayParser <- bookOverlayParser(args)
     reports <- parse(leioLogParser, bookOverlayParser)
+    result <- write(reports)(args)
   } yield Result(reports) tap (r => logger.info(r.toSeq.show))
 
   def leioLogParser(args: AppArgs)(implicit ec: ExecutionContext): Future[LeioLogParser] =
@@ -30,7 +31,12 @@ trait StandardApp extends App[Seq[BookReport]] with Logging {
   def parse(leioLogParser: LeioLogParser, bookOverlayParser: BookOverlayParser)(implicit ec: ExecutionContext): Future[Seq[BookReport]] =
     BookReportParser(leioLogParser, bookOverlayParser, BookReportAssembler.default).parse
 
-  def formatter(args: AppArgs)(implicit ec: ExecutionContext): Future[Formatter[Unit]] = Future(FormatterComposer(new CaseClassFormatter).run)
+  def formatter(args: AppArgs)(implicit ec: ExecutionContext): Future[Formatter[Unit]] = Future(FormatterComposer(new PrettyFormatter).run)
+
+  def write(reports: Seq[BookReport])(args: AppArgs)(implicit ec: ExecutionContext): Future[Unit] = for {
+    formatter <- formatter(args)
+    outputResult <- Outputter.formatToStdOut(formatter).apply(reports)
+  } yield outputResult
 
 }
 object StandardApp extends StandardApp

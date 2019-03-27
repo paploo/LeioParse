@@ -19,6 +19,7 @@ case class Session(bookTitle: Book.Title,
 
 object Session {
 
-  implicit val ShowSession: Show[Session] = Show.fromToString
+  implicit val ShowSession: Show[Session] =
+    s => (s.productIterator ++ List(s.blocks, s.endDate, s.blockRate, s.blockPace)).mkString(s"${s.productPrefix}(", ", ", ")")
 
 }

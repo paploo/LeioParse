@@ -9,5 +9,5 @@ import net.paploo.leioparse.data.core.BookReport
   */
 trait WriterFormatter[A] extends Formatter[A] {
   def writeReports(reports: Seq[BookReport])(implicit writer: PrintWriter): A
-  override def apply(env: OutputEnv): A = writeReports(env.reports)(env.out.toWriter)
+  override def apply(env: FormatterEnv): A = writeReports(env.reports)(env.out.toWriter)
 }

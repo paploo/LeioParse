@@ -17,6 +17,6 @@ object Book {
 
   case class Title(value: String) extends AnyVal
 
-  implicit val ShowBook: Show[Book] = book => book.title.toString//Show.fromToString
+  implicit val ShowBook: Show[Book] = book => (book.productIterator ++ Seq(book.length)).mkString(s"${book.productPrefix}(", ", ", ")")
 
 }
