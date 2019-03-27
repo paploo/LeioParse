@@ -1,4 +1,4 @@
-package net.paploo.leioparse.outputterformatter
+package net.paploo.leioparse.formatter
 
 import java.io.{File, FileOutputStream, OutputStream, OutputStreamWriter, PrintWriter}
 import java.nio.file.Path
