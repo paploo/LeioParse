@@ -78,10 +78,13 @@ object Location {
   * Fundamental unit of measure of a span of locations; e.g. pages, locs, etc.
   */
 case class Blocks(value: Int) extends Quantity[Int] {
+  def *(ratio: Ratio): Blocks = Blocks((value * ratio.value).round.toInt)
   def *(wordDensity: WordDensity): Words = Words((toDouble * wordDensity.value).round.toInt)
-  def /(duration: TimeSpan): BlockRate = BlockRate.from(this, duration)
 
+  def /(duration: TimeSpan): BlockRate = BlockRate.from(this, duration)
   def /(that: Blocks): Ratio = Ratio.from(this, that)
+
+  def -(that: Blocks): Blocks = Blocks(value - that.value)
 
   override def toInt: Int = value.toInt
   override def toDouble: Double = value.toDouble
@@ -94,13 +97,15 @@ object Blocks {
 }
 
 /**
-  * Fundamental unit.
+  * Fundamental unit of counts of words.
   */
 case class Words(value: Int) extends Quantity[Int] {
   def /(blocks: Blocks): WordDensity = WordDensity.from(this, blocks)
   def /(duration: TimeSpan): WordRate = WordRate.from(this, duration)
 
   def /(that: Words): Ratio = Ratio.from(this, that)
+
+  def *(ratio: Ratio): Words = Words((value * ratio.value).round.toInt)
 
   override def toInt: Int = value.toInt
   override def toDouble: Double = value.toDouble

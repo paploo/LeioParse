@@ -9,6 +9,7 @@ case class Book(title: Book.Title,
                 averageWordDensity: WordDensity,
                 externalId: Option[Book.ExternalId] = None) {
   val length: Blocks = startLocation to endLocation
+  val words: Words = length * averageWordDensity
 }
 
 object Book {

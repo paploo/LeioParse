@@ -26,8 +26,10 @@ object BookStatistics {
                            last: Location)
 
   case class Progress(completed: Ratio,
-                      locationsRead: Blocks,
+                      blocksRead: Blocks,
+                      blocksRemaining: Blocks,
                       wordsRead: Words,
+                      wordsRemaining: Words,
                       cumulativeReadingTime: TimeSpan,
                       calendarDuration: TimeSpan)
 
@@ -38,6 +40,7 @@ object BookStatistics {
   case class BookReadingRates(blockDailyRate: BlockDailyRate)
 
   case class Estimates(timeRemaining: TimeSpan,
+                       calendarDaysRemaining: TimeSpan,
                        completionDate: DateTime)
 
   case class StatisticsComputationException(message: String, cause: Throwable) extends RuntimeException(message, cause)
@@ -62,18 +65,22 @@ object BookStatistics {
     )
 
     val progress = {
-      val locationsRead = locationStats.start to locationStats.last
+      val blocksRead = locationStats.start to locationStats.last
+      val completed = if (book.length.isZero) Ratio.zero else blocksRead / book.length
+      val blocksRemaining = book.length - blocksRead
       Progress(
-        completed = if (book.length.isZero) Ratio.zero else locationsRead / book.length,
-        locationsRead = locationsRead,
-        wordsRead = book.averageWordDensity * locationsRead,
+        completed = completed,
+        blocksRead = blocksRead,
+        blocksRemaining = blocksRemaining,
+        wordsRead = book.averageWordDensity * blocksRead,
+        wordsRemaining = book.averageWordDensity * blocksRemaining,
         cumulativeReadingTime = sessions.foldLeft(TimeSpan.Zero)(_ + _.duration),
         calendarDuration = calendarDateStats.last - calendarDateStats.start
       )
     }
 
     val sessionReadingRates: SessionReadingRates = {
-      val blockRate = if (progress.cumulativeReadingTime.isZero) BlockRate.Zero else progress.locationsRead / progress.cumulativeReadingTime
+      val blockRate = if (progress.cumulativeReadingTime.isZero) BlockRate.Zero else progress.blocksRead / progress.cumulativeReadingTime
       SessionReadingRates(
         blockRate = blockRate,
         blockPace = if (blockRate.isZero) BlockPace.Zero else blockRate.inverse,
@@ -82,14 +89,16 @@ object BookStatistics {
     }
 
     val bookReadingRates: BookReadingRates = BookReadingRates(
-      blockDailyRate = BlockDailyRate.from(progress.locationsRead, progress.calendarDuration)
+      blockDailyRate = BlockDailyRate.from(progress.blocksRead, progress.calendarDuration)
     )
 
     val estimates: Estimates = {
       val scaleFactor: Ratio = Ratio(progress.completed.inverse.value - 1.0)
+      val calendardaysRemaining: TimeSpan = progress.calendarDuration * scaleFactor
       Estimates(
         progress.cumulativeReadingTime * scaleFactor,
-        calendarDateStats.last + (progress.calendarDuration * scaleFactor)
+        calendardaysRemaining,
+        calendarDateStats.last + calendardaysRemaining
       )
     }
 
