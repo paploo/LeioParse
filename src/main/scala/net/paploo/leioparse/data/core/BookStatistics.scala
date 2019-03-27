@@ -89,7 +89,7 @@ object BookStatistics {
       val scaleFactor: Ratio = Ratio(progress.completed.inverse.value - 1.0)
       Estimates(
         progress.cumulativeReadingTime * scaleFactor,
-        calendarDateStats.start + (progress.calendarDuration * scaleFactor)
+        calendarDateStats.last + (progress.calendarDuration * scaleFactor)
       )
     }
 

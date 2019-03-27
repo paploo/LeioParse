@@ -9,6 +9,7 @@ import scala.util.{Failure, Success, Try}
 
 class PrettyFormatter extends WriterFormatter[Unit] {
   //TODO: Swap out for a nice pretty-print library.
+  //TODO: What about derived attributes?
 
   override def writeReports(reports: Seq[BookReport])(implicit writer: PrintWriter): Unit = reports.foreach {
     report => {
@@ -25,7 +26,7 @@ class PrettyFormatter extends WriterFormatter[Unit] {
       writer.println(s"\tFailure($th)")
     case Success(stats) =>
       writer.println(s"\tSuccess(")
-      writer.println(stats.productIterator.map(_.toString).mkString(s"\t\t${stats.productPrefix()}\n\t\t\t", ",\n\t\t\t", "\n\t\t)"))
+      writer.println(stats.productIterator.map(_.toString).mkString(s"\t\t${stats.productPrefix}\n\t\t\t", ",\n\t\t\t", "\n\t\t)"))
       writer.println(s"\t)")
   }
 

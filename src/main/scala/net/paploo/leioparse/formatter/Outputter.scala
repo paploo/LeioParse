@@ -12,6 +12,9 @@ import scala.concurrent.{ExecutionContext, Future}
   *
   * The OutputStream lifecycle should be managed outside of the Outputter; see the runTo companion object methods which
   * safely wrap the lifecycle management for various objects.
+  *
+  * Note that OutputStream was chosen as the base, since binary modes can be written with the OutputStream, and it
+  * can be wrapped in a PrintWriter to do a character stream.
   */
 class Outputter private(os: OutputStream) extends OutputStream {
 

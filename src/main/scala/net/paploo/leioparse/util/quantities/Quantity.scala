@@ -16,11 +16,12 @@ case class TimeSpan(value: Duration) extends Quantity[Duration] {
   def +(duration: TimeSpan): TimeSpan = TimeSpan(value plus duration.value)
   def *(ratio: Ratio): TimeSpan = TimeSpan(Duration.ofSeconds((value.getSeconds * ratio.value).round))
 
-  def getSeconds: Long = value.getSeconds
-  def getMinutes: Double = value.getSeconds / 60.0
-  def getHours: Double = value.getSeconds / 3600.0
-  def getDays: Double = value.getSeconds / 86400.0
+  def toSeconds: Long = value.getSeconds
+  def toMinutes: Double = value.getSeconds / 60.0
+  def toHours: Double = value.getSeconds / 3600.0
+  def toDays: Double = value.getSeconds / 86400.0
 
+  def toDuration: Duration = value
   override def toInt: Int = value.getSeconds.toInt
   override def toDouble: Double = value.getSeconds.toDouble + (value.getNano.toDouble / 1e9)
 
@@ -38,9 +39,10 @@ object TimeSpan {
 case class DateTime(value: LocalDateTime) extends Quantity[LocalDateTime] {
   def +(duration: TimeSpan): DateTime = DateTime(value plus duration.value)
   def -(duration: TimeSpan): DateTime = DateTime(value minus duration.value)
-  def -(dateTime: DateTime): TimeSpan = TimeSpan(Duration.between(value, dateTime.value))
+  def -(dateTime: DateTime): TimeSpan = TimeSpan(Duration.between(dateTime.value, value))
 
   private def toInstant: Instant = value.atZone(ZoneId.systemDefault).toInstant
+  def toLocalDateTime: LocalDateTime = value
   def toLong: Long = toInstant.getEpochSecond
   override def toInt: Int = toLong.toInt
   override def toDouble: Double = toInstant.toEpochMilli / 1000.0
@@ -141,7 +143,7 @@ case class BlockRate(value: Double) extends Quantity[Double] {
 
 object BlockRate {
   val Zero: BlockRate = BlockRate(0.0)
-  def from(blocks: Blocks, duration: TimeSpan): BlockRate = BlockRate(blocks.toDouble / duration.getHours)
+  def from(blocks: Blocks, duration: TimeSpan): BlockRate = BlockRate(blocks.toDouble / duration.toHours)
 }
 
 /**
@@ -158,7 +160,7 @@ case class BlockPace(value: Double) extends Quantity[Double] {
 
 object BlockPace {
   val Zero: BlockPace = BlockPace(0.0)
-  def from(duration: TimeSpan, blocks: Blocks): BlockPace = BlockPace(duration.getMinutes / blocks.toDouble)
+  def from(duration: TimeSpan, blocks: Blocks): BlockPace = BlockPace(duration.toMinutes / blocks.toDouble)
 }
 
 /**
@@ -173,7 +175,7 @@ case class WordRate(value: Double) extends Quantity[Double] {
 
 object WordRate {
   val Zero: WordRate = WordRate(0.0)
-  def from(words: Words, duration: TimeSpan): WordRate = WordRate(words.toDouble / duration.getMinutes)
+  def from(words: Words, duration: TimeSpan): WordRate = WordRate(words.toDouble / duration.toMinutes)
 }
 
 /**
@@ -188,7 +190,7 @@ case class BlockDailyRate(value: Double) extends Quantity[Double] {
 
 object BlockDailyRate {
   val Zero: BlockDailyRate = BlockDailyRate(0.0)
-  def from(blocks: Blocks, duration: TimeSpan): BlockDailyRate = BlockDailyRate(blocks.toDouble / duration.getDays)
+  def from(blocks: Blocks, duration: TimeSpan): BlockDailyRate = BlockDailyRate(blocks.toDouble / duration.toDays)
 }
 
 /**
