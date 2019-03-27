@@ -13,7 +13,7 @@ import net.paploo.leioparse.data.core.Book
 import net.paploo.leioparse.util.quantities.WordDensity
 import net.paploo.leioparse.util.extensions.LoggingExtensions.Implicits._
 import net.paploo.leioparse.util.extensions.LoggingExtensions.Logging
-import net.paploo.leioparse.util.functional.Functional
+import net.paploo.leioparse.util.functional.Functional._
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Codec
@@ -39,7 +39,7 @@ trait JsonBookOverlayParser {
   def getJson(implicit ec: ExecutionContext): Future[String]
 
   def parseJson(implicit ec: ExecutionContext): Future[Seq[BookOverlay]] = {
-    val convertBooks: List[RawBookOverlay] => Try[List[BookOverlay]] = Functional.swap(Traverse[List].traverse[Try, RawBookOverlay, BookOverlay])(_.toBookOverlay)
+    val convertBooks: List[RawBookOverlay] => Try[List[BookOverlay]] = swap(Traverse[List].traverse[Try, RawBookOverlay, BookOverlay])(_.toBookOverlay)
     val parseJsonToRawBookOverlays: String => Try[List[RawBookOverlay]] = (decode[List[RawBookOverlay]] _) andThen (_.toTry)
     val parseJsonToBookOverlays: String => Try[List[BookOverlay]] = (Kleisli(parseJsonToRawBookOverlays) andThen convertBooks).run
     getJson flatMap (parseJsonToBookOverlays andThen Future.fromTry)
