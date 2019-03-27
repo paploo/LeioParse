@@ -7,9 +7,19 @@ import scala.language.higherKinds
 trait Functional {
 
   /**
+    * Identity as a lambda function
+    */
+  def id[A]: A => A = identity
+
+  /**
+    * Const ignores the argument and returns the given value.
+    */
+  def const[A, B](b: B): A => B = _ => b
+
+  /**
     * Implement the K-Combinator, but apply f for the side-effects.
     */
-  def tap[A,B](f: A => B)(a: A): A = {
+  def tap[A, B](f: A => B)(a: A): A = {
     f(a)
     a
   }
