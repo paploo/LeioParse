@@ -3,7 +3,7 @@ package net.paploo.leioparse
 import cats.data.Reader
 import net.paploo.leioparse.data.core.BookSessions
 
-package object formatter {
+package object outputterformatter {
 
   /**
     * The environment to output includes the book data to output and an Outputter to write too.
