@@ -6,10 +6,10 @@ import java.nio.file.Path
 import scala.concurrent.{ExecutionContext, Future}
 
 /**
-  * Wrapper for an OutputStream to provide controlled/safe access from within the Output monad.
+  * Wrapper for an OutputStream to provide controlled/safe access to formatters from within the Output monad.
   *
-  *
-  * @param os
+  * The OutputStream lifecycle should be managed outside of the Outputter; see the run companion object methods which
+  * safely wrap the lifecycle management for various objects.
   */
 class Outputter private(os: OutputStream) extends OutputStream {
 
@@ -19,13 +19,13 @@ class Outputter private(os: OutputStream) extends OutputStream {
 
   override def write(b: Int): Unit = os.write(b)
 
-  override def close(): Unit = {/** Do nothing; defer close management to whatever created the output object **/}
+  override def close(): Unit = {/** Do nothing to not leak closing into formatter scope; defer close management to whatever created the OutputStream **/}
 
 }
 
 object Outputter {
 
-  private[this] def apply(os: OutputStream): Outputter = new Outputter(os)
+  private def apply(os: OutputStream): Outputter = new Outputter(os)
 
   def runStdout[A](f: Outputter => A)(implicit ec: ExecutionContext): Future[A] = Future(f(Outputter(System.out)))
 

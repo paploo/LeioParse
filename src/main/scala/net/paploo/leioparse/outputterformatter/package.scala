@@ -1,17 +1,17 @@
 package net.paploo.leioparse
 
 import cats.data.Reader
-import net.paploo.leioparse.data.core.BookSessions
+import net.paploo.leioparse.data.core.BookReport
 
 package object outputterformatter {
 
   /**
     * The environment to output includes the book data to output and an Outputter to write too.
     */
-  case class OutputEnv(out: Outputter, books: Seq[BookSessions])
+  case class OutputEnv(out: Outputter, reports: Seq[BookReport])
 
   /**
-    * Formatters are functions that write a Seq[BookSessions] into a Outputter, and return a value A.
+    * Formatters are functions that write a Seq[BookReport] into a Outputter, and return a value A.
     */
   type Formatter[+A] = OutputEnv => A
 
