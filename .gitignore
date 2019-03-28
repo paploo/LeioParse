@@ -12,3 +12,6 @@ target
 
 # MacOS X
 .DS_Store
+
+# Application
+*.log

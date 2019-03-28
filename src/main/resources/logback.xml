@@ -1,0 +1,21 @@
+<configuration packagingData="true">
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%yellow(%d{HH:MM:ss.SSSZ}) %highlight(%-5level) [%9.9thread] %cyan(%logger{36}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>leioparse.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%d{yyyy-mm-dd'T'HH:MM:ss.SSSZ} %-5level [%9.9thread] %42.42logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <!--<appender-ref ref="STDOUT" />-->
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
