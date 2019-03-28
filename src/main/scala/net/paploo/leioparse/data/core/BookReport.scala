@@ -13,7 +13,7 @@ object BookReport {
 
   def from(book: Book, sessions: Seq[Session]): BookReport = apply(
     book,
-    sessions,
+    sessions.sortBy(_.startDate),
     BookStatistics.from(book, sessions)
   )
 

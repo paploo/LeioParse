@@ -2,6 +2,8 @@ package net.paploo.leioparse.util.quantities
 
 import java.time.{Duration, Instant, LocalDateTime, ZoneId}
 
+//TODO: Formalize a number of the math operations via Numeric type classes.
+
 trait Quantity[N] {
   def value: N
   def toInt: Int
@@ -94,6 +96,7 @@ case class Blocks(value: Int) extends Quantity[Int] {
 
 object Blocks {
   val Zero: Blocks = Blocks(0)
+  implicit val Ordering: Ordering[Blocks] = scala.math.Ordering.by(_.value)
 }
 
 /**
@@ -115,6 +118,7 @@ case class Words(value: Int) extends Quantity[Int] {
 
 object Words {
   val Zero: Words = Words(0)
+  implicit val Ordering: Ordering[Words] = scala.math.Ordering.by(_.value)
 }
 
 /**
@@ -131,6 +135,8 @@ case class WordDensity(value: Double) extends Quantity[Double] {
 
 object WordDensity {
   val Zero: WordDensity = WordDensity(0.0)
+  implicit val Ordering: Ordering[WordDensity] = scala.math.Ordering.by(_.value)
+
   def from(words: Words, blocks: Blocks): WordDensity = WordDensity(words.toDouble / blocks.toDouble)
 }
 
@@ -148,6 +154,8 @@ case class BlockRate(value: Double) extends Quantity[Double] {
 
 object BlockRate {
   val Zero: BlockRate = BlockRate(0.0)
+  implicit val Ordering: Ordering[BlockRate] = scala.math.Ordering.by(_.value)
+
   def from(blocks: Blocks, duration: TimeSpan): BlockRate = BlockRate(blocks.toDouble / duration.toHours)
 }
 
@@ -165,6 +173,8 @@ case class BlockPace(value: Double) extends Quantity[Double] {
 
 object BlockPace {
   val Zero: BlockPace = BlockPace(0.0)
+  implicit val Ordering: Ordering[BlockPace] = scala.math.Ordering.by(_.value)
+
   def from(duration: TimeSpan, blocks: Blocks): BlockPace = BlockPace(duration.toMinutes / blocks.toDouble)
 }
 
@@ -180,6 +190,8 @@ case class WordRate(value: Double) extends Quantity[Double] {
 
 object WordRate {
   val Zero: WordRate = WordRate(0.0)
+  implicit val Ordering: Ordering[WordRate] = scala.math.Ordering.by(_.value)
+
   def from(words: Words, duration: TimeSpan): WordRate = WordRate(words.toDouble / duration.toMinutes)
 }
 
@@ -195,6 +207,8 @@ case class BlockDailyRate(value: Double) extends Quantity[Double] {
 
 object BlockDailyRate {
   val Zero: BlockDailyRate = BlockDailyRate(0.0)
+  implicit val Ordering: Ordering[BlockDailyRate] = scala.math.Ordering.by(_.value)
+
   def from(blocks: Blocks, duration: TimeSpan): BlockDailyRate = BlockDailyRate(blocks.toDouble / duration.toDays)
 }
 
@@ -212,5 +226,7 @@ case class Ratio(value: Double) extends Quantity[Double] {
 
 object Ratio {
   def zero: Ratio = Ratio(0.0)
+  implicit val Ordering: Ordering[Ratio] = scala.math.Ordering.by(_.value)
+
   def from[A <: Quantity[_]](numerator: A, denominator: A): Ratio = Ratio(numerator.toDouble / denominator.toDouble)
 }
