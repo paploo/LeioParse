@@ -6,7 +6,7 @@ import net.paploo.leioparse.bookoverlayparser.BookOverlayParser
 import net.paploo.leioparse.processing.{BookReportAssembler, BookReportParser}
 import net.paploo.leioparse.data.core.BookReport
 import net.paploo.leioparse.leiologparser.LeioLogParser
-import net.paploo.leioparse.formatter.formatters.{JsonFormatter, DebugFormatter}
+import net.paploo.leioparse.formatter.formatters.{DebugFormatter, JsonFormatter, LegacyCSVFormatter}
 import net.paploo.leioparse.formatter.{Formatter, FormatterComposer, Outputter}
 import net.paploo.leioparse.util.extensions.Implicits._
 import net.paploo.leioparse.util.extensions.LoggingExtensions.Logging
@@ -33,7 +33,7 @@ trait StandardApp extends App[Seq[BookReport]] with Logging {
   def parse(leioLogParser: LeioLogParser, bookOverlayParser: BookOverlayParser)(implicit args: AppArgs, ec: ExecutionContext): Future[Seq[BookReport]] =
     BookReportParser(leioLogParser, bookOverlayParser, BookReportAssembler.default).parse
 
-  def formatter(implicit args: AppArgs, ec: ExecutionContext): Future[Formatter[Unit]] = Future(FormatterComposer(new JsonFormatter).run)
+  def formatter(implicit args: AppArgs, ec: ExecutionContext): Future[Formatter[Unit]] = Future(FormatterComposer(new LegacyCSVFormatter).run)
 
   def write(reports: Seq[BookReport])(implicit args: AppArgs, ec: ExecutionContext): Future[Unit] = for {
     formatter <- formatter

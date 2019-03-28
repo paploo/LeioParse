@@ -20,7 +20,9 @@ class Outputter private(os: OutputStream) extends OutputStream {
 
   val toOutputStream: OutputStream = this
 
-  lazy val toWriter: PrintWriter = new PrintWriter(new OutputStreamWriter(os, "UTF-8"), true)
+  lazy val toWriter: PrintWriter = new PrintWriter(new OutputStreamWriter(os, "UTF-8"), true) {
+    override def close(): Unit = {/** Do nothing to not leak closing into formatter scope; defer close management to whatever created the OutputStream} **/}
+  }
 
   override def write(b: Int): Unit = os.write(b)
 
