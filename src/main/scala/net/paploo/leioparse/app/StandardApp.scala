@@ -6,7 +6,7 @@ import net.paploo.leioparse.bookoverlayparser.BookOverlayParser
 import net.paploo.leioparse.processing.{BookReportAssembler, BookReportParser}
 import net.paploo.leioparse.data.core.BookReport
 import net.paploo.leioparse.leiologparser.LeioLogParser
-import net.paploo.leioparse.formatter.formatters.{JsonFormatter, PrettyFormatter}
+import net.paploo.leioparse.formatter.formatters.{JsonFormatter, DebugFormatter}
 import net.paploo.leioparse.formatter.{Formatter, FormatterComposer, Outputter}
 import net.paploo.leioparse.util.extensions.Implicits._
 import net.paploo.leioparse.util.extensions.LoggingExtensions.Logging
