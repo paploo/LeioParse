@@ -1,6 +1,7 @@
 # sbt
 target
 !build.properties
+!plugins.sbt
 
 # IntelliJ
 .idea

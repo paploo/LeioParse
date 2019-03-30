@@ -15,7 +15,9 @@ before_script:
 
 test:
   stage: test
-  except:
-    - master
   script:
-    - sbt clean compile test
+    - sbt clean compile coverage test coverageReport
+  cache:
+    key: "$CI_COMMIT_SHA"
+    paths:
+      - target/
