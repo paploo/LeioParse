@@ -6,8 +6,10 @@ import java.time.{Duration, Instant, LocalDateTime, ZoneId}
 
 trait Quantity[N] {
   def value: N
+
   def toInt: Int
   def toDouble: Double
+
   def isZero: Boolean
 }
 
