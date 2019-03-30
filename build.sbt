@@ -28,6 +28,8 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-generic" % circeVersion,
   "io.circe" %% "circe-parser" % circeVersion,
 
+  "com.github.scopt" %% "scopt" % "4.0.0-RC2",
+
   "com.lihaoyi" %% "pprint" % "0.5.3",
 
   "ch.qos.logback" % "logback-classic" % "1.2.3",
