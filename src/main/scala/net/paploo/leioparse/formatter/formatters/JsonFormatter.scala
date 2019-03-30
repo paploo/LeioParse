@@ -8,6 +8,7 @@ import io.circe.syntax._
 import net.paploo.leioparse.data.core.{Book, BookReport, BookStatistics, Session}
 import net.paploo.leioparse.formatter.WriterFormatter
 import net.paploo.leioparse.util.extensions.Implicits._
+import net.paploo.leioparse.util.quantities.DateTime
 
 class JsonFormatter extends WriterFormatter[Unit] {
 
@@ -26,7 +27,10 @@ object JsonFormatter {
 
     def fromCanonical(report: BookReport): JsonBookReport = JsonBookReport(
       book = JsonBook.fromCanonical(report.book),
-      sessions = report.sessions.map(JsonSession.fromCanonical(Option(report.book))),
+      sessions = report.sessions.map(JsonSession.fromCanonical(
+        book = Option(report.book),
+        tZero = report.sessions.headOption.map(_.startDate))
+      ),
       stats = report.stats.toOption.map(JsonBookStatistics.fromCanonical)
     )
 
@@ -58,6 +62,8 @@ object JsonFormatter {
                          startDate: LocalDateTime,
                          endDate: LocalDateTime,
                          duration: Duration,
+                         relativeStart: Option[Duration],
+                         relativeEnd: Option[Duration],
                          startLocation: Int,
                          endLocation: Int,
                          blocks: Int,
@@ -68,11 +74,13 @@ object JsonFormatter {
 
   object JsonSession {
 
-    def fromCanonical(book: Option[Book])(session: Session): JsonSession = JsonSession(
+    def fromCanonical(book: Option[Book], tZero: Option[DateTime])(session: Session): JsonSession = JsonSession(
       bookTitle = session.bookTitle.value,
       startDate = session.startDate.value,
       endDate = session.endDate.value,
       duration = session.duration.value,
+      relativeStart = tZero.map(session.sessionRelativeStart).map(_.value),
+      relativeEnd = tZero.map(session.sessionRelativeEnd).map(_.value),
       startLocation = session.startLocation.value,
       endLocation = session.endLocation.value,
       blocks = session.blocks.value,

@@ -15,6 +15,9 @@ case class Session(bookTitle: Book.Title,
 
   def words(averageWordDensity: WordDensity): Words = blocks * averageWordDensity
   def wordRate(averageWordDensity: WordDensity): WordRate = words(averageWordDensity) / duration
+
+  def sessionRelativeStart(tZero: DateTime): TimeSpan = startDate - tZero
+  def sessionRelativeEnd(tZero: DateTime): TimeSpan = endDate - tZero
 }
 
 object Session {
