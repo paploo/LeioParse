@@ -20,7 +20,7 @@ object BookReportAssembler {
       val sessionsBuilder = Functor[Seq].lift(SessionBuilder.default)
       val booksBuilder = Functor[Seq].lift(BookBuilder.withOverlays(bookOverlays))
       BookReportBuilder.withBooks(booksBuilder(leioBooks))(sessionsBuilder(leioSessions))
-    }
+    }.sortBy(_.sessions.headOption.map(_.startDate))
 
   }
 
