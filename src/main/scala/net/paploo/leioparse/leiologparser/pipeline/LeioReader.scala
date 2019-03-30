@@ -25,7 +25,7 @@ object LeioReader {
 
   }
 
- private[LeioReader] object CSVFileLeioReader {
+  private[LeioReader] object CSVFileLeioReader {
     def apply(implicit ec: ExecutionContext): CSVFileLeioReader = new CSVFileLeioReader
   }
 
