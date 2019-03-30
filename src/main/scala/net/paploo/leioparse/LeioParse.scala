@@ -60,8 +60,8 @@ object LeioParse extends Logging {
     import builder._
 
     OParser.sequence(
-      programName("App2"),
-      head("App2", "2.0.0"),
+      programName("leioparse"),
+      head("LeioParse", "2.0.0", "(c)2018 Reinecke"),
       help('h', "help").text("prints this usage text"),
 
       opt[String]('f',"format")
