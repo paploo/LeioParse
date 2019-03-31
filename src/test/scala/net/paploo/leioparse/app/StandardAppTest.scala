@@ -4,11 +4,11 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Path, Paths}
 
 import net.paploo.leioparse.app.AppArgs.OutputMethod
-import net.paploo.leioparse.test.TestSpec
+import net.paploo.leioparse.test.{LineDiffSupport, TestSpec}
 
 import scala.concurrent.{ExecutionContext, Promise}
 
-class StandardAppTest extends TestSpec {
+class StandardAppTest extends TestSpec with LineDiffSupport {
 
   implicit val ec: ExecutionContext = ExecutionContext.global
 
@@ -30,14 +30,14 @@ class StandardAppTest extends TestSpec {
 
     val app = StandardApp
 
-    it("should return csv that matches") {
+    it("should be able to return legacy csv that matches output from v1") {
       val linesPromise = Promise[Seq[String]]()
       val args = appArgs(linesPromise)
 
-      val result = app.run(args)
-      val output = linesPromise.future.futureValue
+      app.run(args)
+      val outputLines = linesPromise.future.futureValue
 
-      output should === (legacyOutputLines)
+      assertNoLineDifference(outputLines, legacyOutputLines)
     }
 
   }
