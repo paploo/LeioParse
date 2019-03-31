@@ -3,7 +3,7 @@ package net.paploo.leioparse
 import java.io.File
 import java.util.concurrent.TimeUnit
 
-import net.paploo.leioparse.app.AppArgs.FormatterArg
+import net.paploo.leioparse.app.AppArgs.{FormatterArg, OutputMethod}
 import net.paploo.leioparse.app.{App, AppArgs, StandardApp}
 import net.paploo.leioparse.util.extensions.Implicits._
 import net.paploo.leioparse.util.extensions.LoggingExtensions.Logging
@@ -75,7 +75,7 @@ object LeioParse extends Logging {
                    else failure(s"Book library not found at $f")),
 
     opt[File]('o', "output")
-    .action((f, args) => args.copy(outfilePath = Some(f.toPath))),
+    .action((f, args) => args.copy(outputMethod = OutputMethod.FilePath(f.toPath))),
 
     arg[File]("input_directory")
     .required()
