@@ -16,7 +16,7 @@ class StandardAppTest extends TestSpec with LineDiffSupport {
 
     def appArgs(linesPromise: Promise[Seq[String]]): AppArgs = {
       val inputDirPath: Path = Paths.get(getClass.getClassLoader.getResource("leio_sample_data").toURI)
-      val bookOverlayPath: Path = Paths.get(getClass.getClassLoader.getResource("sample_books.json").toURI)
+      val bookOverlayPath: Path = Paths.get(getClass.getClassLoader.getResource("sample_legacy_books.json").toURI)
       AppArgs(inputDirPath = inputDirPath,
               bookOverlayPath = bookOverlayPath,
               formatter = AppArgs.FormatterArg.LegacyCSV,
