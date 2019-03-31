@@ -1,10 +1,10 @@
 package net.paploo.leioparse.util.quantities
 
-import java.time.{Duration, LocalDateTime, OffsetDateTime, ZoneId, ZoneOffset, ZonedDateTime}
+import java.time.{Duration, LocalDateTime, ZoneId}
 
-import net.paploo.leioparse.test.SpecTest
+import net.paploo.leioparse.test.TestSpec
 
-class DateTimeTest extends SpecTest {
+class DateTimeTest extends TestSpec {
 
   describe("arithmetic") {
 

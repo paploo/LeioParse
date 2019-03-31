@@ -2,9 +2,9 @@ package net.paploo.leioparse.util.quantities
 
 import java.time.Duration
 
-import net.paploo.leioparse.test.SpecTest
+import net.paploo.leioparse.test.TestSpec
 
-class TimeSpanTest extends SpecTest {
+class TimeSpanTest extends TestSpec {
 
   describe("arithmetic") {
 
