@@ -28,8 +28,8 @@ object LineDiffSupport {
   }
 
   def diff(lines: Seq[String], expectedLines: Seq[String]): DiffReport = {
-    val lineSet: Set[Line] = lines.zipWithIndex.map { case (s, i) => Line(s)(i) }.toSet
-    val expectedLineSet: Set[Line] = expectedLines.zipWithIndex.map { case (s, i) => Line(s)(i) }.toSet
+    val lineSet: Set[Line] = lines.zipWithIndex.map { case (s, i) => Line(s)(i+1) }.toSet
+    val expectedLineSet: Set[Line] = expectedLines.zipWithIndex.map { case (s, i) => Line(s)(i+1) }.toSet
 
     val extraLines = (lineSet diff expectedLineSet).toSeq.sortBy(_.lineNumber)
     val missingLines = (expectedLineSet diff lineSet).toSeq.sortBy(_.lineNumber)
