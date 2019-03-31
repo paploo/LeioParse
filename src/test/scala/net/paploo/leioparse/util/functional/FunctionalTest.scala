@@ -32,12 +32,12 @@ class FunctionalTest extends TestSpec with Functional {
 
   describe("tap") {
 
-    it("should return what it was passed") {
+    it("should return what it was passed, regardless of what the function passes out") {
       val obj = new Object
       tap[Object, String](_ => "Flux Capacitor")(obj) should === (obj)
     }
 
-    it("should run a side-effect on a value") {
+    it("should run a side-effect on the value") {
       val promise: Promise[Int] = Promise[Int]()
       tap[Int, Unit](a => promise.success(a))(88)
       promise.future.futureValue should === (88)
