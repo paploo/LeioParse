@@ -49,7 +49,7 @@ case class DateTime(value: LocalDateTime) extends Quantity[LocalDateTime] {
   def toLocalDateTime: LocalDateTime = value
   def toLong: Long = toInstant.getEpochSecond
   override def toInt: Int = toLong.toInt
-  override def toDouble: Double = toInstant.toEpochMilli / 1000.0
+  override def toDouble: Double = (toInstant.toEpochMilli / 1000.0) + (toInstant.getNano / 1e9)
 
   override def isZero: Boolean = toInstant.getEpochSecond == 0L
 }

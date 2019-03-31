@@ -3,6 +3,8 @@
 J.C. Reinecke<br/>
 (c) 2019
 
+[![pipeline status](https://gitlab.com/paploo/leioparse/badges/master/pipeline.svg)](https://gitlab.com/paploo/leioparse/commits/master)
+
 * Project Home: https://gitlab.com/paploo/leioparse
 * Project Mirror: https://github.com/paploo/LeioParse
 

@@ -44,6 +44,10 @@ class TimeSpanTest extends SpecTest {
 
     val ts = TimeSpan(Duration.ofMinutes(45))
 
+    it("should return the value as a java.time duration") {
+      ts.value should === (Duration.ofMinutes(45))
+    }
+
     it("should compute total integral seconds") {
       ts.toInt should === (2700)
       ts.toSeconds should === (2700)
