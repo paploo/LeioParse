@@ -1,0 +1,11 @@
+[
+  { "id": "1", "title": "Relic Worlds 1", "wordDensity": 333 },
+  { "id": "2", "title": "Relic Worlds 2", "wordDensity": 333 },
+  { "id": "3", "title": "Dune", "wordDensity": 440 },
+  { "id": "4", "title": "Gardens of the Moon", "wordDensity": 544 },
+  { "id": "5", "title": "Norse Mythology", "wordDensity": 264 },
+  { "id": "6", "title": "Mortal Engines", "wordDensity": 292 },
+  { "id": "7", "title": "Predator's Gold", "wordDensity": 292 },
+  { "id": "8", "title": "Infernal Devices", "wordDensity": 292 },
+  { "id": "9", "title": "A Darkling Plain", "wordDensity": 292 }
+]

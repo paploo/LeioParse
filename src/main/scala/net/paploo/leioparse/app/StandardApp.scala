@@ -2,7 +2,7 @@ package net.paploo.leioparse.app
 
 import cats.implicits._
 import net.paploo.leioparse.app.App.Result
-import net.paploo.leioparse.app.AppArgs.FormatterArg
+import net.paploo.leioparse.app.AppArgs.{FormatterArg, OutputMethod}
 import net.paploo.leioparse.bookoverlayparser.BookOverlayParser
 import net.paploo.leioparse.processing.{BookReportAssembler, BookReportParser}
 import net.paploo.leioparse.data.core.BookReport
@@ -14,6 +14,11 @@ import net.paploo.leioparse.util.extensions.LoggingExtensions.Logging
 
 import scala.concurrent.{ExecutionContext, Future}
 
+/**
+  * The "standard" app implementation.
+  *
+  * This is designed to be state-less, allowing multiple invocations of run, as such, the default reference is a static object.
+  */
 trait StandardApp extends App[Seq[BookReport]] with Logging {
 
   override def run(args: AppArgs)(implicit ec: ExecutionContext): Future[Result[Seq[BookReport]]] =
@@ -47,10 +52,11 @@ trait StandardApp extends App[Seq[BookReport]] with Logging {
 
   private[this] def write(reports: Seq[BookReport])(implicit args: AppArgs, ec: ExecutionContext): Future[Unit] = for {
     formatter <- formatter
-    outputResult <- args.outfilePath match {
-      case Some(path) => Outputter.formatToPath(path)(formatter).apply(reports)
-      case None => Outputter.formatToStdOut(formatter).apply(reports)
-    }
+    outputResult <- (args.outputMethod match {
+      case OutputMethod.FilePath(path) => Outputter.formatToPath(path)(formatter)
+      case OutputMethod.Lines(promise) => Outputter.formatToLinesPromise(promise)(formatter)
+      case _ => Outputter.formatToStdOut(formatter)
+    }).apply(reports)
   } yield outputResult
 
 }
