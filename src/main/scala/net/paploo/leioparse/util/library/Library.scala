@@ -4,6 +4,12 @@ import cats.data.Kleisli
 
 import scala.language.higherKinds
 
+/**
+  * A wrapper type for a "library" of values that can be accessed via key and a functor wrapped value.
+  *
+  * Most versions return values as either an `Option[V]` or `Future[Option[V]]`, depending on if their
+  * values are found synchronously or asynchronously, and returning None if no value is found.
+  */
 trait Library[F[+_], -K, +V] extends (K => F[V]) {
   def toKleisli[K1 <: K, V1 >: V]: Kleisli[F, K1, V1] = Kleisli[F, K1, V1](this)
 }
