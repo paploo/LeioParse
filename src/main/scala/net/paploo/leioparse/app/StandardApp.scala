@@ -28,7 +28,7 @@ trait StandardApp extends App[Seq[BookReport]] with Logging {
     leioLogParser <- leioLogParser
     bookOverlayParser <- bookOverlayParser
     reports <- parse(leioLogParser, bookOverlayParser)
-    result <- write(reports)
+    _ <- write(reports)
   } yield Result(reports) tap (r => logger.debug(r.toSeq.show))
 
   private[this] def leioLogParser(implicit args: AppArgs, ec: ExecutionContext): Future[LeioLogParser] =

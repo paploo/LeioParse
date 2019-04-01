@@ -35,7 +35,7 @@ object LeioParse extends Logging {
       case Success(result) =>
         result.log(r => s"LeioParse.main(${rawArgs.toList}) --> ${r.toSeq.mkString(s"Result(\n\t", ",\n\t", "\n)")}")
         System.exit(0)
-      case Failure(th @ ArgumentParseException) =>
+      case Failure(th: ArgumentParseException) =>
         th.log(identity)
         System.exit(1)
       case Failure(throwable) =>
@@ -52,7 +52,7 @@ object LeioParse extends Logging {
   private[this] def getAppArgs(implicit rawArgs: Array[String]): Try[AppArgs] =
     OParser.parse(parser, rawArgs, AppArgs.empty) match {
       case Some(appArgs) => Success(appArgs)
-      case None => Failure(ArgumentParseException)
+      case None => Failure(new ArgumentParseException)
     }
 
   private[this] val parser: OParser[Unit, AppArgs] = {
@@ -92,7 +92,7 @@ object LeioParse extends Logging {
     "legacy" -> FormatterArg.LegacyCSV
   )
 
-  case object ArgumentParseException extends RuntimeException(s"Could not parse application arguments")
+  class ArgumentParseException extends RuntimeException(s"Could not parse application arguments")
 
 
 }
