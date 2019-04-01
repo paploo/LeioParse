@@ -14,8 +14,8 @@ trait LineDiffSupport {
 
 object LineDiffSupport {
 
-  case class DiffReport(extraLines: Seq[Line],
-                        missingLines: Seq[Line]) {
+  case class DiffReport(missingLines: Seq[Line],
+                        extraLines: Seq[Line]) {
     val isAMatch: Boolean = extraLines.isEmpty && missingLines.isEmpty
     override def toString: String = s"$productPrefix(\n\textraLines  : $extraLines,\n\tmissingLines: $missingLines\n)"
   }
@@ -24,6 +24,12 @@ object LineDiffSupport {
     def empty = DiffReport(Seq.empty, Seq.empty)
   }
 
+  /**
+    * Wraps a line value with its metadata.
+    *
+    * Algorithms depend on the equality check being just on the value, so metadata (e.g. line number) are put
+    * in an extra parameters list where it doesn't affect the output.
+    */
   case class Line(value: String)(val lineNumber: Int) {
     def toTuple: (Int, String) = (lineNumber, value)
     override def toString: String = s"$productPrefix($lineNumber: $value)"
@@ -42,14 +48,25 @@ object LineDiffSupport {
     * This works best for CSV files, where lines are expected to be unique and hold no ordering context.
     */
   private[this] def diffWithSetStrategy(lineSet: Set[Line], expectedLines: Set[Line]): DiffReport = DiffReport(
-    extraLines = (lineSet diff expectedLines).toSeq.sortBy(_.lineNumber),
-    missingLines = (expectedLines diff lineSet).toSeq.sortBy(_.lineNumber)
+    missingLines = (expectedLines diff lineSet).toSeq.sortBy(_.lineNumber),
+    extraLines = (lineSet diff expectedLines).toSeq.sortBy(_.lineNumber)
   )
 
+  /**
+    * This strategy more properly does a diff, by traversing down the left list, looking for additions and removals.
+    *
+    * It does this by, for each element of the left list:
+    * 1. Checking to see if it can be found in the remainder of the right list, such that if it does find it, it assumes
+    *    that anything above it were added lines, advances both lists to "consume" the found value, and uses the
+    *    remaining right lines for comparisons with further elements from the left, or
+    * 2. It can't find the left element, in which case it must've been removed, so it consumes it off, marks that it
+    *    was seen as removed, and then goes on to the next element.
+    */
   private[this] def diffWithOrderedRecursionStrategy(lines: List[Line], expectedLines: List[Line]): DiffReport = {
 
     /**
       * Given a list (which may be empty), split into two lists on the pivot value (if found), and return if the pivot was found.
+      * @return (listOfBeforeFound, maybeFoundElement, listOfAfterFound)
       */
     def splitOn[A](pivot: A)(list: List[A]): (List[A], Option[A], List[A]) =
       Option(list.indexOf(pivot)).filter(_ >= 0).map(index => list.splitAt(index)).map {
@@ -57,18 +74,18 @@ object LineDiffSupport {
       }.getOrElse((list, None, Nil))
 
     @tailrec
-    def diff(leftLines: List[Line], rightLines: List[Line], addedLines: Vector[Line], removedLines: Vector[Line]): (Seq[Line], Seq[Line]) = leftLines match {
+    def diff(leftLines: List[Line], rightLines: List[Line], removedLines: Vector[Line], addedLines: Vector[Line]): (Seq[Line], Seq[Line]) = leftLines match {
       case leftHead :: leftTail =>
         splitOn(leftHead)(rightLines) match {
-          case (added, Some(found), rightTail) => diff(leftTail, rightTail, addedLines ++ added, removedLines)
-          case (_, None, rightTail) => diff(leftTail, rightLines, addedLines, removedLines :+ leftHead)
+          case (added, Some(_), rightTail) => diff(leftTail, rightTail, removedLines, addedLines ++ added)
+          case (_, None, _) => diff(leftTail, rightLines, removedLines :+ leftHead, addedLines)
         }
       case Nil =>
-        (addedLines ++ rightLines, removedLines)
+        (removedLines, addedLines ++ rightLines)
     }
 
-    val (extraLines, missingLines) = diff(lines, expectedLines, Vector.empty, Vector.empty)
-    DiffReport(extraLines, missingLines)
+    val (missingLines, extraLines) = diff(lines, expectedLines, Vector.empty, Vector.empty)
+    DiffReport(missingLines = missingLines, extraLines = extraLines)
   }
 
 }
@@ -94,9 +111,22 @@ class LineDiffSupportTest extends TestSpec {
 
       val diffReport = LineDiffSupport.diff(left, right)
 
-      diffReport.missingLines should === (Vector(Line("A")(1), Line("F")(6), Line("G")(7), Line("H")(8), Line("I")(9)))
-      diffReport.extraLines should === (Vector(Line("G")(3), Line("D1")(5), Line("D2")(6), Line("F1")(8)))
+      val expectedMissing = Vector(Line("A")(1), Line("F")(6), Line("G")(7), Line("H")(8), Line("I")(9))
+      val expectedExtra = Vector(Line("G")(3), Line("D1")(5), Line("D2")(6), Line("F1")(8))
 
+      //Check values and line numbers
+      diffReport.missingLines.map(_.toTuple) should === (expectedMissing.map(_.toTuple))
+      diffReport.extraLines.map(_.toTuple) should === (expectedExtra.map(_.toTuple))
+    }
+
+    it("should correctly calculate if bracketing changed") {
+      val left: Seq[String] = Seq("{", "B", "}")
+      val right: Seq[String] = Seq("{", "{", "B", "}", "}")
+
+      val diffReport = LineDiffSupport.diff(left, right)
+
+      diffReport.missingLines should === (Vector())
+      diffReport.extraLines.map(_.toTuple) should === (Vector(Line("{")(2), Line("}")(5)).map(_.toTuple))
     }
 
   }
