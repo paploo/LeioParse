@@ -11,7 +11,7 @@ trait App[+A] extends (AppArgs => ExecutionContext => Future[Result[A]]) {
 
   override def apply(args: AppArgs): ExecutionContext => Future[Result[A]] = ec => run(args)(ec)
 
-  def andThenRun[A1 >: A](second: App[A1])(implicit ec: ExecutionContext): App[A1] = App.CompositeApp(this, second)
+  def andThenRun[A1 >: A](second: App[A1]): App[A1] = App.CompositeApp(this, second)
 }
 
 object App {

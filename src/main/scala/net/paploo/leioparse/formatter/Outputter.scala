@@ -45,13 +45,10 @@ object Outputter {
   }
 
   def runToLinesPromise[A](linesPromise: Promise[Seq[String]])(f: Outputter => A)(implicit ec: ExecutionContext):  Future[A] = Future {
-    import scala.collection.JavaConverters._
-
     val os: ByteArrayOutputStream = new ByteArrayOutputStream
     val result = f(Outputter(os))
 
     val reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(os.toByteArray), StandardCharsets.UTF_8))
-    //val lines = reader.lines.iterator.asScala.toList
     val lines = reader.lines.toArray[String](size => new Array[String](size)).toSeq
     linesPromise.success(lines)
 

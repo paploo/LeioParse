@@ -1,7 +1,5 @@
 package net.paploo.leioparse.util.functional
 
-import scala.language.higherKinds
-
 trait Functional {
 
   /**
