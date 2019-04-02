@@ -5,6 +5,11 @@ import net.paploo.leioparse.util.quantities._
 
 import scala.util.{Failure, Try}
 
+/**
+  * Object encapsulating aggregate statistics calculated from a book and its reading sessions.
+  *
+  * The values are subdivided into mildly logical groupings.
+  */
 case class BookStatistics(calendarDateStats: BookStatistics.CalendarDateStats,
                           locationStats: BookStatistics.LocationStats,
                           progress: BookStatistics.Progress,
@@ -17,7 +22,7 @@ object BookStatistics {
 
   def from(book: Book, sessions: Seq[Session]): Try[BookStatistics] =
     if (sessions.nonEmpty) fromNonEmptySessions(book, sessions).recoverWith { case th => Failure(StatisticsComputationException(s"Encountered error $th while computing statistics for $book with sessions $sessions", th))}
-    else Failure(StatisticsComputationException(s"Could not compute statiscs for book with no sessions: $book", cause = null))
+    else Failure(StatisticsComputationException(s"Could not compute statistics for book with no sessions: $book", cause = null))
 
   case class CalendarDateStats(start: DateTime,
                                last: DateTime)
@@ -94,11 +99,11 @@ object BookStatistics {
 
     val estimates: Estimates = {
       val scaleFactor: Ratio = Ratio(progress.completed.inverse.value - 1.0)
-      val calendardaysRemaining: TimeSpan = progress.calendarDuration * scaleFactor
+      val calendarDaysRemaining: TimeSpan = progress.calendarDuration * scaleFactor
       Estimates(
-        progress.cumulativeReadingTime * scaleFactor,
-        calendardaysRemaining,
-        calendarDateStats.last + calendardaysRemaining
+        timeRemaining = progress.cumulativeReadingTime * scaleFactor,
+        calendarDaysRemaining = calendarDaysRemaining,
+        completionDate = calendarDateStats.last + calendarDaysRemaining
       )
     }
 
