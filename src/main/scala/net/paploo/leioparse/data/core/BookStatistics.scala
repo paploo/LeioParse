@@ -5,6 +5,11 @@ import net.paploo.leioparse.util.quantities._
 
 import scala.util.{Failure, Try}
 
+/**
+  * Object encapsulating aggregate statistics calculated from a book and its reading sessions.
+  *
+  * The values are subdivided into mildly logical groupings.
+  */
 case class BookStatistics(calendarDateStats: BookStatistics.CalendarDateStats,
                           locationStats: BookStatistics.LocationStats,
                           progress: BookStatistics.Progress,
