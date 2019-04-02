@@ -34,8 +34,8 @@ object BookBuilder {
     )
 
     private[this] def defaultWordDensity(book: LeioBook): WordDensity = ((book.lastPage to book.firstPage) match {
-      case Blocks(n) if n <= 10000 => WordDensity(300) //Probably measured in pages
-      case Blocks(_) => WordDensity(22) //Probably measured in locs
+      case Blocks(n) if n <= 4000 => WordDensity(300) //Probably measured in pages
+      case Blocks(_) => WordDensity(21) //Probably measured in locs
     }) tap {wd => logger.warn(s"No word density provided in overlay for ${book.title}; defaulting to $wd")}
 
   }
