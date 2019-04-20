@@ -7,7 +7,7 @@ import net.paploo.leioparse.bookoverlayparser.BookOverlayParser
 import net.paploo.leioparse.processing.{BookReportAssembler, BookReportParser}
 import net.paploo.leioparse.data.core.BookReport
 import net.paploo.leioparse.leiologparser.LeioLogParser
-import net.paploo.leioparse.formatter.formatters.{DebugFormatter, JsonFormatter, LegacyCSVFormatter}
+import net.paploo.leioparse.formatter.formatters.{DebugFormatter, JsonFormatter, LegacyCSVFormatter, V2CSVFormatter}
 import net.paploo.leioparse.formatter.{Formatter, FormatterComposer, Outputter}
 import net.paploo.leioparse.util.extensions.Implicits._
 import net.paploo.leioparse.util.extensions.LoggingExtensions.Logging
@@ -44,9 +44,9 @@ trait StandardApp extends App[Seq[BookReport]] with Logging {
     args.formatter match {
       case FormatterArg.Debug => new DebugFormatter
       case FormatterArg.JSON => new JsonFormatter
-      case FormatterArg.CSV => new LegacyCSVFormatter //TODO: Create the formatter!
+      case FormatterArg.CSV => new V2CSVFormatter
       case FormatterArg.LegacyCSV => new LegacyCSVFormatter
-      case _ => new LegacyCSVFormatter
+      case _ => new V2CSVFormatter
     }
   ).run)
 

@@ -1,13 +1,13 @@
 [
-  { "id": "1", "title": "Relic Worlds 1", "wordDensity": 300, "comment": "sample pages are ~333, then applied 0.9 efficiency to get approximation" },
-  { "id": "2", "title": "Relic Worlds 2", "wordDensity": 300, "comment": "used Relic Worlds 1 WC since formatting the same" },
-  { "id": "3", "title": "Dune", "wordDensity": 390, "comment": "sample pages are ~440, but online word counts give around 380-395, so ~0.90 efficiency" },
-  { "id": "4", "title": "Gardens of the Moon", "wordDensity": 490, "comment": "sample pages are ~544, mult by 0.9 to get 490; online counts give me 450–490, so eff is 0.82-0.90" },
-  { "id": "5", "title": "Norse Mythology", "wordDensity": 238, "comment": "sample pages are ~264, so e=0.9-> 238; online *estimates* give 190-205 -> e=0.75" },
-  { "id": "6", "title": "Mortal Engines", "wordDensity": 260, "comment": "using online word count got 265, but this should be the same as darkling plain so normalized with it" },
-  { "id": "7", "title": "Predator's Gold", "wordDensity": 260 },
-  { "id": "8", "title": "Infernal Devices", "wordDensity": 260 },
-  { "id": "9", "title": "A Darkling Plain", "wordDensity": 260, "comment": "sample page is ~290, but online word counts give ~260, so 0.90 efficiency"},
-  { "id": "10", "title": "Night Flights", "wordDensity": 150, "comment": "Counted words on a few pages, and averaged down over empty/picture pages" },
-  { "id": "11", "title": "Harry Potter 6", "wordDensity": 20.09, "comment": "Calculated using word count found online" }
+  { "id": "RELIC.1", "title": "Relic Worlds 1", "wordDensity": 300, "comment": "sample pages are ~333, then applied 0.9 efficiency to get approximation" },
+  { "id": "RELIC.2", "title": "Relic Worlds 2", "wordDensity": 300, "comment": "used Relic Worlds 1 WC since formatting the same" },
+  { "id": "DUNE.1", "title": "Dune", "wordDensity": 390, "comment": "sample pages are ~440, but online word counts give around 380-395, so ~0.90 efficiency" },
+  { "id": "MALAZAN.1", "title": "Gardens of the Moon", "wordDensity": 490, "comment": "sample pages are ~544, mult by 0.9 to get 490; online counts give me 450–490, so eff is 0.82-0.90" },
+  { "id": "NORSE", "title": "Norse Mythology", "wordDensity": 238, "comment": "sample pages are ~264, so e=0.9-> 238; online *estimates* give 190-205 -> e=0.75" },
+  { "id": "MORTAL.1", "title": "Mortal Engines", "wordDensity": 260, "comment": "using online word count got 265, but this should be the same as darkling plain so normalized with it" },
+  { "id": "MORTAL.2", "title": "Predator's Gold", "wordDensity": 260 },
+  { "id": "MORTAL.3", "title": "Infernal Devices", "wordDensity": 260 },
+  { "id": "MORTAL.4", "title": "A Darkling Plain", "wordDensity": 260, "comment": "sample page is ~290, but online word counts give ~260, so 0.90 efficiency"},
+  { "id": "MORTAL.5", "title": "Night Flights", "wordDensity": 150, "comment": "Counted words on a few pages, and averaged down over empty/picture pages" },
+  { "id": "HP.6", "title": "Harry Potter 6", "wordDensity": 20.09, "comment": "Calculated using word count found online" }
 ]

@@ -14,11 +14,11 @@ class LegacyCSVFormatter extends CSVFormatter[Unit] {
     reports.foreach(writeReport)
   }
 
-  def writeHeaders(implicit csv: CSVWriter): Seq[String] = LegacyCSVFormatter.headers.tap(csv.writeRow)
+  private[this] def writeHeaders(implicit csv: CSVWriter): Seq[String] = LegacyCSVFormatter.headers.tap(csv.writeRow)
 
-  def writeReport(report: BookReport)(implicit csv: CSVWriter): Seq[String] = report.sessions.flatMap(writeSession(report.book))
+  private[this] def writeReport(report: BookReport)(implicit csv: CSVWriter): Seq[String] = report.sessions.flatMap(writeSession(report.book))
 
-  def writeSession(book: Book)(session: Session)(implicit csv: CSVWriter): Seq[String] = Seq(
+  private[this] def writeSession(book: Book)(session: Session)(implicit csv: CSVWriter): Seq[String] = Seq(
     book.title.value.toString,
     book.externalId.map(_.value).getOrElse(""),
     book.averageWordDensity.value.round.toString, //Convert to Int
