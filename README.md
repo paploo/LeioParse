@@ -40,6 +40,13 @@ $ sbt "run <path_to_data_dir>"
 use the `--help` switch to get further options, such as formatters, output to file, and use of a book library overlay
 that is different than the one I've bundled in (which happens to be mine).
 
+## Testing
+
+To test with coverage, you have to compile with coverage turned on:
+```
+$ sbt coverage test coverageReport
+```
+
 ## License
 
 See the LICENSE file.
