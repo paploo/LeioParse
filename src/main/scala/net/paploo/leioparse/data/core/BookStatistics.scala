@@ -126,15 +126,15 @@ object BookStatistics {
     }
 
     val emptyMemo = (SessionCumulativeStatistics.empty, Vector.empty[SessionCumulativeStatistics])
-    val cumulativeStatistics: Seq[SessionCumulativeStatistics] = sessions.foldLeft(emptyMemo){
+    val cumulativeSessionStatistics: Seq[SessionCumulativeStatistics] = sessions.foldLeft(emptyMemo){
       case ((acc, stats), session) =>
         val blocksRead = acc.blocks + session.blocks
         val completed = if (book.length.isZero) Ratio.Zero else blocksRead / book.length
-        val nextAcc = SessionCumulativeStatistics(blocksRead,
-                                                  acc.words + session.words(book.averageWordDensity),
-                                                  completed,
-                                                  acc.duration + session.duration,
-                                                  session.endDate - calendarDateStats.start)
+        val nextAcc = SessionCumulativeStatistics(blocks = blocksRead,
+                                                  words = acc.words + session.words(book.averageWordDensity),
+                                                  completed = completed,
+                                                  duration = acc.duration + session.duration,
+                                                  calendarDuration = session.endDate - calendarDateStats.start)
         (nextAcc, stats :+ nextAcc)
     }._2
 
@@ -144,7 +144,7 @@ object BookStatistics {
           sessionReadingRates,
           bookReadingRates,
           estimates,
-          cumulativeStatistics)
+          cumulativeSessionStatistics)
   }
 
 }

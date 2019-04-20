@@ -122,6 +122,60 @@ class BookStatisticsTest extends TestSpec {
         }
 
       }
+
+      describe("cumulativeSessionStatistics") {
+
+        it("should have the same length as the sessions") {
+          Fixtures.statsTry.map(_.cumulativeSessionStatistics.length) should === (Success(Fixtures.sessions.length))
+        }
+
+        it("should calculate the cumulative blocks read at each session") {
+          Fixtures.statsTry.map(_.cumulativeSessionStatistics.map(_.blocks)) should === (Success(Seq(
+            Blocks(10),
+            Blocks(35),
+            Blocks(40),
+            Blocks(75)
+          )))
+        }
+
+        it("should calculate the cumulative words read at each session") {
+          //Should be same as for blocks, but the value should be bigger by the book average word density
+          Fixtures.statsTry.map(_.cumulativeSessionStatistics.map(_.words)) should === (Success(Seq(
+            Words(10*300),
+            Words(35*300),
+            Words(40*300),
+            Words(75*300)
+          )))
+        }
+
+        it("should calculate the cumulative completion progress at each session") {
+          Fixtures.statsTry.map(_.cumulativeSessionStatistics.map(_.completed)) should === (Success(Seq(
+            Ratio(10.0/100.0),
+            Ratio(35.0/100.0),
+            Ratio(40.0/100.0),
+            Ratio(75.0/100.0)
+          )))
+        }
+
+        it("should calculate the cumulative session duration at each session") {
+          Fixtures.statsTry.map(_.cumulativeSessionStatistics.map(_.duration)) should === (Success(Seq(
+            TimeSpan(Duration.parse("PT30M")),
+            TimeSpan(Duration.parse("PT1H30M")),
+            TimeSpan(Duration.parse("PT1H40M")),
+            TimeSpan(Duration.parse("PT3H"))
+          )))
+        }
+
+        it("should calculate the cumulative calendar duration at each session") {
+          Fixtures.statsTry.map(_.cumulativeSessionStatistics.map(_.calendarDuration)) should === (Success(Seq(
+            TimeSpan(Duration.parse("PT30M")), //This should be the length of the first session!
+            TimeSpan(Duration.parse("P2DT12H30M")),
+            TimeSpan(Duration.parse("P3DT3H10M")),
+            TimeSpan(Duration.parse("P6D"))
+          )))
+        }
+
+      }
       
     }
 
