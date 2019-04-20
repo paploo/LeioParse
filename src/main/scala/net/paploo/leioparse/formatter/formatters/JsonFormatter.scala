@@ -97,7 +97,8 @@ object JsonFormatter {
                                 progress: JsonBookStatistics.Progress,
                                 sessionReadingRates: JsonBookStatistics.SessionReadingRates,
                                 bookReadingRates: JsonBookStatistics.BookReadingRates,
-                                estimates: JsonBookStatistics.Estimates)
+                                estimates: JsonBookStatistics.Estimates,
+                                cumulativeSessionStatistics: Seq[JsonBookStatistics.SessionCumulativeStatistics])
 
   object JsonBookStatistics {
 
@@ -125,13 +126,20 @@ object JsonFormatter {
                          calendarDaysRemaining: Duration,
                          completionDate: LocalDateTime)
 
+    case class SessionCumulativeStatistics(blocks: Int,
+                                           words: Int,
+                                           completed: Double,
+                                           duration: Duration,
+                                           calendarDuration: Duration)
+
     def fromCanonical(stats: BookStatistics): JsonBookStatistics = JsonBookStatistics(
       calendarDateStats = stats.calendarDateStats.thru(s => CalendarDateStats(s.start.value, s.last.value)),
       locationStats = stats.locationStats.thru(s => LocationStats(s.start.value, s.last.value)),
       progress = stats.progress.thru(s => Progress(s.completed.value, s.blocksRead.value, s.blocksRemaining.value, s.wordsRead.value, s.wordsRemaining.value, s.cumulativeReadingTime.value, s.calendarDuration.value)),
       sessionReadingRates = stats.sessionReadingRates.thru(s => SessionReadingRates(s.blockRate.value, s.blockPace.value, s.wordRate.value)),
       bookReadingRates = stats.bookReadingRates.thru(s => BookReadingRates(s.blockDailyRate.value)),
-      estimates = stats.estimates.thru(s => Estimates(s.timeRemaining.value, s.calendarDaysRemaining.value, s.completionDate.value))
+      estimates = stats.estimates.thru(s => Estimates(s.timeRemaining.value, s.calendarDaysRemaining.value, s.completionDate.value)),
+      cumulativeSessionStatistics = stats.cumulativeSessionStatistics.map(cs => SessionCumulativeStatistics(cs.blocks.value, cs.words.value, cs.completed.value, cs.duration.value, cs.calendarDuration.value))
     )
 
   }

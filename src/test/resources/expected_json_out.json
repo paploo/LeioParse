@@ -39,7 +39,107 @@
         "timeRemaining" : "PT0S",
         "calendarDaysRemaining" : "PT0S",
         "completionDate" : "2018-09-13T23:38:49"
-      }
+      },
+      "cumulativeSessionStatistics" : [
+        {
+          "blocks" : 63,
+          "words" : 20979,
+          "completed" : 0.1903323262839879,
+          "duration" : "PT1H48M",
+          "calendarDuration" : "PT1H48M"
+        },
+        {
+          "blocks" : 87,
+          "words" : 28971,
+          "completed" : 0.2628398791540785,
+          "duration" : "PT2H22M7S",
+          "calendarDuration" : "PT153H17M7S"
+        },
+        {
+          "blocks" : 105,
+          "words" : 34965,
+          "completed" : 0.31722054380664655,
+          "duration" : "PT2H46M7S",
+          "calendarDuration" : "PT107H48M"
+        },
+        {
+          "blocks" : 141,
+          "words" : 46953,
+          "completed" : 0.4259818731117825,
+          "duration" : "PT3H31M59S",
+          "calendarDuration" : "PT293H57M52S"
+        },
+        {
+          "blocks" : 169,
+          "words" : 56277,
+          "completed" : 0.5105740181268882,
+          "duration" : "PT4H5M56S",
+          "calendarDuration" : "PT318H3M57S"
+        },
+        {
+          "blocks" : 175,
+          "words" : 58275,
+          "completed" : 0.5287009063444109,
+          "duration" : "PT4H16M19S",
+          "calendarDuration" : "PT319H53M23S"
+        },
+        {
+          "blocks" : 216,
+          "words" : 71928,
+          "completed" : 0.6525679758308157,
+          "duration" : "PT5H6M37S",
+          "calendarDuration" : "PT341H42M18S"
+        },
+        {
+          "blocks" : 230,
+          "words" : 76590,
+          "completed" : 0.6948640483383686,
+          "duration" : "PT5H23M12S",
+          "calendarDuration" : "PT343H9M35S"
+        },
+        {
+          "blocks" : 245,
+          "words" : 81585,
+          "completed" : 0.7401812688821753,
+          "duration" : "PT5H43M11S",
+          "calendarDuration" : "PT414H7M59S"
+        },
+        {
+          "blocks" : 255,
+          "words" : 84915,
+          "completed" : 0.770392749244713,
+          "duration" : "PT5H53M5S",
+          "calendarDuration" : "PT419H6M54S"
+        },
+        {
+          "blocks" : 270,
+          "words" : 89910,
+          "completed" : 0.8157099697885196,
+          "duration" : "PT6H14M34S",
+          "calendarDuration" : "PT438H9M29S"
+        },
+        {
+          "blocks" : 303,
+          "words" : 100899,
+          "completed" : 0.9154078549848943,
+          "duration" : "PT7H9S",
+          "calendarDuration" : "PT467H44M35S"
+        },
+        {
+          "blocks" : 319,
+          "words" : 106227,
+          "completed" : 0.9637462235649547,
+          "duration" : "PT7H17M6S",
+          "calendarDuration" : "PT486H6M57S"
+        },
+        {
+          "blocks" : 333,
+          "words" : 110889,
+          "completed" : 1.0060422960725075,
+          "duration" : "PT7H32M55S",
+          "calendarDuration" : "PT491H26M49S"
+        }
+      ]
     },
     "sessions" : [
       {
@@ -294,7 +394,142 @@
         "timeRemaining" : "PT0S",
         "calendarDaysRemaining" : "PT0S",
         "completionDate" : "2018-10-08T21:39:49"
-      }
+      },
+      "cumulativeSessionStatistics" : [
+        {
+          "blocks" : 14,
+          "words" : 4662,
+          "completed" : 0.041666666666666664,
+          "duration" : "PT19M48S",
+          "calendarDuration" : "PT19M48S"
+        },
+        {
+          "blocks" : 18,
+          "words" : 5994,
+          "completed" : 0.05357142857142857,
+          "duration" : "PT26M4S",
+          "calendarDuration" : "PT27M16S"
+        },
+        {
+          "blocks" : 31,
+          "words" : 10323,
+          "completed" : 0.09226190476190477,
+          "duration" : "PT44M6S",
+          "calendarDuration" : "PT2H2M2S"
+        },
+        {
+          "blocks" : 44,
+          "words" : 14652,
+          "completed" : 0.13095238095238096,
+          "duration" : "PT1H2M54S",
+          "calendarDuration" : "PT72H30M48S"
+        },
+        {
+          "blocks" : 61,
+          "words" : 20313,
+          "completed" : 0.18154761904761904,
+          "duration" : "PT1H23M22S",
+          "calendarDuration" : "PT97H24M28S"
+        },
+        {
+          "blocks" : 74,
+          "words" : 24642,
+          "completed" : 0.22023809523809523,
+          "duration" : "PT1H37M37S",
+          "calendarDuration" : "PT126H24M15S"
+        },
+        {
+          "blocks" : 80,
+          "words" : 26640,
+          "completed" : 0.23809523809523808,
+          "duration" : "PT1H46M53S",
+          "calendarDuration" : "PT145H23M16S"
+        },
+        {
+          "blocks" : 112,
+          "words" : 37296,
+          "completed" : 0.3333333333333333,
+          "duration" : "PT2H29M1S",
+          "calendarDuration" : "PT168H21M8S"
+        },
+        {
+          "blocks" : 125,
+          "words" : 41625,
+          "completed" : 0.37202380952380953,
+          "duration" : "PT2H44M32S",
+          "calendarDuration" : "PT170H2M31S"
+        },
+        {
+          "blocks" : 134,
+          "words" : 44622,
+          "completed" : 0.39880952380952384,
+          "duration" : "PT2H57M32S",
+          "calendarDuration" : "PT240H57M"
+        },
+        {
+          "blocks" : 140,
+          "words" : 46620,
+          "completed" : 0.4166666666666667,
+          "duration" : "PT3H5M56S",
+          "calendarDuration" : "PT288H56M24S"
+        },
+        {
+          "blocks" : 164,
+          "words" : 54612,
+          "completed" : 0.4880952380952381,
+          "duration" : "PT3H38M53S",
+          "calendarDuration" : "PT312H8M57S"
+        },
+        {
+          "blocks" : 180,
+          "words" : 59940,
+          "completed" : 0.5357142857142857,
+          "duration" : "PT4H59S",
+          "calendarDuration" : "PT336H30M6S"
+        },
+        {
+          "blocks" : 203,
+          "words" : 67599,
+          "completed" : 0.6041666666666666,
+          "duration" : "PT4H30M20S",
+          "calendarDuration" : "PT408H59M21S"
+        },
+        {
+          "blocks" : 216,
+          "words" : 71928,
+          "completed" : 0.6428571428571429,
+          "duration" : "PT4H50M54S",
+          "calendarDuration" : "PT480H29M34S"
+        },
+        {
+          "blocks" : 234,
+          "words" : 77922,
+          "completed" : 0.6964285714285714,
+          "duration" : "PT5H12M41S",
+          "calendarDuration" : "PT506H47S"
+        },
+        {
+          "blocks" : 285,
+          "words" : 94905,
+          "completed" : 0.8482142857142857,
+          "duration" : "PT6H21M41S",
+          "calendarDuration" : "PT549H32M"
+        },
+        {
+          "blocks" : 319,
+          "words" : 106227,
+          "completed" : 0.9494047619047619,
+          "duration" : "PT7H51S",
+          "calendarDuration" : "PT558H20M10S"
+        },
+        {
+          "blocks" : 336,
+          "words" : 111888,
+          "completed" : 1.0,
+          "duration" : "PT7H21M40S",
+          "calendarDuration" : "PT580H12M49S"
+        }
+      ]
     },
     "sessions" : [
       {
@@ -624,7 +859,240 @@
         "timeRemaining" : "PT0S",
         "calendarDaysRemaining" : "PT0S",
         "completionDate" : "2018-11-06T18:06:32"
-      }
+      },
+      "cumulativeSessionStatistics" : [
+        {
+          "blocks" : 18,
+          "words" : 7920,
+          "completed" : 0.038135593220338986,
+          "duration" : "PT49M57S",
+          "calendarDuration" : "PT49M57S"
+        },
+        {
+          "blocks" : 24,
+          "words" : 10560,
+          "completed" : 0.05084745762711865,
+          "duration" : "PT1H3M49S",
+          "calendarDuration" : "PT6H5M52S"
+        },
+        {
+          "blocks" : 44,
+          "words" : 19360,
+          "completed" : 0.09322033898305085,
+          "duration" : "PT1H52M41S",
+          "calendarDuration" : "PT24H16M52S"
+        },
+        {
+          "blocks" : 62,
+          "words" : 27280,
+          "completed" : 0.13135593220338984,
+          "duration" : "PT2H40M4S",
+          "calendarDuration" : "PT48H51M23S"
+        },
+        {
+          "blocks" : 74,
+          "words" : 32560,
+          "completed" : 0.15677966101694915,
+          "duration" : "PT3H4M5S",
+          "calendarDuration" : "PT73H55M1S"
+        },
+        {
+          "blocks" : 102,
+          "words" : 44880,
+          "completed" : 0.21610169491525424,
+          "duration" : "PT4H9M5S",
+          "calendarDuration" : "PT95H8M"
+        },
+        {
+          "blocks" : 122,
+          "words" : 53680,
+          "completed" : 0.2584745762711864,
+          "duration" : "PT4H51M57S",
+          "calendarDuration" : "PT126H21M52S"
+        },
+        {
+          "blocks" : 141,
+          "words" : 62040,
+          "completed" : 0.298728813559322,
+          "duration" : "PT5H39M37S",
+          "calendarDuration" : "PT144H50M40S"
+        },
+        {
+          "blocks" : 152,
+          "words" : 66880,
+          "completed" : 0.3220338983050847,
+          "duration" : "PT6H2M55S",
+          "calendarDuration" : "PT167H57M18S"
+        },
+        {
+          "blocks" : 169,
+          "words" : 74360,
+          "completed" : 0.3580508474576271,
+          "duration" : "PT6H39M5S",
+          "calendarDuration" : "PT192H38M10S"
+        },
+        {
+          "blocks" : 181,
+          "words" : 79640,
+          "completed" : 0.3834745762711864,
+          "duration" : "PT7H4M27S",
+          "calendarDuration" : "PT198H18M22S"
+        },
+        {
+          "blocks" : 201,
+          "words" : 88440,
+          "completed" : 0.4258474576271186,
+          "duration" : "PT7H45M25S",
+          "calendarDuration" : "PT216H13M58S"
+        },
+        {
+          "blocks" : 219,
+          "words" : 96360,
+          "completed" : 0.4639830508474576,
+          "duration" : "PT8H26M23S",
+          "calendarDuration" : "PT240H45M58S"
+        },
+        {
+          "blocks" : 233,
+          "words" : 102520,
+          "completed" : 0.4936440677966102,
+          "duration" : "PT9H27S",
+          "calendarDuration" : "PT261H44M4S"
+        },
+        {
+          "blocks" : 246,
+          "words" : 108240,
+          "completed" : 0.5211864406779662,
+          "duration" : "PT9H30M9S",
+          "calendarDuration" : "PT287H27M42S"
+        },
+        {
+          "blocks" : 252,
+          "words" : 110880,
+          "completed" : 0.5338983050847458,
+          "duration" : "PT9H44M43S",
+          "calendarDuration" : "PT312H44M34S"
+        },
+        {
+          "blocks" : 261,
+          "words" : 114840,
+          "completed" : 0.5529661016949152,
+          "duration" : "PT10H5M34S",
+          "calendarDuration" : "PT318H3M51S"
+        },
+        {
+          "blocks" : 278,
+          "words" : 122320,
+          "completed" : 0.5889830508474576,
+          "duration" : "PT10H48M3S",
+          "calendarDuration" : "PT336H13M29S"
+        },
+        {
+          "blocks" : 286,
+          "words" : 125840,
+          "completed" : 0.6059322033898306,
+          "duration" : "PT11H11M7S",
+          "calendarDuration" : "PT366H7M4S"
+        },
+        {
+          "blocks" : 298,
+          "words" : 131120,
+          "completed" : 0.6313559322033898,
+          "duration" : "PT11H39M46S",
+          "calendarDuration" : "PT383H48M39S"
+        },
+        {
+          "blocks" : 319,
+          "words" : 140360,
+          "completed" : 0.6758474576271186,
+          "duration" : "PT12H32M2S",
+          "calendarDuration" : "PT408H10M16S"
+        },
+        {
+          "blocks" : 327,
+          "words" : 143880,
+          "completed" : 0.6927966101694916,
+          "duration" : "PT12H51M19S",
+          "calendarDuration" : "PT409H52M17S"
+        },
+        {
+          "blocks" : 336,
+          "words" : 147840,
+          "completed" : 0.711864406779661,
+          "duration" : "PT13H14M43S",
+          "calendarDuration" : "PT431H24M24S"
+        },
+        {
+          "blocks" : 350,
+          "words" : 154000,
+          "completed" : 0.7415254237288136,
+          "duration" : "PT13H45M41S",
+          "calendarDuration" : "PT453H58S"
+        },
+        {
+          "blocks" : 360,
+          "words" : 158400,
+          "completed" : 0.7627118644067796,
+          "duration" : "PT14H3M39S",
+          "calendarDuration" : "PT486H19M58S"
+        },
+        {
+          "blocks" : 378,
+          "words" : 166320,
+          "completed" : 0.8008474576271186,
+          "duration" : "PT14H48M40S",
+          "calendarDuration" : "PT504H16M1S"
+        },
+        {
+          "blocks" : 394,
+          "words" : 173360,
+          "completed" : 0.8347457627118644,
+          "duration" : "PT15H25M34S",
+          "calendarDuration" : "PT527H57M54S"
+        },
+        {
+          "blocks" : 409,
+          "words" : 179960,
+          "completed" : 0.8665254237288136,
+          "duration" : "PT15H58M45S",
+          "calendarDuration" : "PT552H36M11S"
+        },
+        {
+          "blocks" : 421,
+          "words" : 185240,
+          "completed" : 0.8919491525423728,
+          "duration" : "PT16H23M53S",
+          "calendarDuration" : "PT576H34M8S"
+        },
+        {
+          "blocks" : 431,
+          "words" : 189640,
+          "completed" : 0.913135593220339,
+          "duration" : "PT16H45M40S",
+          "calendarDuration" : "PT604H27M47S"
+        },
+        {
+          "blocks" : 440,
+          "words" : 193600,
+          "completed" : 0.9322033898305084,
+          "duration" : "PT17H4M33S",
+          "calendarDuration" : "PT626H7M53S"
+        },
+        {
+          "blocks" : 449,
+          "words" : 197560,
+          "completed" : 0.951271186440678,
+          "duration" : "PT17H25M36S",
+          "calendarDuration" : "PT648H43M3S"
+        },
+        {
+          "blocks" : 472,
+          "words" : 207680,
+          "completed" : 1.0,
+          "duration" : "PT18H15M8S",
+          "calendarDuration" : "PT672H32M32S"
+        }
+      ]
     },
     "sessions" : [
       {
@@ -1164,7 +1632,282 @@
         "timeRemaining" : "PT0S",
         "calendarDaysRemaining" : "PT0S",
         "completionDate" : "2018-12-27T16:25:00"
-      }
+      },
+      "cumulativeSessionStatistics" : [
+        {
+          "blocks" : 12,
+          "words" : 6528,
+          "completed" : 0.02586206896551724,
+          "duration" : "PT35M53S",
+          "calendarDuration" : "PT35M53S"
+        },
+        {
+          "blocks" : 21,
+          "words" : 11424,
+          "completed" : 0.04525862068965517,
+          "duration" : "PT1H7M27S",
+          "calendarDuration" : "PT24H19M34S"
+        },
+        {
+          "blocks" : 31,
+          "words" : 16864,
+          "completed" : 0.0668103448275862,
+          "duration" : "PT1H36M25S",
+          "calendarDuration" : "PT48H7M58S"
+        },
+        {
+          "blocks" : 40,
+          "words" : 21760,
+          "completed" : 0.08620689655172414,
+          "duration" : "PT2H17S",
+          "calendarDuration" : "PT49H59M52S"
+        },
+        {
+          "blocks" : 51,
+          "words" : 27744,
+          "completed" : 0.10991379310344827,
+          "duration" : "PT2H40M20S",
+          "calendarDuration" : "PT120H39M3S"
+        },
+        {
+          "blocks" : 57,
+          "words" : 31008,
+          "completed" : 0.12284482758620689,
+          "duration" : "PT2H57M19S",
+          "calendarDuration" : "PT168H37M59S"
+        },
+        {
+          "blocks" : 64,
+          "words" : 34816,
+          "completed" : 0.13793103448275862,
+          "duration" : "PT3H20M38S",
+          "calendarDuration" : "PT192H39M19S"
+        },
+        {
+          "blocks" : 78,
+          "words" : 42432,
+          "completed" : 0.16810344827586207,
+          "duration" : "PT3H59M33S",
+          "calendarDuration" : "PT216H9M55S"
+        },
+        {
+          "blocks" : 84,
+          "words" : 45696,
+          "completed" : 0.1810344827586207,
+          "duration" : "PT4H17M",
+          "calendarDuration" : "PT217H53M27S"
+        },
+        {
+          "blocks" : 95,
+          "words" : 51680,
+          "completed" : 0.20474137931034483,
+          "duration" : "PT4H52M15S",
+          "calendarDuration" : "PT238H6M15S"
+        },
+        {
+          "blocks" : 107,
+          "words" : 58208,
+          "completed" : 0.23060344827586207,
+          "duration" : "PT5H24M6S",
+          "calendarDuration" : "PT283H16M51S"
+        },
+        {
+          "blocks" : 122,
+          "words" : 66368,
+          "completed" : 0.2629310344827586,
+          "duration" : "PT6H8M26S",
+          "calendarDuration" : "PT285H47M20S"
+        },
+        {
+          "blocks" : 140,
+          "words" : 76160,
+          "completed" : 0.3017241379310345,
+          "duration" : "PT7H6M48S",
+          "calendarDuration" : "PT309H7M22S"
+        },
+        {
+          "blocks" : 149,
+          "words" : 81056,
+          "completed" : 0.32112068965517243,
+          "duration" : "PT7H39M59S",
+          "calendarDuration" : "PT367H11M11S"
+        },
+        {
+          "blocks" : 154,
+          "words" : 83776,
+          "completed" : 0.33189655172413796,
+          "duration" : "PT7H56M44S",
+          "calendarDuration" : "PT385H43M45S"
+        },
+        {
+          "blocks" : 163,
+          "words" : 88672,
+          "completed" : 0.35129310344827586,
+          "duration" : "PT8H21M14S",
+          "calendarDuration" : "PT391H4M30S"
+        },
+        {
+          "blocks" : 180,
+          "words" : 97920,
+          "completed" : 0.3879310344827586,
+          "duration" : "PT9H15M25S",
+          "calendarDuration" : "PT405H54M11S"
+        },
+        {
+          "blocks" : 191,
+          "words" : 103904,
+          "completed" : 0.41163793103448276,
+          "duration" : "PT9H50M5S",
+          "calendarDuration" : "PT407H13M40S"
+        },
+        {
+          "blocks" : 204,
+          "words" : 110976,
+          "completed" : 0.4396551724137931,
+          "duration" : "PT10H26M42S",
+          "calendarDuration" : "PT456H40M37S"
+        },
+        {
+          "blocks" : 214,
+          "words" : 116416,
+          "completed" : 0.46120689655172414,
+          "duration" : "PT10H58M11S",
+          "calendarDuration" : "PT480H14M29S"
+        },
+        {
+          "blocks" : 224,
+          "words" : 121856,
+          "completed" : 0.4827586206896552,
+          "duration" : "PT11H25M19S",
+          "calendarDuration" : "PT504H16M8S"
+        },
+        {
+          "blocks" : 236,
+          "words" : 128384,
+          "completed" : 0.5086206896551724,
+          "duration" : "PT11H57M20S",
+          "calendarDuration" : "PT552H4M1S"
+        },
+        {
+          "blocks" : 242,
+          "words" : 131648,
+          "completed" : 0.521551724137931,
+          "duration" : "PT12H16M57S",
+          "calendarDuration" : "PT553H55M37S"
+        },
+        {
+          "blocks" : 249,
+          "words" : 135456,
+          "completed" : 0.5366379310344828,
+          "duration" : "PT12H36M21S",
+          "calendarDuration" : "PT624H55M24S"
+        },
+        {
+          "blocks" : 262,
+          "words" : 142528,
+          "completed" : 0.5646551724137931,
+          "duration" : "PT13H17M53S",
+          "calendarDuration" : "PT628H19M32S"
+        },
+        {
+          "blocks" : 277,
+          "words" : 150688,
+          "completed" : 0.5969827586206896,
+          "duration" : "PT13H56M7S",
+          "calendarDuration" : "PT672H31M14S"
+        },
+        {
+          "blocks" : 286,
+          "words" : 155584,
+          "completed" : 0.6163793103448276,
+          "duration" : "PT14H21M14S",
+          "calendarDuration" : "PT698H50M7S"
+        },
+        {
+          "blocks" : 300,
+          "words" : 163200,
+          "completed" : 0.646551724137931,
+          "duration" : "PT14H54M43S",
+          "calendarDuration" : "PT720H7M29S"
+        },
+        {
+          "blocks" : 304,
+          "words" : 165376,
+          "completed" : 0.6551724137931034,
+          "duration" : "PT15H7M28S",
+          "calendarDuration" : "PT721H49M45S"
+        },
+        {
+          "blocks" : 316,
+          "words" : 171904,
+          "completed" : 0.6810344827586207,
+          "duration" : "PT15H45M23S",
+          "calendarDuration" : "PT772H6M55S"
+        },
+        {
+          "blocks" : 334,
+          "words" : 181696,
+          "completed" : 0.7198275862068966,
+          "duration" : "PT16H28M18S",
+          "calendarDuration" : "PT792H18M55S"
+        },
+        {
+          "blocks" : 348,
+          "words" : 189312,
+          "completed" : 0.75,
+          "duration" : "PT17H1M36S",
+          "calendarDuration" : "PT816H38M18S"
+        },
+        {
+          "blocks" : 364,
+          "words" : 198016,
+          "completed" : 0.7844827586206896,
+          "duration" : "PT17H45M39S",
+          "calendarDuration" : "PT1007H40M3S"
+        },
+        {
+          "blocks" : 374,
+          "words" : 203456,
+          "completed" : 0.8060344827586207,
+          "duration" : "PT18H6M8S",
+          "calendarDuration" : "PT1057H3M29S"
+        },
+        {
+          "blocks" : 383,
+          "words" : 208352,
+          "completed" : 0.8254310344827587,
+          "duration" : "PT18H23M42S",
+          "calendarDuration" : "PT1057H53M34S"
+        },
+        {
+          "blocks" : 394,
+          "words" : 214336,
+          "completed" : 0.8491379310344828,
+          "duration" : "PT18H57M56S",
+          "calendarDuration" : "PT1084H27M14S"
+        },
+        {
+          "blocks" : 414,
+          "words" : 225216,
+          "completed" : 0.8922413793103449,
+          "duration" : "PT19H55M52S",
+          "calendarDuration" : "PT1103H51M56S"
+        },
+        {
+          "blocks" : 435,
+          "words" : 236640,
+          "completed" : 0.9375,
+          "duration" : "PT20H53M31S",
+          "calendarDuration" : "PT1126H21M39S"
+        },
+        {
+          "blocks" : 464,
+          "words" : 252416,
+          "completed" : 1.0,
+          "duration" : "PT22H2M31S",
+          "calendarDuration" : "PT1198H53M"
+        }
+      ]
     },
     "sessions" : [
       {
@@ -1794,7 +2537,44 @@
         "timeRemaining" : "PT0S",
         "calendarDaysRemaining" : "PT0S",
         "completionDate" : "2018-12-31T14:39:00"
-      }
+      },
+      "cumulativeSessionStatistics" : [
+        {
+          "blocks" : 25,
+          "words" : 6600,
+          "completed" : 0.09225092250922509,
+          "duration" : "PT25M57S",
+          "calendarDuration" : "PT25M57S"
+        },
+        {
+          "blocks" : 79,
+          "words" : 20856,
+          "completed" : 0.2915129151291513,
+          "duration" : "PT1H15M30S",
+          "calendarDuration" : "PT18H54M33S"
+        },
+        {
+          "blocks" : 141,
+          "words" : 37224,
+          "completed" : 0.5202952029520295,
+          "duration" : "PT2H19M30S",
+          "calendarDuration" : "PT41H40M"
+        },
+        {
+          "blocks" : 199,
+          "words" : 52536,
+          "completed" : 0.7343173431734318,
+          "duration" : "PT3H16M37S",
+          "calendarDuration" : "PT65H41M7S"
+        },
+        {
+          "blocks" : 271,
+          "words" : 71544,
+          "completed" : 1.0,
+          "duration" : "PT4H33M37S",
+          "calendarDuration" : "PT89H22M"
+        }
+      ]
     },
     "sessions" : [
       {
@@ -1914,7 +2694,86 @@
         "timeRemaining" : "PT0S",
         "calendarDaysRemaining" : "PT0S",
         "completionDate" : "2019-01-14T21:25:10"
-      }
+      },
+      "cumulativeSessionStatistics" : [
+        {
+          "blocks" : 21,
+          "words" : 6132,
+          "completed" : 0.07142857142857142,
+          "duration" : "PT30M31S",
+          "calendarDuration" : "PT30M31S"
+        },
+        {
+          "blocks" : 38,
+          "words" : 11096,
+          "completed" : 0.1292517006802721,
+          "duration" : "PT52M39S",
+          "calendarDuration" : "PT24H8M8S"
+        },
+        {
+          "blocks" : 52,
+          "words" : 15184,
+          "completed" : 0.17687074829931973,
+          "duration" : "PT1H10M25S",
+          "calendarDuration" : "PT25H47M46S"
+        },
+        {
+          "blocks" : 83,
+          "words" : 24236,
+          "completed" : 0.282312925170068,
+          "duration" : "PT1H50M28S",
+          "calendarDuration" : "PT96H37M3S"
+        },
+        {
+          "blocks" : 117,
+          "words" : 34164,
+          "completed" : 0.3979591836734694,
+          "duration" : "PT2H32M19S",
+          "calendarDuration" : "PT120H38M51S"
+        },
+        {
+          "blocks" : 136,
+          "words" : 39712,
+          "completed" : 0.46258503401360546,
+          "duration" : "PT2H57M13S",
+          "calendarDuration" : "PT144H4M54S"
+        },
+        {
+          "blocks" : 165,
+          "words" : 48180,
+          "completed" : 0.5612244897959183,
+          "duration" : "PT3H32M34S",
+          "calendarDuration" : "PT168H35M21S"
+        },
+        {
+          "blocks" : 180,
+          "words" : 52560,
+          "completed" : 0.6122448979591837,
+          "duration" : "PT3H49M16S",
+          "calendarDuration" : "PT193H45M42S"
+        },
+        {
+          "blocks" : 243,
+          "words" : 70956,
+          "completed" : 0.826530612244898,
+          "duration" : "PT5H16S",
+          "calendarDuration" : "PT215H37M"
+        },
+        {
+          "blocks" : 269,
+          "words" : 78548,
+          "completed" : 0.9149659863945578,
+          "duration" : "PT5H31M45S",
+          "calendarDuration" : "PT264H13M29S"
+        },
+        {
+          "blocks" : 294,
+          "words" : 85848,
+          "completed" : 1.0,
+          "duration" : "PT5H58M55S",
+          "calendarDuration" : "PT267H47M10S"
+        }
+      ]
     },
     "sessions" : [
       {
@@ -2124,7 +2983,100 @@
         "timeRemaining" : "PT0S",
         "calendarDaysRemaining" : "PT0S",
         "completionDate" : "2019-02-01T19:27:25"
-      }
+      },
+      "cumulativeSessionStatistics" : [
+        {
+          "blocks" : 30,
+          "words" : 8760,
+          "completed" : 0.09523809523809523,
+          "duration" : "PT38M29S",
+          "calendarDuration" : "PT38M29S"
+        },
+        {
+          "blocks" : 54,
+          "words" : 15768,
+          "completed" : 0.17142857142857143,
+          "duration" : "PT1H6M54S",
+          "calendarDuration" : "PT24H18M25S"
+        },
+        {
+          "blocks" : 70,
+          "words" : 20440,
+          "completed" : 0.2222222222222222,
+          "duration" : "PT1H28M1S",
+          "calendarDuration" : "PT72H16M7S"
+        },
+        {
+          "blocks" : 90,
+          "words" : 26280,
+          "completed" : 0.2857142857142857,
+          "duration" : "PT1H53M8S",
+          "calendarDuration" : "PT73H57M7S"
+        },
+        {
+          "blocks" : 112,
+          "words" : 32704,
+          "completed" : 0.35555555555555557,
+          "duration" : "PT2H22M36S",
+          "calendarDuration" : "PT144H37M28S"
+        },
+        {
+          "blocks" : 146,
+          "words" : 42632,
+          "completed" : 0.4634920634920635,
+          "duration" : "PT3H49S",
+          "calendarDuration" : "PT168H47M13S"
+        },
+        {
+          "blocks" : 163,
+          "words" : 47596,
+          "completed" : 0.5174603174603175,
+          "duration" : "PT3H18M22S",
+          "calendarDuration" : "PT192H42M33S"
+        },
+        {
+          "blocks" : 187,
+          "words" : 54604,
+          "completed" : 0.5936507936507937,
+          "duration" : "PT3H46M26S",
+          "calendarDuration" : "PT240H24M4S"
+        },
+        {
+          "blocks" : 203,
+          "words" : 59276,
+          "completed" : 0.6444444444444445,
+          "duration" : "PT4H5M2S",
+          "calendarDuration" : "PT241H52M36S"
+        },
+        {
+          "blocks" : 216,
+          "words" : 63072,
+          "completed" : 0.6857142857142857,
+          "duration" : "PT4H19M56S",
+          "calendarDuration" : "PT312H47M54S"
+        },
+        {
+          "blocks" : 252,
+          "words" : 73584,
+          "completed" : 0.8,
+          "duration" : "PT5H32S",
+          "calendarDuration" : "PT360H44M36S"
+        },
+        {
+          "blocks" : 301,
+          "words" : 87892,
+          "completed" : 0.9555555555555556,
+          "duration" : "PT5H55M19S",
+          "calendarDuration" : "PT384H53M47S"
+        },
+        {
+          "blocks" : 315,
+          "words" : 91980,
+          "completed" : 1.0,
+          "duration" : "PT6H11M44S",
+          "calendarDuration" : "PT409H57M25S"
+        }
+      ]
     },
     "sessions" : [
       {
@@ -2364,7 +3316,100 @@
         "timeRemaining" : "PT0S",
         "calendarDaysRemaining" : "PT0S",
         "completionDate" : "2019-03-06T21:56:35"
-      }
+      },
+      "cumulativeSessionStatistics" : [
+        {
+          "blocks" : 23,
+          "words" : 6716,
+          "completed" : 0.06764705882352941,
+          "duration" : "PT26M31S",
+          "calendarDuration" : "PT26M31S"
+        },
+        {
+          "blocks" : 54,
+          "words" : 15768,
+          "completed" : 0.1588235294117647,
+          "duration" : "PT1H2M13S",
+          "calendarDuration" : "PT23H52M42S"
+        },
+        {
+          "blocks" : 66,
+          "words" : 19272,
+          "completed" : 0.19411764705882353,
+          "duration" : "PT1H15M26S",
+          "calendarDuration" : "PT25H26M13S"
+        },
+        {
+          "blocks" : 104,
+          "words" : 30368,
+          "completed" : 0.3058823529411765,
+          "duration" : "PT1H58M10S",
+          "calendarDuration" : "PT168H24M44S"
+        },
+        {
+          "blocks" : 144,
+          "words" : 42048,
+          "completed" : 0.4235294117647059,
+          "duration" : "PT2H45M3S",
+          "calendarDuration" : "PT191H56M53S"
+        },
+        {
+          "blocks" : 151,
+          "words" : 44092,
+          "completed" : 0.4441176470588235,
+          "duration" : "PT2H52M30S",
+          "calendarDuration" : "PT193H28M27S"
+        },
+        {
+          "blocks" : 179,
+          "words" : 52268,
+          "completed" : 0.5264705882352941,
+          "duration" : "PT3H23M21S",
+          "calendarDuration" : "PT288H13M51S"
+        },
+        {
+          "blocks" : 209,
+          "words" : 61028,
+          "completed" : 0.6147058823529412,
+          "duration" : "PT4H1M52S",
+          "calendarDuration" : "PT310H50M31S"
+        },
+        {
+          "blocks" : 233,
+          "words" : 68036,
+          "completed" : 0.6852941176470588,
+          "duration" : "PT4H28M44S",
+          "calendarDuration" : "PT336H14M52S"
+        },
+        {
+          "blocks" : 259,
+          "words" : 75628,
+          "completed" : 0.7617647058823529,
+          "duration" : "PT4H59M11S",
+          "calendarDuration" : "PT359H42M27S"
+        },
+        {
+          "blocks" : 292,
+          "words" : 85264,
+          "completed" : 0.8588235294117647,
+          "duration" : "PT5H36M39S",
+          "calendarDuration" : "PT455H55M28S"
+        },
+        {
+          "blocks" : 321,
+          "words" : 93732,
+          "completed" : 0.9441176470588235,
+          "duration" : "PT6H6M47S",
+          "calendarDuration" : "PT479H48M8S"
+        },
+        {
+          "blocks" : 340,
+          "words" : 99280,
+          "completed" : 1.0,
+          "duration" : "PT6H27M22S",
+          "calendarDuration" : "PT484H1M35S"
+        }
+      ]
     },
     "sessions" : [
       {
@@ -2604,7 +3649,79 @@
         "timeRemaining" : "PT7H53M54S",
         "calendarDaysRemaining" : "PT671H32M37S",
         "completionDate" : "2019-04-16T17:14:53"
-      }
+      },
+      "cumulativeSessionStatistics" : [
+        {
+          "blocks" : 9,
+          "words" : 2628,
+          "completed" : 0.016981132075471698,
+          "duration" : "PT11M2S",
+          "calendarDuration" : "PT11M2S"
+        },
+        {
+          "blocks" : 26,
+          "words" : 7592,
+          "completed" : 0.04905660377358491,
+          "duration" : "PT32M17S",
+          "calendarDuration" : "PT23H52M15S"
+        },
+        {
+          "blocks" : 55,
+          "words" : 16060,
+          "completed" : 0.10377358490566038,
+          "duration" : "PT1H9M41S",
+          "calendarDuration" : "PT95H51M24S"
+        },
+        {
+          "blocks" : 58,
+          "words" : 16936,
+          "completed" : 0.10943396226415095,
+          "duration" : "PT1H12M31S",
+          "calendarDuration" : "PT98H32M50S"
+        },
+        {
+          "blocks" : 77,
+          "words" : 22484,
+          "completed" : 0.14528301886792452,
+          "duration" : "PT1H37M19S",
+          "calendarDuration" : "PT120H14M48S"
+        },
+        {
+          "blocks" : 90,
+          "words" : 26280,
+          "completed" : 0.16981132075471697,
+          "duration" : "PT1H56M18S",
+          "calendarDuration" : "PT146H55M59S"
+        },
+        {
+          "blocks" : 103,
+          "words" : 30076,
+          "completed" : 0.19433962264150945,
+          "duration" : "PT2H14M53S",
+          "calendarDuration" : "PT148H3M35S"
+        },
+        {
+          "blocks" : 119,
+          "words" : 34748,
+          "completed" : 0.22452830188679246,
+          "duration" : "PT2H35M6S",
+          "calendarDuration" : "PT167H47M13S"
+        },
+        {
+          "blocks" : 132,
+          "words" : 38544,
+          "completed" : 0.2490566037735849,
+          "duration" : "PT2H50M50S",
+          "calendarDuration" : "PT263H50M44S"
+        },
+        {
+          "blocks" : 159,
+          "words" : 46428,
+          "completed" : 0.3,
+          "duration" : "PT3H23M6S",
+          "calendarDuration" : "PT287H48M16S"
+        }
+      ]
     },
     "sessions" : [
       {
