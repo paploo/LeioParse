@@ -8,14 +8,14 @@ import net.paploo.leioparse.formatter.CSVFormatter
 import net.paploo.leioparse.util.extensions.Implicits._
 import net.paploo.leioparse.util.extensions.LoggingExtensions.Logging
 
-class V2CSVFormatter extends CSVFormatter[Unit] with Logging {
+class CSVFormatterV2 extends CSVFormatter[Unit] with Logging {
 
   override def writeReports(reports: Seq[BookReport])(implicit CSVWriter: CSVWriter): Unit = {
     writeHeaders
     reports.foreach(writeReport)
   }
 
-  private[this] def writeHeaders(implicit csv: CSVWriter): Seq[String] = V2CSVFormatter.headers.tap(csv.writeRow)
+  private[this] def writeHeaders(implicit csv: CSVWriter): Seq[String] = CSVFormatterV2.headers.tap(csv.writeRow)
 
   private[this] def writeReport(report: BookReport)(implicit csv: CSVWriter): Seq[String] = report.stats.map { reportStats =>
     report.sessions.flatMap(writeSession(report.book, reportStats))
@@ -57,7 +57,7 @@ class V2CSVFormatter extends CSVFormatter[Unit] with Logging {
 
 }
 
-object V2CSVFormatter {
+object CSVFormatterV2 {
 
   val headers: Seq[String] = Seq(
     "Book_Title",
