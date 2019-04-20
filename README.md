@@ -49,7 +49,11 @@ $ sbt coverage test coverageReport
 
 Note that IntelliJ will choke if trying to run on the files compiled with coverage on; the easiest way is to
 clean and compile from a new sbt instance (one without coverage loaded); however if you are in an active *sbt*
-session, use `coverageOff` to clear coverage first, and then `clean` and `compile`
+session, use `coverageOff` to clear coverage first, and then `clean` and `compile`. This leads to an interesting chain
+of commands I find myself running:
+```
+$ sbt clean coverage test coverageReport coverageOff compile
+```
 
 ## License
 
