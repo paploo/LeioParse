@@ -37,7 +37,7 @@ class CSVFormatterV2 extends CSVFormatter[Unit] with Logging {
     stats.progress.blocksRead.value.toString,
     book.words.value.toString,
     stats.progress.wordsRead.value.toString,
-    stats.progress.completed.value.formatted("%.2f"),
+    stats.progress.completed.value.formatted("%.4f"),
     stats.progress.cumulativeReadingTime.toHours.formatted("%.2f"),
     stats.progress.calendarDuration.toDays.formatted("%.3f"),
     stats.sessionReadingRates.blockRate.value.round.toString, //blocks per hour
@@ -57,7 +57,7 @@ class CSVFormatterV2 extends CSVFormatter[Unit] with Logging {
     cumulativeStats.words.value.toString,
     cumulativeStats.duration.toHours.formatted("%.2f"),
     cumulativeStats.calendarDuration.toDays.formatted("%.3f"),
-    cumulativeStats.completed.value.formatted("%.2f")
+    cumulativeStats.completed.value.formatted("%.4f")
   ).tap(csv.writeRow)
 
 }
