@@ -3,6 +3,7 @@ package net.paploo.leioparse.formatter.formatters
 import java.time.format.DateTimeFormatter
 
 import com.github.tototoshi.csv.CSVWriter
+import net.paploo.leioparse.data.core.BookStatistics.SessionCumulativeStatistics
 import net.paploo.leioparse.data.core.{Book, BookReport, BookStatistics, Session}
 import net.paploo.leioparse.formatter.CSVFormatter
 import net.paploo.leioparse.util.extensions.Implicits._
@@ -18,7 +19,7 @@ class CSVFormatterV2 extends CSVFormatter[Unit] with Logging {
   private[this] def writeHeaders(implicit csv: CSVWriter): Seq[String] = CSVFormatterV2.headers.tap(csv.writeRow)
 
   private[this] def writeReport(report: BookReport)(implicit csv: CSVWriter): Seq[String] = report.stats.map { reportStats =>
-    report.sessions.flatMap(writeSession(report.book, reportStats))
+    (report.sessions zip reportStats.cumulativeSessionStatistics).flatMap((writeSession(report.book, reportStats) _).tupled)
   } recover {
     case th =>
       logger.error(s"Encountered error formatting for lines due to $th on report $report", th)
@@ -28,7 +29,7 @@ class CSVFormatterV2 extends CSVFormatter[Unit] with Logging {
     Seq.empty
   }
 
-  private[this] def writeSession(book: Book, stats: BookStatistics)(session: Session)(implicit csv: CSVWriter): Seq[String] = Seq(
+  private[this] def writeSession(book: Book, stats: BookStatistics)(session: Session, cumulativeStats: SessionCumulativeStatistics)(implicit csv: CSVWriter): Seq[String] = Seq(
     book.title.value.toString,
     book.externalId.map(_.value).getOrElse(""),
     book.averageWordDensity.value.round.toString, //Convert to Int
@@ -36,7 +37,7 @@ class CSVFormatterV2 extends CSVFormatter[Unit] with Logging {
     stats.progress.blocksRead.value.toString,
     book.words.value.toString,
     stats.progress.wordsRead.value.toString,
-    stats.progress.completed.value.toString,
+    stats.progress.completed.value.formatted("%.2f"),
     stats.progress.cumulativeReadingTime.toHours.formatted("%.2f"),
     stats.progress.calendarDuration.toDays.formatted("%.3f"),
     stats.sessionReadingRates.blockRate.value.round.toString, //blocks per hour
@@ -48,11 +49,15 @@ class CSVFormatterV2 extends CSVFormatter[Unit] with Logging {
     session.sessionRelativeStart(stats.calendarDateStats.start).toDays.formatted("%.3f"),
     session.duration.toMinutes.formatted("%.1f"),
     session.blocks.value.toString,
+    session.blockRate.value.round.toString, //blocks per hour
     session.words(book.averageWordDensity).value.toString,
+    session.wordRate(book.averageWordDensity).value.round.toString, //words per hour
 
-    "0.0",
-    "0",
-    "0"
+    cumulativeStats.blocks.value.toString,
+    cumulativeStats.words.value.toString,
+    cumulativeStats.duration.toHours.formatted("%.2f"),
+    cumulativeStats.calendarDuration.toDays.formatted("%.3f"),
+    cumulativeStats.completed.value.formatted("%.2f")
   ).tap(csv.writeRow)
 
 }
@@ -79,11 +84,15 @@ object CSVFormatterV2 {
     "Session_Relative_Start_Day",
     "Session_Duration_Minutes",
     "Session_Blocks_Read",
+    "Session_Reading_Block_Rate",
     "Session_Words_Read",
+    "Session_Reading_Word_Rate",
 
-    "Session_Cumulative_Duration_Hours",
     "Session_Cumulative_Blocks",
-    "Session_Cumulative_Words"
+    "Session_Cumulative_Words",
+    "Session_Cumulative_Duration_Hours",
+    "Session_Cumulative_Calendar_Time_Days",
+    "Session_Cumulative_Progress"
   )
 
 }

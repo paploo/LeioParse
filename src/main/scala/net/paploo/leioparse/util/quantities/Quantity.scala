@@ -88,6 +88,7 @@ case class Blocks(value: Int) extends Quantity[Int] {
   def /(duration: TimeSpan): BlockRate = BlockRate.from(this, duration)
   def /(that: Blocks): Ratio = Ratio.from(this, that)
 
+  def +(that: Blocks): Blocks = Blocks(value + that.value)
   def -(that: Blocks): Blocks = Blocks(value - that.value)
 
   override def toInt: Int = value.toInt
@@ -105,6 +106,8 @@ object Blocks {
   * Fundamental unit of counts of words.
   */
 case class Words(value: Int) extends Quantity[Int] {
+  def +(that: Words): Words = Words(value + that.value)
+
   def /(blocks: Blocks): WordDensity = WordDensity.from(this, blocks)
   def /(duration: TimeSpan): WordRate = WordRate.from(this, duration)
 
@@ -227,7 +230,7 @@ case class Ratio(value: Double) extends Quantity[Double] {
 }
 
 object Ratio {
-  def zero: Ratio = Ratio(0.0)
+  def Zero: Ratio = Ratio(0.0)
   implicit val Ordering: Ordering[Ratio] = scala.math.Ordering.by(_.value)
 
   def from[A <: Quantity[_]](numerator: A, denominator: A): Ratio = Ratio(numerator.toDouble / denominator.toDouble)
