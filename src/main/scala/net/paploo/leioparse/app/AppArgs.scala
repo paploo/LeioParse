@@ -8,7 +8,7 @@ import scala.concurrent.Promise
 
 case class AppArgs(inputDirPath: Path,
                    bookOverlayPath: Path = Paths.get("books.json"),
-                   formatter: FormatterArg = FormatterArg.LegacyCSV,
+                   formatter: FormatterArg = FormatterArg.CSV,
                    outputMethod: OutputMethod = OutputMethod.StdOut)
 
 object AppArgs {
