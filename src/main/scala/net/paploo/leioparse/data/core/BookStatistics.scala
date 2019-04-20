@@ -1,6 +1,7 @@
 package net.paploo.leioparse.data.core
 
 import cats.Show
+import net.paploo.leioparse.data.core.BookStatistics.SessionCumulativeStatistics
 import net.paploo.leioparse.util.quantities._
 
 import scala.util.{Failure, Try}
@@ -15,7 +16,8 @@ case class BookStatistics(calendarDateStats: BookStatistics.CalendarDateStats,
                           progress: BookStatistics.Progress,
                           sessionReadingRates: BookStatistics.SessionReadingRates,
                           bookReadingRates: BookStatistics.BookReadingRates,
-                          estimates: BookStatistics.Estimates) {
+                          estimates: BookStatistics.Estimates,
+                          cumulativeSessionStatistics: Seq[SessionCumulativeStatistics]) {
 }
 
 object BookStatistics {
@@ -48,6 +50,22 @@ object BookStatistics {
                        calendarDaysRemaining: TimeSpan,
                        completionDate: DateTime)
 
+  case class SessionCumulativeStatistics(blocks: Blocks,
+                                         words: Words,
+                                         completed: Ratio,
+                                         duration: TimeSpan,
+                                         calendarDuration: TimeSpan)
+
+  object SessionCumulativeStatistics {
+
+    val empty: SessionCumulativeStatistics = apply(Blocks.Zero,
+                                                   Words.Zero,
+                                                   Ratio.Zero,
+                                                   TimeSpan.Zero,
+                                                   TimeSpan.Zero)
+
+  }
+
   case class StatisticsComputationException(message: String, cause: Throwable) extends RuntimeException(message, cause)
 
   implicit val ShowBookStatistics: Show[BookStatistics] =
@@ -71,7 +89,7 @@ object BookStatistics {
 
     val progress = {
       val blocksRead = locationStats.start to locationStats.last
-      val completed = if (book.length.isZero) Ratio.zero else blocksRead / book.length
+      val completed = if (book.length.isZero) Ratio.Zero else blocksRead / book.length
       val blocksRemaining = book.length - blocksRead
       Progress(
         completed = completed,
@@ -107,12 +125,26 @@ object BookStatistics {
       )
     }
 
+    val emptyMemo = (SessionCumulativeStatistics.empty, Vector.empty[SessionCumulativeStatistics])
+    val cumulativeSessionStatistics: Seq[SessionCumulativeStatistics] = sessions.foldLeft(emptyMemo){
+      case ((acc, stats), session) =>
+        val blocksRead = acc.blocks + session.blocks
+        val completed = if (book.length.isZero) Ratio.Zero else blocksRead / book.length
+        val nextAcc = SessionCumulativeStatistics(blocks = blocksRead,
+                                                  words = acc.words + session.words(book.averageWordDensity),
+                                                  completed = completed,
+                                                  duration = acc.duration + session.duration,
+                                                  calendarDuration = session.endDate - calendarDateStats.start)
+        (nextAcc, stats :+ nextAcc)
+    }._2
+
     apply(calendarDateStats,
           locationStats,
           progress,
           sessionReadingRates,
           bookReadingRates,
-          estimates)
+          estimates,
+          cumulativeSessionStatistics)
   }
 
 }
