@@ -67,7 +67,7 @@ object LeioParse extends Logging {
       opt[String]('f',"format")
       .action((s, args) => args.copy(formatter = formatMapping(s)))
       .validate(s => if (formatMapping.isDefinedAt(s)) success
-                   else failure(s"Unrecognized format $s, must be one of ${formatMapping.keys.mkString(", ")}")),
+                     else failure(s"Unrecognized format $s, must be one of ${formatMapping.keys.mkString(", ")}")),
 
     opt[File]('b', "book-library")
     .action((f, args) => args.copy(bookOverlayPath = f.toPath))
