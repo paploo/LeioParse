@@ -10,5 +10,8 @@
   { "id": "MORTAL.4", "title": "A Darkling Plain", "wordDensity": 260, "comment": "sample page is ~290, but online word counts give ~260, so 0.90 efficiency"},
   { "id": "MORTAL.5", "title": "Night Flights", "wordDensity": 150, "comment": "Counted words on a few pages, and averaged down over empty/picture pages" },
   { "id": "HP.6", "title": "Harry Potter 6", "wordDensity": 20.09, "comment": "Calculated using word count found online" },
-  { "id": "HP.7", "title": "Harry Potter 7", "wordDensity": 20.90, "comment": "Calculated using word count found online" }
+  { "id": "HP.7", "title": "Harry Potter 7", "wordDensity": 20.90, "comment": "Calculated using word count found online" },
+  { "id": "MIST.1", "title": "Mistborn", "wordDensity": 331.8, "comment": "Calculated trilogy with https://gzidar.wordpress.com/2012/04/05/mistborn-by-the-numbers/" },
+  { "id": "MIST.2", "title": "The Well of Ascension", "wordDensity": 314.7 },
+  { "id": "MIST.3", "title": "The Hero of Ages", "wordDensity": 314.0 }
 ]
