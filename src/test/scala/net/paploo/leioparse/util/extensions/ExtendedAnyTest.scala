@@ -26,7 +26,7 @@ class ExtendedAnyTest extends TestSpec with ExtendedAny.Implicits {
   describe("thru") {
 
     it("should run the given function and return the value") {
-      32.thru(_*2) should === (64)
+      32.let(_*2) should === (64)
     }
 
   }

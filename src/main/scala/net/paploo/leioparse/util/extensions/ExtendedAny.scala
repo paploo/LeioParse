@@ -4,7 +4,7 @@ import net.paploo.leioparse.util.functional.Functional
 
 class ExtendedAny[+A](val value: A) extends AnyVal {
   def tap[B](f: A => B): A = Functional.tap(f)(value)
-  def thru[B](f: A => B): B = f(value)
+  def let[B](f: A => B): B = f(value)
 }
 
 object ExtendedAny {

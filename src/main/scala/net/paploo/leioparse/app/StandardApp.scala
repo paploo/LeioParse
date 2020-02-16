@@ -22,7 +22,7 @@ import scala.concurrent.{ExecutionContext, Future}
 trait StandardApp extends App[Seq[BookReport]] with Logging {
 
   override def run(args: AppArgs)(implicit ec: ExecutionContext): Future[Result[Seq[BookReport]]] =
-    args.log(a => s"Running with $a").thru(a => runImplicitly(a, ec))
+    args.log(a => s"Running with $a").let(a => runImplicitly(a, ec))
 
   private[this] def runImplicitly(implicit args: AppArgs, ec: ExecutionContext): Future[Result[Seq[BookReport]]] = for {
     leioLogParser <- leioLogParser
