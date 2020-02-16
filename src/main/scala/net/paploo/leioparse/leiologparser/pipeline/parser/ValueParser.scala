@@ -14,6 +14,7 @@ trait ValueParser[A] {
   def apply(v: Row.Value): A
 
   def toFunction: Row.Value => A = apply
+
   def map[B](f: A => B): ValueParser[B] = s => f(apply(s))
 }
 
@@ -36,18 +37,18 @@ object ValueParser {
 
   implicit val TimeSpanParser: ValueParser[TimeSpan] = new ValueParser[TimeSpan] {
 
-    private[this] val leioPattern: Regex ="""((\d+) h)?\s*((\d+) min)\s*?((\d+) s)?""".r
+    private[this] val leioPattern: Regex = """((\d+) h)?\s*((\d+) min)\s*?((\d+) s)?""".r
 
     override def apply(v: Row.Value): TimeSpan = TimeSpan(v.value match {
-                                                            case leioPattern(_, h, _, m, _, s) =>
-                                                              Duration.ofHours(
-                                                                Option(h).map(_.toLong).getOrElse(0L)
-                                                              ).plusMinutes(
-                                                                Option(m).map(_.toLong).getOrElse(0L)
-                                                              ).plusSeconds(
-                                                                Option(s).map(_.toLong).getOrElse(0L)
-                                                              )
-                                                          })
+      case leioPattern(_, h, _, m, _, s) =>
+        Duration.ofHours(
+          Option(h).map(_.toLong).getOrElse(0L)
+        ).plusMinutes(
+          Option(m).map(_.toLong).getOrElse(0L)
+        ).plusSeconds(
+          Option(s).map(_.toLong).getOrElse(0L)
+        )
+    })
   }
 
 }

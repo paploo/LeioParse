@@ -8,7 +8,7 @@ import scala.util.{Failure, Try}
 
 class ExtendedFuture[+A](toFuture: Future[A]) {
 
-  def toTry( implicit timeout: TryTimeout): Try[A] = {
+  def toTry(implicit timeout: TryTimeout): Try[A] = {
     Await.ready(toFuture, timeout.toDuration)
     toFuture.value getOrElse Failure(new RuntimeException(s"Cannot convert to Try, ready future value is missing!"))
   }

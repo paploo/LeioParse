@@ -22,12 +22,16 @@ class Outputter private(os: OutputStream) extends OutputStream {
   val toOutputStream: OutputStream = this
 
   lazy val toWriter: PrintWriter = new PrintWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8), true) {
-    override def close(): Unit = {/** Do nothing to not leak closing into formatter scope; defer close management to whatever created the OutputStream} **/}
+    override def close(): Unit = {
+      /** Do nothing to not leak closing into formatter scope; defer close management to whatever created the OutputStream} **/
+    }
   }
 
   override def write(b: Int): Unit = os.write(b)
 
-  override def close(): Unit = {/** Do nothing to not leak closing into formatter scope; defer close management to whatever created the OutputStream **/}
+  override def close(): Unit = {
+    /** Do nothing to not leak closing into formatter scope; defer close management to whatever created the OutputStream **/
+  }
 
 }
 
@@ -44,7 +48,7 @@ object Outputter {
     result
   }
 
-  def runToLinesPromise[A](linesPromise: Promise[Seq[String]])(f: Outputter => A)(implicit ec: ExecutionContext):  Future[A] = Future {
+  def runToLinesPromise[A](linesPromise: Promise[Seq[String]])(f: Outputter => A)(implicit ec: ExecutionContext): Future[A] = Future {
     val os: ByteArrayOutputStream = new ByteArrayOutputStream
     val result = f(Outputter(os))
 

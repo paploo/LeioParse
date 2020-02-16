@@ -15,6 +15,7 @@ object LeioParser {
   val BookParser: LeioParser[LeioBook] = parser.BookParser()
 
   trait ParseTools {
+
     implicit class RichRow(toRow: Row) {
       def extractRequired[A](key: Row.Key)(implicit parser: ValueParser[A]): Try[A] = extract(key) match {
         case Some(extracted) => Success(extracted)
@@ -25,6 +26,7 @@ object LeioParser {
 
       def extract[A](key: Row.Key)(implicit parser: ValueParser[A]): Option[A] = toRow.get(key).map(parser.toFunction)
     }
+
   }
 
 }

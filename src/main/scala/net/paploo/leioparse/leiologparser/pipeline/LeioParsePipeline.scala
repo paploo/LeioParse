@@ -45,6 +45,7 @@ object LeioParsePipeline {
     LeioReader.csvParser,
     LeioParser.BookParser
   )
+
   def leioBookPipelineBuilder: LeioParsePipelineBuilder[LeioBook] = leioBookPipeline(_)
 
   def leioSessionPipeline(implicit ec: ExecutionContext): LeioParsePipeline[LeioSession] = apply(
@@ -52,6 +53,7 @@ object LeioParsePipeline {
     LeioReader.csvParser,
     LeioParser.SessionParser
   )
+
   def leioSessionPipelineBuilder: LeioParsePipelineBuilder[LeioSession] = leioSessionPipeline(_)
 
 }

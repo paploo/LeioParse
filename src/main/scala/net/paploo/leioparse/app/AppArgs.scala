@@ -16,13 +16,18 @@ object AppArgs {
   def empty: AppArgs = AppArgs(inputDirPath = Paths.get("."))
 
   trait OutputMethod
+
   object OutputMethod {
+
     /** //Output to System.out (stdout) */
     case object StdOut extends OutputMethod
+
     /** Output the lines as UTF-8 strings to the given promise. This is usually used for test scenarios. */
     case class Lines(linesPromise: Promise[Seq[String]]) extends OutputMethod
+
     /** Output to the given file **/
     case class FilePath(toPath: Path) extends OutputMethod
+
   }
 
   trait FormatterArg
@@ -31,7 +36,6 @@ object AppArgs {
     case object JSON extends FormatterArg
     case object LegacyCSV extends FormatterArg
     case object CSV extends FormatterArg
-
     def values: Set[FormatterArg] = Set(Debug, JSON, LegacyCSV, CSV)
   }
 

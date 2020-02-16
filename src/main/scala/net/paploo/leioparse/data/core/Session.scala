@@ -5,11 +5,12 @@ import net.paploo.leioparse.util.quantities._
 
 /**
   * Represents a session spent reading a given book.
-  * @param bookTitle The title of the book—this is usually used as the primary reference key to a book
-  * @param startDate The date-time that the session began.
-  * @param duration The duration of the reading session.
+  *
+  * @param bookTitle     The title of the book—this is usually used as the primary reference key to a book
+  * @param startDate     The date-time that the session began.
+  * @param duration      The duration of the reading session.
   * @param startLocation The location that reading started from (inclusive).
-  * @param endLocation The location from which reading completed (inclusive).
+  * @param endLocation   The location from which reading completed (inclusive).
   */
 case class Session(bookTitle: Book.Title,
                    startDate: DateTime,

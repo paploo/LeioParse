@@ -9,6 +9,6 @@ import pprint.PPrinter
 class DebugFormatter extends WriterFormatter[Unit] {
 
   override def writeReports(reports: Seq[BookReport])(implicit writer: PrintWriter): Unit =
-    writer.println( PPrinter.BlackWhite.apply(reports, 160, 10000) )
+    writer.println(PPrinter.BlackWhite.apply(reports, 160, 10000))
 
 }

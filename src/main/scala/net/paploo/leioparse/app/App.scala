@@ -34,6 +34,7 @@ object App {
     }
 
     import cats.implicits._
+
     implicit def ShowResult[A](implicit showA: Show[A]): Show[Result[A]] =
       result => result.toSeq.map(_.show).mkString(s"Result(\n\t", ",\n\t", "\n)")
 
@@ -45,7 +46,5 @@ object App {
       result2 <- second.run(args)
     } yield result1 ++ result2
   }
-
-
 
 }

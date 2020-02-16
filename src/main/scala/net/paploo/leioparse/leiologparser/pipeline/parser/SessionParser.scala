@@ -10,6 +10,7 @@ import net.paploo.leioparse.util.quantities.{DateTime, Location, TimeSpan}
 import scala.util.{Success, Try}
 
 class SessionParser extends LeioParser[LeioSession] with ParseTools {
+
   import SessionParser.Keys._
 
   override def apply(row: Row): Try[LeioSession] = for {

@@ -23,7 +23,7 @@ case class BookStatistics(calendarDateStats: BookStatistics.CalendarDateStats,
 object BookStatistics {
 
   def from(book: Book, sessions: Seq[Session]): Try[BookStatistics] =
-    if (sessions.nonEmpty) fromNonEmptySessions(book, sessions).recoverWith { case th => Failure(StatisticsComputationException(s"Encountered error $th while computing statistics for $book with sessions $sessions", th))}
+    if (sessions.nonEmpty) fromNonEmptySessions(book, sessions).recoverWith { case th => Failure(StatisticsComputationException(s"Encountered error $th while computing statistics for $book with sessions $sessions", th)) }
     else Failure(StatisticsComputationException(s"Could not compute statistics for book with no sessions: $book", cause = null))
 
   case class CalendarDateStats(start: DateTime,
@@ -59,10 +59,10 @@ object BookStatistics {
   object SessionCumulativeStatistics {
 
     val empty: SessionCumulativeStatistics = apply(Blocks.Zero,
-                                                   Words.Zero,
-                                                   Ratio.Zero,
-                                                   TimeSpan.Zero,
-                                                   TimeSpan.Zero)
+      Words.Zero,
+      Ratio.Zero,
+      TimeSpan.Zero,
+      TimeSpan.Zero)
 
   }
 
@@ -126,25 +126,25 @@ object BookStatistics {
     }
 
     val emptyMemo = (SessionCumulativeStatistics.empty, Vector.empty[SessionCumulativeStatistics])
-    val cumulativeSessionStatistics: Seq[SessionCumulativeStatistics] = sessions.foldLeft(emptyMemo){
+    val cumulativeSessionStatistics: Seq[SessionCumulativeStatistics] = sessions.foldLeft(emptyMemo) {
       case ((acc, stats), session) =>
         val blocksRead = acc.blocks + session.blocks
         val completed = if (book.length.isZero) Ratio.Zero else blocksRead / book.length
         val nextAcc = SessionCumulativeStatistics(blocks = blocksRead,
-                                                  words = acc.words + session.words(book.averageWordDensity),
-                                                  completed = completed,
-                                                  duration = acc.duration + session.duration,
-                                                  calendarDuration = session.endDate - calendarDateStats.start)
+          words = acc.words + session.words(book.averageWordDensity),
+          completed = completed,
+          duration = acc.duration + session.duration,
+          calendarDuration = session.endDate - calendarDateStats.start)
         (nextAcc, stats :+ nextAcc)
     }._2
 
     apply(calendarDateStats,
-          locationStats,
-          progress,
-          sessionReadingRates,
-          bookReadingRates,
-          estimates,
-          cumulativeSessionStatistics)
+      locationStats,
+      progress,
+      sessionReadingRates,
+      bookReadingRates,
+      estimates,
+      cumulativeSessionStatistics)
   }
 
 }

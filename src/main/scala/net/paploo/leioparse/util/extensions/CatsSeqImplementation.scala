@@ -33,6 +33,7 @@ object CatsSeqImplementation {
     override def tailRecM[A, B](a: A)(f: A => Seq[Either[A, B]]): Seq[B] = {
       val buf = Seq.newBuilder[B]
       val initialState = List(f(a).iterator)
+
       @tailrec
       def loop(state: List[Iterator[Either[A, B]]]): Unit = state match {
         case Nil => ()
@@ -47,6 +48,7 @@ object CatsSeqImplementation {
               loop((f(a).iterator) :: h :: tail)
           }
       }
+
       loop(initialState)
       buf.result
     }

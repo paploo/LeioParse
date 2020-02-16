@@ -10,6 +10,7 @@ import net.paploo.leioparse.util.quantities.Location
 import scala.util.Try
 
 class BookParser extends LeioParser[LeioBook] with ParseTools {
+
   import BookParser.Keys._
 
   override def apply(row: Row): Try[LeioBook] = for {

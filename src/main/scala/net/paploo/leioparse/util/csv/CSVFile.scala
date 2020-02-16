@@ -33,8 +33,7 @@ object CSVFile {
   object Row {
     case class Key(value: String)
     type Value = String
-
-    def from(rawRow: Map[String, String]): Row = Row(rawRow.map { case (k,v) => (Row.Key(k), v)})
+    def from(rawRow: Map[String, String]): Row = Row(rawRow.map { case (k, v) => (Row.Key(k), v) })
   }
 
 }

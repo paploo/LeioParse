@@ -58,7 +58,7 @@ object JsonBookOverlayParser {
       title = Book.Title(title),
       externalId = id.map(Book.ExternalId.apply),
       wordDensity = wordDensity.map(WordDensity.apply),
-      ))
+    ))
   }
 
 }
