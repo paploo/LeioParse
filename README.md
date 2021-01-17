@@ -3,8 +3,13 @@
 J.C. Reinecke<br/>
 (c) 2019
 
+Gitlab:
 [![pipeline status](https://gitlab.com/paploo/leioparse/badges/master/pipeline.svg)](https://gitlab.com/paploo/leioparse/commits/master)
 [![coverage report](https://gitlab.com/paploo/leioparse/badges/master/coverage.svg)](https://gitlab.com/paploo/leioparse/commits/master)
+
+Github:
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/paploo/LeioParse)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/paploo/LeioParse/Scala%20CI)
 
 * Project Home: https://gitlab.com/paploo/leioparse
 * Project Mirror: https://github.com/paploo/LeioParse
