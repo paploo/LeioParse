@@ -21,7 +21,7 @@ jobs:
       run:
         sbt clean coverage compile test coverageReport
     - name: Upload coverage
-      uses: actions/upload-articat@v2
+      uses: actions/upload-artifact@v2
       with:
         name: scoverage_report
         path: target/scala-2.12/scoverage-report
