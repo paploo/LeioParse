@@ -1,4 +1,4 @@
-name: Scala CI
+name: BuildAndTest
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  buildAndTest:
 
     runs-on: ubuntu-latest
 
