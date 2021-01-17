@@ -8,8 +8,8 @@ Gitlab:
 [![coverage report](https://gitlab.com/paploo/leioparse/badges/master/coverage.svg)](https://gitlab.com/paploo/leioparse/commits/master)
 
 Github:
-![Github Build And Test Status](https://github.com/paploo/LeioParse/workflows/BuildAndTest/badge.svg)
-![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/paploo/LeioParse)
+[![Github Build And Test Status](https://github.com/paploo/LeioParse/workflows/BuildAndTest/badge.svg)](https://github.com/paploo/LeioParse)
+[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/paploo/LeioParse)](https://github.com/paploo/LeioParse)
 
 * Project Home: https://gitlab.com/paploo/leioparse
 * Project Mirror: https://github.com/paploo/LeioParse
